@@ -500,6 +500,28 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 .kb-detail .body { max-width: none; }
 .kb-tags { padding-block: var(--space-2); }
 
+/* Closing statement. The lead-in is muted so the cycling name carries the line. */
+.kb-close {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--line);
+}
+.kb-close__statement,
+.kb-close__with {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--tracking-h3);
+  text-wrap: pretty;
+}
+.kb-close__statement { color: var(--heading); max-width: 30ch; }
+.kb-close__with { color: var(--ink-muted); }
+
+.rot { display: inline-block; color: var(--heading); font-weight: var(--weight-heading); }
+/* The word travels vertically on the swap, so it needs its own box to move in. */
+.rot__word { display: inline-block; }
+
 @media (max-width: 900px) {
   .kb-detail { min-height: 0; }
   .kb-detail__media { min-height: 12rem; }

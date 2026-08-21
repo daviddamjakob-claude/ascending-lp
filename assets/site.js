@@ -190,6 +190,101 @@
   select(0, false);
 })();
 
+/* Closing line of the Knowledge Base section — the last word cycles through the
+   clients the layer plugs into, so the claim reads as a list without being one.
+
+   The name leaves upward and the next arrives from below, which reads as one
+   list moving rather than two unrelated words. Under prefers-reduced-motion it
+   crossfades in place instead: the names still get shown, but nothing travels.
+
+   The line sits at the end of the section, so a longer name would push the page
+   under it. The tallest variant's height is measured once and held. */
+(function () {
+  'use strict';
+
+  var HOLD = 2000;
+  var OUT = 260;
+  var IN = 320;
+  var EASE = 'cubic-bezier(.2,.6,.2,1)';
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var WORDS = ['Claude', 'Copilot', 'ChatGPT', 'Langdock', 'white-label UI by Ascending'];
+
+  var slot = document.getElementById('kb-rot');
+  var word = slot && slot.querySelector('.rot__word');
+  var line = slot && slot.closest('.kb-close__with');
+  if (!word) return;
+
+  var i = 0;
+  var timer = null;
+  var anim = null;
+
+  function reserve() {
+    if (!line) return;
+    var keep = word.textContent;
+    line.style.minHeight = '';
+    var tallest = 0;
+    WORDS.forEach(function (w) {
+      word.textContent = w;
+      tallest = Math.max(tallest, line.getBoundingClientRect().height);
+    });
+    word.textContent = keep;
+    line.style.minHeight = Math.ceil(tallest) + 'px';
+  }
+
+  /* Cancelling the previous animation first keeps one filled animation on the
+     element rather than a new one every couple of seconds for as long as the
+     page is open. Both end states match the element's base style, so the drop is
+     invisible — and it means a stalled animation can only ever revert to a
+     visible word, never strand an invisible one. */
+  function play(frames, duration) {
+    if (anim) anim.cancel();
+    anim = word.animate(frames, { duration: duration, easing: EASE, fill: 'forwards' });
+  }
+
+  /* Timers drive the swap, not the animation's finish event. A browser that is
+     not rendering — a background tab — never dispatches that event, and hanging
+     the sequence off it leaves the word faded out and never brought back. */
+  function step() {
+    var next = (i + 1) % WORDS.length;
+    var out = REDUCED ? [{ opacity: 1 }, { opacity: 0 }]
+                      : [{ transform: 'translateY(0)', opacity: 1 },
+                         { transform: 'translateY(-0.55em)', opacity: 0 }];
+    var into = REDUCED ? [{ opacity: 0 }, { opacity: 1 }]
+                       : [{ transform: 'translateY(0.55em)', opacity: 0 },
+                          { transform: 'translateY(0)', opacity: 1 }];
+
+    play(out, OUT);
+    setTimeout(function () {
+      word.textContent = WORDS[next];
+      i = next;
+      play(into, IN);
+      queue();
+    }, OUT);
+  }
+
+  function queue() {
+    clearTimeout(timer);
+    timer = setTimeout(step, HOLD);
+  }
+
+  /* Coming back to a backgrounded tab, a half-run fade is stale and its timer
+     was throttled. Drop it and restart cleanly — cancelling can only ever leave
+     the word at its base style, which is visible. */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) return;
+    if (anim) { anim.cancel(); anim = null; }
+    queue();
+  });
+
+  /* Measure once the real face is in, or the reserved height is Arial's. */
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+  else reserve();
+  addEventListener('resize', reserve);
+
+  queue();
+})();
+
 /* Header nav.
 
    Solutions opens on hover where there is a pointer and on click everywhere, so
