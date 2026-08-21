@@ -58,7 +58,12 @@
 .page {
   background: var(--page);
   color: var(--ink);
+  /* `clip`, not `hidden`. Hidden resolves overflow-y to auto, which makes this a
+     scroll container and quietly kills position:sticky on the header inside it —
+     the header was declared sticky but scrolled away. Clip holds back the hero
+     graph without creating a scroll box. */
   overflow-x: hidden;
+  overflow-x: clip;
   --heading: var(--ink);
   --body: var(--ink-muted);
   --meta: var(--ink-muted);
@@ -105,8 +110,12 @@
 }
 
 /* --------------------------------------------------------------------------
-   Header — hairline on white, the only sticky element
+   Header — hairline on white, the only sticky element. The nav below it is all
+   in-page anchors, so the jump is animated rather than instant. base.css already
+   forces scroll-behavior back to auto under prefers-reduced-motion.
    -------------------------------------------------------------------------- */
+html { scroll-behavior: smooth; }
+
 .site-header {
   position: sticky;
   top: 0;
@@ -130,9 +139,87 @@
   flex: none;
 }
 .brand:hover { text-decoration: none; }
-.site-nav { display: flex; gap: var(--space-8); margin-inline: auto; }
-.site-nav a { font-size: var(--fs-small); color: var(--ink-muted); }
-.site-nav a[aria-current="page"] { font-weight: var(--weight-heading); color: var(--ink); }
+.site-nav { display: flex; align-items: center; gap: var(--space-8); margin-inline: auto; }
+
+/* One control style for the links and the Solutions trigger, so the row reads
+   as a single set rather than a mix of anchors and a button. */
+.site-nav a,
+.nav-menu__trigger {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0; border: 0; background: none;
+  font: inherit; font-size: var(--fs-small);
+  color: var(--ink-muted); cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+.site-nav a:hover,
+.nav-menu__trigger:hover,
+.nav-menu[data-open="true"] > .nav-menu__trigger { color: var(--ink); text-decoration: none; }
+/* Set by the scroll spy — the section currently under the header. */
+.site-nav a[aria-current="true"],
+.nav-menu[data-current="true"] > .nav-menu__trigger { font-weight: var(--weight-heading); color: var(--ink); }
+
+/* Solutions dropdown. Depth is the ring, as everywhere else on the page. */
+.nav-menu { position: relative; }
+.nav-menu__chev {
+  width: 0.4rem; height: 0.4rem;
+  border-right: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: translateY(-0.12em) rotate(45deg);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.nav-menu[data-open="true"] .nav-menu__chev { transform: translateY(0.1em) rotate(-135deg); }
+.nav-menu__panel {
+  position: absolute;
+  top: calc(100% + var(--space-4)); left: calc(var(--space-6) * -1);
+  min-width: 12rem;
+  display: grid; gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: var(--page);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px var(--line);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-0.35rem);
+  transition: opacity var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease),
+              visibility var(--dur-fast) var(--ease);
+}
+.nav-menu[data-open="true"] .nav-menu__panel { opacity: 1; visibility: visible; transform: none; }
+
+/* Language. Three codes, so the whole set is shown rather than hidden behind a
+   menu — cheaper to read and one click to switch. */
+.lang { display: flex; align-items: center; gap: var(--space-1); flex: none; }
+.lang__opt {
+  padding: 0.3rem 0.45rem;
+  border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--ink-muted);
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.lang__opt:hover { color: var(--ink); }
+.lang__opt[aria-current="true"] { color: var(--ink); font-weight: var(--weight-heading); background: var(--chip); }
+
+/* Menu button — two bars that cross into an X. Desktop never sees it. */
+.nav-toggle {
+  display: none;
+  width: 2.25rem; height: 2.25rem;
+  margin-left: auto;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  position: relative; flex: none;
+}
+.nav-toggle__bar {
+  position: absolute; left: 0.5rem; right: 0.5rem; height: 1px;
+  background: var(--ink);
+  transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.nav-toggle__bar:nth-child(1) { top: calc(50% - 4px); }
+.nav-toggle__bar:nth-child(2) { top: calc(50% + 3px); }
+.site-header[data-nav-open="true"] .nav-toggle__bar:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.site-header[data-nav-open="true"] .nav-toggle__bar:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* The header is sticky, so an anchored section has to clear it. */
+section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 
 /* --------------------------------------------------------------------------
    HERO — display type over the knowledge-graph point cloud, on white.
@@ -363,15 +450,30 @@
   font-weight: var(--weight-heading);
 }
 
-/* the marker square that flags the active row */
+/* The marker square that flags the active row doubles as the pause control:
+   filled while the list is advancing, hollow once it has been stopped. Only the
+   active row's square is live — the others are invisible and let the click
+   through to the row underneath. */
 .kb-item__mark {
   width: 7px; height: 7px;
   align-self: center;
+  padding: 0; border: 0;
   background: var(--ink);
   opacity: 0;
-  transition: opacity var(--dur-fast) var(--ease);
+  pointer-events: none;
+  cursor: pointer;
+  position: relative;
+  transition: opacity var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
 }
-.kb-item[aria-selected="true"] .kb-item__mark { opacity: 1; }
+/* 7px is a marker, not a target — this gives it a 27px one without moving it. */
+.kb-item__mark::before { content: ""; position: absolute; inset: -10px; }
+.kb-item[aria-selected="true"] .kb-item__mark { opacity: 1; pointer-events: auto; }
+.kb-list[data-paused="true"] .kb-item[aria-selected="true"] .kb-item__mark {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
 
 .kb-detail {
   /* Media on top takes whatever slack there is; the text well is auto-sized, so
@@ -477,71 +579,35 @@
 .step { justify-self: start; }
 
 /* --------------------------------------------------------------------------
-   Reveal cards — used for the eight challenges. At rest the card is the title
-   alone, set two steps up; the explanation is only drawn on hover. The face is
-   absolutely placed and free to grow past the card's flow height, so an opened
-   card lifts over its neighbours rather than reflowing the whole eight-up grid.
-   Depth is still the ring, never a shadow.
+   Reveal cards — used for the eight challenges. The card carries its number and
+   title, set two steps up from .h5-card; the explanation is only drawn in on
+   hover.
+
+   The copy keeps its place in the box model the whole time and only its opacity
+   moves, so a card is exactly as tall closed as it is open. Nothing in the flow
+   changes on hover, which means the row cannot resize and the grid cannot jump —
+   the height is the original card height, decided by the grid as before.
    -------------------------------------------------------------------------- */
-.card-reveal { position: relative; min-height: 12.5rem; }
-.card-reveal:hover, .card-reveal:focus-within { z-index: 2; }
-.card-reveal:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.card--reveal { transition: box-shadow var(--dur) var(--ease); }
+.card--reveal:hover,
+.card--reveal:focus-within { box-shadow: inset 0 0 0 1px var(--ink); }
 
-.card-reveal__face {
-  position: absolute;
-  inset: 0 0 auto 0;
-  min-height: 100%;
-  display: grid;
-  align-content: start;
-  gap: var(--space-3);
-  padding: var(--space-6);
-  border-radius: var(--radius-md);
-  /* Opaque: an open card sits on top of the closed ones behind it. */
-  background: var(--page);
-  box-shadow: inset 0 0 0 1px var(--line);
-  transition: box-shadow var(--dur) var(--ease);
-}
-.card-reveal:hover .card-reveal__face,
-.card-reveal:focus-within .card-reveal__face { box-shadow: inset 0 0 0 1px var(--ink); }
-
-/* Two steps up from .h5-card at rest, settling back to the four-up card size
-   on open to make room for the copy. */
+/* Two steps up from .h5-card — at this size the title alone can carry the card. */
 .card-reveal__title {
-  margin: 0;
   font-size: clamp(1.5rem, 0.9vw + 1.15rem, 1.875rem);
   line-height: var(--lh-h3); letter-spacing: var(--tracking-h3);
   color: var(--heading); text-wrap: pretty;
-  transition: font-size var(--dur) var(--ease);
 }
-.card-reveal:hover .card-reveal__title,
-.card-reveal:focus-within .card-reveal__title { font-size: 1.25rem; }
-
-/* 0fr -> 1fr keeps the copy out of the box model until it is asked for, so the
-   resting height is the title's alone. */
-.card-reveal__body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur) var(--ease);
-}
-.card-reveal:hover .card-reveal__body,
-.card-reveal:focus-within .card-reveal__body { grid-template-rows: 1fr; }
-.card-reveal__body > p { overflow: hidden; margin: 0; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
-.card-reveal:hover .card-reveal__body > p,
-.card-reveal:focus-within .card-reveal__body > p { opacity: 1; }
+.card-reveal__body { opacity: 0; transition: opacity var(--dur) var(--ease); }
+.card--reveal:hover .card-reveal__body,
+.card--reveal:focus-within .card-reveal__body { opacity: 1; }
 
 /* Nothing to hover with — hand back the plain, fully open card. */
 @media (hover: none) {
-  .card-reveal { min-height: 0; }
-  .card-reveal__face { position: static; }
-  .card-reveal__title { font-size: 1.25rem; }
-  .card-reveal__body { grid-template-rows: 1fr; }
-  .card-reveal__body > p { opacity: 1; }
+  .card-reveal__body { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card-reveal__face,
-  .card-reveal__title,
-  .card-reveal__body,
-  .card-reveal__body > p { transition: none; }
+  .card--reveal, .card-reveal__body { transition: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -738,9 +804,39 @@
 }
 .cta-row { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
 
+/* Below this the three nav items plus the language set stop fitting beside the
+   wordmark, so the nav drops into a panel under the header and Solutions
+   un-nests into a plain indented group rather than a floating menu. */
+@media (max-width: 900px) {
+  .nav-toggle { display: block; order: 3; margin-left: 0; }
+  .lang { order: 2; margin-left: auto; }
+  .site-nav {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: flex-start;
+    gap: var(--space-6);
+    margin: 0;
+    padding: var(--space-6) max(1.25rem, 5vw) var(--space-8);
+    background: var(--page);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .site-header[data-nav-open="true"] .site-nav { display: flex; }
+  .site-nav a, .nav-menu__trigger { font-size: var(--fs-lead); }
+  .nav-menu__panel {
+    display: none;
+    position: static;
+    min-width: 0;
+    padding: var(--space-3) 0 0 var(--space-4);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    opacity: 1; visibility: visible; transform: none;
+  }
+  .nav-menu[data-open="true"] .nav-menu__panel { display: grid; }
+}
+
 @media (max-width: 760px) {
   .site-header { gap: var(--space-4); padding-inline: 1.25rem; }
-  .site-nav { gap: var(--space-4); margin-left: auto; margin-right: 0; }
   .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }

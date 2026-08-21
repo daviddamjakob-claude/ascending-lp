@@ -7,7 +7,10 @@
    restart the interval.
 
    Hovering the list pauses it: the panel changing mid-sentence while someone is
-   reading is the main failure mode of an auto-advancing control.
+   reading is the main failure mode of an auto-advancing control. That pause only
+   lasts as long as the pointer is there, so the marker square on the active row
+   is also a latch — click it and the list stays stopped after you move away.
+   Filled means running, hollow means stopped.
 
    Under prefers-reduced-motion it does not advance or animate at all — the bar
    is drawn full width as a plain underline and selection is click-only.
@@ -57,6 +60,12 @@
   var buttons = [];
   var progress = null;
 
+  /* Three independent reasons to hold the timer. Latched is the only one the
+     reader sets deliberately, so it is the only one the square reports. */
+  var latched = false;
+  var hovering = false;
+  var focused = false;
+
   function el(tag, className, text) {
     var node = document.createElement(tag);
     if (className) node.className = className;
@@ -66,43 +75,83 @@
 
   function pad(i) { return ('0' + (i + 1)).slice(-2); }
 
+  /* A row is a div rather than a button so the square inside it can be a real
+     button — a control nested in a control is not valid markup. The tab role and
+     its keyboard contract are reproduced below. */
   ITEMS.forEach(function (item, i) {
-    var btn = el('button', 'kb-item');
-    btn.type = 'button';
-    btn.id = 'kb-tab-' + i;
-    btn.setAttribute('role', 'tab');
-    btn.appendChild(el('span', 'kb-item__num', pad(i)));
-    btn.appendChild(el('span', 'kb-item__title', item.title));
-    btn.appendChild(el('span', 'kb-item__mark'));
-    btn.appendChild(el('span', 'kb-item__bar'));
+    var row = el('div', 'kb-item');
+    row.id = 'kb-tab-' + i;
+    row.setAttribute('role', 'tab');
+    row.tabIndex = -1;
+    row.appendChild(el('span', 'kb-item__num', pad(i)));
+    row.appendChild(el('span', 'kb-item__title', item.title));
 
-    btn.addEventListener('click', function () { select(i, false); });
-    btn.addEventListener('keydown', onKeydown);
+    var mark = el('button', 'kb-item__mark');
+    mark.type = 'button';
+    mark.tabIndex = -1;
+    mark.setAttribute('aria-hidden', 'true');
+    mark.addEventListener('click', function (e) {
+      /* Without this the click reaches the row and restarts what it just stopped. */
+      e.stopPropagation();
+      setLatched(!latched);
+    });
+    row.appendChild(mark);
+    row.appendChild(el('span', 'kb-item__bar'));
 
-    buttons.push(btn);
-    list.appendChild(btn);
+    row.addEventListener('click', function () { select(i, false); });
+    row.addEventListener('keydown', onKeydown);
+
+    buttons.push(row);
+    list.appendChild(row);
   });
 
   detail.setAttribute('role', 'tabpanel');
 
   /* Reading should not be interrupted by the thing you are reading about. */
-  list.addEventListener('mouseenter', function () { if (progress) progress.pause(); });
-  list.addEventListener('mouseleave', function () { if (progress) progress.play(); });
-  list.addEventListener('focusin', function () { if (progress) progress.pause(); });
-  list.addEventListener('focusout', function () { if (progress) progress.play(); });
+  list.addEventListener('mouseenter', function () { hovering = true; sync(); });
+  list.addEventListener('mouseleave', function () { hovering = false; sync(); });
+  list.addEventListener('focusin', function () { focused = true; sync(); });
+  list.addEventListener('focusout', function () { focused = false; sync(); });
 
-  function runProgress(btn) {
+  /* The square is decorative to assistive tech — the latch it sets is announced
+     on the list itself, where a screen reader is already told the list advances. */
+  function setLatched(next) {
+    latched = next;
+    list.setAttribute('data-paused', latched ? 'true' : 'false');
+    list.setAttribute('aria-label',
+      'Knowledge base capabilities' + (latched ? ', auto-advance paused' : ''));
+    buttons.forEach(function (row) {
+      row.querySelector('.kb-item__mark').title = latched ? 'Resume' : 'Pause';
+    });
+    sync();
+  }
+
+  function sync() {
+    if (!progress) return;
+    if (latched || hovering || focused) progress.pause();
+    else progress.play();
+  }
+
+  function runProgress(row) {
     if (progress) { progress.onfinish = null; progress.cancel(); progress = null; }
-    var bar = btn.querySelector('.kb-item__bar');
+    var bar = row.querySelector('.kb-item__bar');
     if (!bar || REDUCED) return;
     progress = bar.animate(
       [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
       { duration: DURATION, easing: 'linear', fill: 'forwards' }
     );
     progress.onfinish = function () { select((active + 1) % ITEMS.length, false); };
+    /* A fresh animation starts playing — hand it straight back to the held state. */
+    sync();
   }
 
   function onKeydown(e) {
+    /* A div does not activate itself the way the button it replaced did. */
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      select(buttons.indexOf(e.currentTarget), false);
+      return;
+    }
     var delta = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
               : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1
               : 0;
@@ -137,5 +186,157 @@
     text.appendChild(el('p', 'body', item.body));
   }
 
+  setLatched(false);
   select(0, false);
+})();
+
+/* Header nav.
+
+   Solutions opens on hover where there is a pointer and on click everywhere, so
+   it works the same whether it is a menu bar or a panel. The scroll spy marks
+   whichever section is currently under the header, which is what makes the
+   Solutions group light up for both of the sections behind it. */
+(function () {
+  'use strict';
+
+  var header = document.querySelector('.site-header');
+  var nav = document.getElementById('site-nav');
+  var toggle = document.querySelector('.nav-toggle');
+  var menu = document.querySelector('.nav-menu');
+  if (!header || !nav) return;
+
+  var trigger = menu && menu.querySelector('.nav-menu__trigger');
+  var COMPACT = '(max-width: 900px)';
+
+  function openMenu(open) {
+    if (!menu || !trigger) return;
+    menu.setAttribute('data-open', open ? 'true' : 'false');
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function openNav(open) {
+    header.setAttribute('data-nav-open', open ? 'true' : 'false');
+    if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) openMenu(false);
+  }
+
+  openMenu(false);
+  openNav(false);
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      openNav(header.getAttribute('data-nav-open') !== 'true');
+    });
+  }
+
+  if (menu && trigger) {
+    trigger.addEventListener('click', function () {
+      openMenu(menu.getAttribute('data-open') !== 'true');
+    });
+    /* Hover is an accelerator on top of the click, never the only way in. */
+    menu.addEventListener('mouseenter', function () {
+      if (!matchMedia(COMPACT).matches) openMenu(true);
+    });
+    menu.addEventListener('mouseleave', function () {
+      if (!matchMedia(COMPACT).matches) openMenu(false);
+    });
+    menu.addEventListener('focusout', function (e) {
+      if (!matchMedia(COMPACT).matches && !menu.contains(e.relatedTarget)) openMenu(false);
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (menu && !menu.contains(e.target)) openMenu(false);
+    if (!header.contains(e.target)) openNav(false);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (menu && menu.getAttribute('data-open') === 'true') {
+      openMenu(false);
+      if (trigger) trigger.focus();
+      return;
+    }
+    if (header.getAttribute('data-nav-open') === 'true') {
+      openNav(false);
+      if (toggle) toggle.focus();
+    }
+  });
+
+  /* Following a link closes the panel, otherwise it covers what you jumped to. */
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a')) { openNav(false); openMenu(false); }
+  });
+
+  /* Scroll spy. Rather than "most visible", this asks which section the header
+     is currently sitting in — the one the reader is actually looking at. */
+  var links = [].slice.call(nav.querySelectorAll('a[href^="#"]'));
+  var targets = links
+    .map(function (a) {
+      return { link: a, section: document.getElementById(a.getAttribute('href').slice(1)) };
+    })
+    .filter(function (t) { return t.section; });
+  if (!targets.length) return;
+
+  var ticking = false;
+
+  function markCurrent() {
+    ticking = false;
+    var current = null;
+    targets.forEach(function (t) {
+      /* Measure against the section's own scroll-margin, which is the offset the
+         anchor jump uses. Anything else marks the previous section on landing. */
+      var top = t.section.getBoundingClientRect().top + window.scrollY;
+      var margin = parseFloat(getComputedStyle(t.section).scrollMarginTop) || header.offsetHeight;
+      if (top - margin <= window.scrollY + 1) current = t;
+    });
+    /* Past the last section the page is in the footer; keep the last mark. */
+    targets.forEach(function (t) {
+      if (t === current) t.link.setAttribute('aria-current', 'true');
+      else t.link.removeAttribute('aria-current');
+    });
+    if (menu) {
+      var inside = current && menu.contains(current.link);
+      menu.setAttribute('data-current', inside ? 'true' : 'false');
+    }
+  }
+
+  addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(markCurrent);
+  }, { passive: true });
+  addEventListener('resize', markCurrent);
+  markCurrent();
+})();
+
+/* Language. The copy is English only for now, so this records the choice and
+   sets the document language; it does not yet swap any text. */
+(function () {
+  'use strict';
+
+  var opts = [].slice.call(document.querySelectorAll('.lang__opt'));
+  if (!opts.length) return;
+
+  var KEY = 'ascending:lang';
+
+  function apply(code) {
+    opts.forEach(function (b) {
+      var on = b.dataset.lang === code;
+      if (on) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+    document.documentElement.lang = code;
+  }
+
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  if (saved && opts.some(function (b) { return b.dataset.lang === saved; })) apply(saved);
+
+  opts.forEach(function (b) {
+    b.addEventListener('click', function () {
+      apply(b.dataset.lang);
+      try { localStorage.setItem(KEY, b.dataset.lang); } catch (e) {}
+    });
+  });
 })();
