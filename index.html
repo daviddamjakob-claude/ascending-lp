@@ -10,8 +10,13 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- ?v= on the two files that actually change. Pages serves everything with
+     max-age=600, so without it a browser can pick up new markup while still
+     running ten-minute-old CSS and JS. Bump it in the same commit as an edit
+     to either file. The design-system entry below is upstream and unversioned
+     because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=2">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -285,6 +290,6 @@
 
 </div>
 
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js?v=2" defer></script>
 </body>
 </html>
