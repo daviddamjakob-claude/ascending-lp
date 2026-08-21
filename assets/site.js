@@ -209,6 +209,10 @@
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var WORDS = ['Claude', 'Copilot', 'ChatGPT', 'Langdock', 'white-label UI by Ascending'];
+  /* The full stop travels with the name rather than sitting outside the animated
+     span. Left outside it would stay lit while the name is faded out, and jump
+     sideways on its own as the next name changes the width. */
+  var STOP = '.';
 
   var slot = document.getElementById('kb-rot');
   var word = slot && slot.querySelector('.rot__word');
@@ -225,7 +229,7 @@
     line.style.minHeight = '';
     var tallest = 0;
     WORDS.forEach(function (w) {
-      word.textContent = w;
+      word.textContent = w + STOP;
       tallest = Math.max(tallest, line.getBoundingClientRect().height);
     });
     word.textContent = keep;
@@ -256,7 +260,7 @@
 
     play(out, OUT);
     setTimeout(function () {
-      word.textContent = WORDS[next];
+      word.textContent = WORDS[next] + STOP;
       i = next;
       play(into, IN);
       queue();
