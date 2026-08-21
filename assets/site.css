@@ -500,13 +500,17 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 .kb-detail .body { max-width: none; }
 .kb-tags { padding-block: var(--space-2); }
 
-/* Closing statement. The lead-in is muted so the cycling name carries the line. */
+/* Closing statement. This is the page's one dark block — the system allows
+   exactly one, and it is spent here so the claim reads as a panel laid over the
+   section rather than more of it. A rule would only draw another hairline onto a
+   page already full of them; a change of ground separates without adding a line.
+   The lead-in is muted so the cycling name carries the sentence. */
 .kb-close {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-6);
   margin-top: var(--space-12);
-  padding-top: var(--space-8);
-  border-top: 1px solid var(--line);
+  padding: var(--space-12);
+  border-radius: var(--radius-md);
 }
 .kb-close__statement,
 .kb-close__with {
@@ -515,8 +519,10 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   letter-spacing: var(--tracking-h3);
   text-wrap: pretty;
 }
-.kb-close__statement { color: var(--heading); max-width: 30ch; }
-.kb-close__with { color: var(--ink-muted); }
+/* Both read the contextual tokens .dark re-declares, so the block would still be
+   legible if it were ever moved back onto white. */
+.kb-close__statement { color: var(--heading); }
+.kb-close__with { color: var(--body); }
 
 .rot { display: inline-block; color: var(--heading); font-weight: var(--weight-heading); }
 /* The word travels vertically on the swap, so it needs its own box to move in. */
@@ -525,6 +531,7 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 @media (max-width: 900px) {
   .kb-detail { min-height: 0; }
   .kb-detail__media { min-height: 12rem; }
+  .kb-close { padding: var(--space-8); gap: var(--space-4); }
 }
 
 /* --------------------------------------------------------------------------
