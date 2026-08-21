@@ -477,6 +477,74 @@
 .step { justify-self: start; }
 
 /* --------------------------------------------------------------------------
+   Reveal cards — used for the eight challenges. At rest the card is the title
+   alone, set two steps up; the explanation is only drawn on hover. The face is
+   absolutely placed and free to grow past the card's flow height, so an opened
+   card lifts over its neighbours rather than reflowing the whole eight-up grid.
+   Depth is still the ring, never a shadow.
+   -------------------------------------------------------------------------- */
+.card-reveal { position: relative; min-height: 12.5rem; }
+.card-reveal:hover, .card-reveal:focus-within { z-index: 2; }
+.card-reveal:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.card-reveal__face {
+  position: absolute;
+  inset: 0 0 auto 0;
+  min-height: 100%;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  /* Opaque: an open card sits on top of the closed ones behind it. */
+  background: var(--page);
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition: box-shadow var(--dur) var(--ease);
+}
+.card-reveal:hover .card-reveal__face,
+.card-reveal:focus-within .card-reveal__face { box-shadow: inset 0 0 0 1px var(--ink); }
+
+/* Two steps up from .h5-card at rest, settling back to the four-up card size
+   on open to make room for the copy. */
+.card-reveal__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 0.9vw + 1.15rem, 1.875rem);
+  line-height: var(--lh-h3); letter-spacing: var(--tracking-h3);
+  color: var(--heading); text-wrap: pretty;
+  transition: font-size var(--dur) var(--ease);
+}
+.card-reveal:hover .card-reveal__title,
+.card-reveal:focus-within .card-reveal__title { font-size: 1.25rem; }
+
+/* 0fr -> 1fr keeps the copy out of the box model until it is asked for, so the
+   resting height is the title's alone. */
+.card-reveal__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur) var(--ease);
+}
+.card-reveal:hover .card-reveal__body,
+.card-reveal:focus-within .card-reveal__body { grid-template-rows: 1fr; }
+.card-reveal__body > p { overflow: hidden; margin: 0; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.card-reveal:hover .card-reveal__body > p,
+.card-reveal:focus-within .card-reveal__body > p { opacity: 1; }
+
+/* Nothing to hover with — hand back the plain, fully open card. */
+@media (hover: none) {
+  .card-reveal { min-height: 0; }
+  .card-reveal__face { position: static; }
+  .card-reveal__title { font-size: 1.25rem; }
+  .card-reveal__body { grid-template-rows: 1fr; }
+  .card-reveal__body > p { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-reveal__face,
+  .card-reveal__title,
+  .card-reveal__body,
+  .card-reveal__body > p { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
    Checklist — the system's own component, used for the compliance lines
    -------------------------------------------------------------------------- */
 .checklist li { font-size: var(--fs-small); color: var(--body); }
