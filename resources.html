@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — Ascending AI</title>
+<meta name="description" content="Brand assets and material for partners, integrators and press.">
+<meta property="og:title" content="Resources — Ascending AI">
+<meta property="og:description" content="Brand assets and material for partners, integrators and press.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- ?v= on the two files that actually change. Pages serves everything with
+     max-age=600, so without it a browser can pick up new markup while still
+     running ten-minute-old CSS and JS. Bump it in the same commit as an edit
+     to either file. The design-system entry below is upstream and unversioned
+     because nothing here edits it. -->
+<link rel="stylesheet" href="assets/design-system/styles.css">
+<link rel="stylesheet" href="assets/site.css?v=3">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body data-surface="light">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="page">
+
+  <!-- Same header as the landing page. The in-page links point back at
+       index.html, since there are no sections to jump to on this one. -->
+  <header class="site-header">
+    <a class="brand" href="index.html" title="Ascending">
+      Ascending
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="index.html#platform">Platform</a>
+
+      <div class="nav-menu">
+        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-solutions">
+          Solutions<span class="nav-menu__chev" aria-hidden="true"></span>
+        </button>
+        <div class="nav-menu__panel" id="nav-solutions">
+          <a href="index.html#solutions">All Solutions</a>
+          <a href="index.html#knowledge-base">Knowledge Base</a>
+        </div>
+      </div>
+
+      <a href="index.html#security">Security</a>
+      <a href="resources.html" aria-current="page">Resources</a>
+    </nav>
+
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang__opt" type="button" data-lang="en" aria-current="true">EN</button>
+      <button class="lang__opt" type="button" data-lang="de">DE</button>
+      <button class="lang__opt" type="button" data-lang="nl">NL</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="wrap sec sec--pb">
+      <span class="eyebrow">Resources</span>
+      <hr class="rule">
+      <div class="split split--end split--pt">
+        <h1 class="h2">Brand assets</h1>
+        <p class="lead">Material for partners, integrators and press. Everything here is the live design system rendered at export size — open an asset full size to capture it.</p>
+      </div>
+
+      <div class="asset" style="margin-top:var(--space-12)">
+        <div class="asset__head">
+          <div class="stack-8">
+            <h2 class="h4-card">LinkedIn banner</h2>
+            <p class="small">Company page cover. 1584 × 396 px.</p>
+          </div>
+          <a class="link-underline" href="assets/banners/linkedin-banner.html" target="_blank" rel="noopener">Open full size →</a>
+        </div>
+        <!-- The banner is a fixed 1584-wide canvas with its own stylesheet and
+             fit script. An iframe keeps it pixel-exact and stops its styles and
+             the page's from reaching each other. -->
+        <div class="asset__frame">
+          <iframe src="assets/banners/linkedin-banner.html" title="Ascending LinkedIn banner, 1584 by 396 pixels" loading="lazy" scrolling="no"></iframe>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="wrap site-footer">
+    <span>© 2026 Ascending AI B.V. · Amsterdam, NL</span>
+    <div class="chip-row">
+      <span class="chip-outline">GDPR</span>
+      <span class="chip-outline">EU AI Act</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="assets/site.js?v=3" defer></script>
+</body>
+</html>

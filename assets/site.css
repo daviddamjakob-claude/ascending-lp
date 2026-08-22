@@ -155,8 +155,9 @@ html { scroll-behavior: smooth; }
 .site-nav a:hover,
 .nav-menu__trigger:hover,
 .nav-menu[data-open="true"] > .nav-menu__trigger { color: var(--ink); text-decoration: none; }
-/* Set by the scroll spy — the section currently under the header. */
-.site-nav a[aria-current="true"],
+/* "true" is what the scroll spy sets on the section under the header; "page" is
+   what a real page link carries. Match on the attribute so both are marked. */
+.site-nav a[aria-current],
 .nav-menu[data-current="true"] > .nav-menu__trigger { font-weight: var(--weight-heading); color: var(--ink); }
 
 /* Solutions dropdown. Depth is the ring, as everywhere else on the page. */
@@ -814,6 +815,25 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 .site-footer span { font-size: var(--fs-tiny); color: var(--ink-muted); }
 .footer-links { display: flex; gap: 1.75rem; flex-wrap: wrap; }
 .footer-links a { font-size: var(--fs-tiny); color: var(--ink-muted); }
+
+/* --------------------------------------------------------------------------
+   Downloadable assets (Resources). Each one is shown at its real proportions
+   inside a hairline frame, so what is on the page is what gets exported.
+   -------------------------------------------------------------------------- */
+.asset { display: grid; gap: var(--space-4); }
+.asset__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-6); flex-wrap: wrap;
+}
+/* The banner is a fixed 1584x396 canvas that scales itself to the width it is
+   given, so the frame only has to hold that ratio. */
+.asset__frame {
+  aspect-ratio: 1584 / 396;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+}
+.asset__frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 
 /* --------------------------------------------------------------------------
    Utilities
