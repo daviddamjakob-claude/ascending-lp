@@ -648,6 +648,7 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 .split--pt { padding-top: var(--space-12); }
 .split--pt-sm { padding-top: var(--space-6); }
 
+
 .grid-3 { display: grid; gap: var(--space-4); grid-template-columns: repeat(3, 1fr); }
 /* Eight challenges, four up — two clean rows. */
 .grid-4 { display: grid; gap: var(--space-4); grid-template-columns: repeat(4, 1fr); }
@@ -884,12 +885,14 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   display: flex; align-items: center; justify-content: space-between;
   gap: var(--space-6); flex-wrap: wrap;
   padding-block: var(--space-8) 4rem;
-  border-top: 1px solid var(--hairline);
+  /* Contextual tokens, not the raw ramp: on the dark band these have to invert
+     with everything else or the rule and the small print disappear into it. */
+  border-top: 1px solid var(--line);
   margin-top: var(--section-lg);
 }
-.site-footer span { font-size: var(--fs-tiny); color: var(--ink-muted); }
+.site-footer span { font-size: var(--fs-tiny); color: var(--meta); }
 .footer-links { display: flex; gap: 1.75rem; flex-wrap: wrap; }
-.footer-links a { font-size: var(--fs-tiny); color: var(--ink-muted); }
+.footer-links a { font-size: var(--fs-tiny); color: var(--meta); }
 
 /* --------------------------------------------------------------------------
    Downloadable assets (Resources). Each one is shown at its real proportions
@@ -907,6 +910,20 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    At this length that is a single line, which reads as a second statement
    rather than as a paragraph — the point being not to repeat the split. */
 .sec-head__lead--full { max-width: none; }
+
+/* Below the breakpoint the split is a single column, so its column gap becomes
+   the space between a heading and its sub-heading — twice what the stacked
+   .sec-head pattern leaves, which is why 01 and 03 sat looser than 02 and 04.
+   Both land on space-6 here, and the inset under the eyebrow's rule tightens
+   with them: that inset is set for a wide screen and reads as a hole on a
+   phone.
+
+   This has to sit after .sec-head's own declaration, not with the other split
+   rules further up — same specificity, so source order decides it. */
+@media (max-width: 899px) {
+  .split { gap: var(--space-6); }
+  .split--pt, .sec-head { padding-top: var(--space-6); }
+}
 
 /* --------------------------------------------------------------------------
    Inline popover, for an address that belongs in a sentence but should not be
@@ -985,8 +1002,15 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 .sec-dark {
   position: relative;
   margin-top: var(--section-lg);
-  padding-block: var(--section-lg) 7rem;
+  /* Less inset above the eyebrow than a light section carries: on black the
+     band's own edge already separates it, so the full section space read as a
+     hole. The foot is short because the footer continues the same ground. */
+  padding-block: var(--section-md) var(--section-md);
 }
+
+/* The outro, on the same ground as the band above it. */
+.footer-band { background: var(--surface-dark); }
+.footer-band .site-footer { margin-top: 0; }
 /* Where the band meets the white above it, a lit edge rather than a hard seam. */
 .sec-dark::before {
   content: "";
