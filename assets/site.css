@@ -975,6 +975,28 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    second underlined thing in it only read as a target competing with it. Where
    it went is still announced, from a visually hidden line in the body. */
 
+/* --------------------------------------------------------------------------
+   Full-bleed dark band. The system allows one dark block per page and this is
+   it — the ground changes edge to edge while the content stays on the page's
+   columns, so the band reads as a change of chapter rather than a large card.
+   Pair with .dark, which re-declares the ink, hairline and fill tokens; the
+   components inside then need no dark variants of their own.
+   -------------------------------------------------------------------------- */
+.sec-dark {
+  position: relative;
+  margin-top: var(--section-lg);
+  padding-block: var(--section-lg) 7rem;
+}
+/* Where the band meets the white above it, a lit edge rather than a hard seam. */
+.sec-dark::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+/* On the dark ground a ring alone is thin — the reference fills its tiles too,
+   and --fill is already the on-dark value inside .dark. */
+.dark .card--ring { background: var(--fill); }
+
 /* Space held for something not built yet. Same flat grey the knowledge-base
    panel uses for its media slot, labelled so it reads as reserved rather than
    as a component that failed to load. */
