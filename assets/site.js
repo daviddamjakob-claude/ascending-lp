@@ -484,21 +484,25 @@
   });
 })();
 
-/* Hero ground swatch — a comparison control, not product chrome. Remove this
-   block along with the markup and the .hero-swatch rules once the ground is
-   settled. The choice is remembered so a reload does not undo the comparison. */
+/* Ground swatch — a comparison control, not product chrome. Remove this block
+   along with the markup and the .hero-swatch rules once the ground is settled.
+   The choice is remembered so a reload does not undo the comparison.
+
+   The attribute goes on .page rather than the hero: that is where the ground
+   tokens are declared, so the hero panel and every element that lifts under the
+   pointer change together off one switch. */
 (function () {
   'use strict';
 
-  var hero = document.querySelector('.hero');
+  var page = document.querySelector('.page');
   var opts = [].slice.call(document.querySelectorAll('.hero-swatch__opt'));
-  if (!hero || !opts.length) return;
+  if (!page || !opts.length) return;
 
   var KEY = 'graph0:hero-ground';
 
   function apply(name) {
-    if (name === 'purple') hero.setAttribute('data-hero', 'purple');
-    else hero.removeAttribute('data-hero');
+    if (name === 'purple') page.setAttribute('data-ground', 'purple');
+    else page.removeAttribute('data-ground');
     opts.forEach(function (b) {
       if (b.dataset.hero === name) b.setAttribute('aria-current', 'true');
       else b.removeAttribute('aria-current');

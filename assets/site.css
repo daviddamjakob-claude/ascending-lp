@@ -70,6 +70,22 @@
   --line: var(--hairline);
   --fill: var(--chip);
   --accent-text: var(--accent);
+
+  /* The page's raised ground, defined once and read by the hero panel and by
+     every element that lifts under the pointer, so the fold and the things you
+     touch are the same material. Each surface resolves the wash against its own
+     box, so the weighting to the upper right repeats at every size. */
+  --ground-base: #fafafa;
+  --ground-wash:
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+}
+/* The reference's hue on the same two layers — see the swatch note in index.html. */
+.page[data-ground="purple"] {
+  --ground-base: #faf7ff;
+  --ground-wash:
+    radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
 }
 
 .dark {
@@ -277,22 +293,9 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
      section could not take this inset without drifting off the columns. */
   margin: var(--space-2);
   border-radius: var(--radius-lg);
-  /* The reference's geometry in the page's own ink: neutral black at low alpha
-     rather than a hue, so the fold still carries no colour. The deeper layer is
-     twice --chip, the grey an element takes under the pointer. */
-  background-color: #fafafa;
-  background-image:
-    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
-    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+  background-color: var(--ground-base);
+  background-image: var(--ground-wash);
   transition: background-color var(--dur) var(--ease);
-}
-/* The reference's own hue, on the same two layers, for comparison against the
-   neutral above. Temporary — see the swatch note in the markup. */
-.hero[data-hero="purple"] {
-  background-color: #faf7ff;
-  background-image:
-    radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
-    radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
 }
 
 /* Comparison control, not product chrome. It sits on the panel it changes so
@@ -432,7 +435,11 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    Without the :not(:hover) guard, tabbing to one panel and then pointing at
    another leaves both open at once. */
 .strip:hover .strip__panel:hover,
-.strip:not(:hover) .strip__panel:focus-visible { flex-grow: 2.6; background: var(--chip); }
+.strip:not(:hover) .strip__panel:focus-visible {
+  flex-grow: 2.6;
+  background-color: var(--ground-base);
+  background-image: var(--ground-wash);
+}
 
 /* The system's focus ring is offset and rounded, which floats oddly on a panel
    that sits flush against its neighbours — inset it instead. */
@@ -749,9 +756,12 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    as a second, heavier border rather than as the card lighting up, and the
    hairline is already carrying the edge. Keyboard focus still gets the system's
    own outline on top of this. */
-.card--reveal { transition: background var(--dur) var(--ease); }
+.card--reveal { transition: background-color var(--dur) var(--ease); }
 .card--reveal:hover,
-.card--reveal:focus-within { background: var(--chip); }
+.card--reveal:focus-within {
+  background-color: var(--ground-base);
+  background-image: var(--ground-wash);
+}
 
 /* Two steps up from .h5-card — at this size the title alone can carry the card. */
 .card-reveal__title {
@@ -1024,9 +1034,13 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   box-shadow: inset 0 0 0 1px var(--line);
   overflow: hidden;
   color: inherit;
-  transition: background var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease);
 }
-.link-card:hover, .link-card:focus-visible { background: var(--chip); text-decoration: none; }
+.link-card:hover, .link-card:focus-visible {
+  background-color: var(--ground-base);
+  background-image: var(--ground-wash);
+  text-decoration: none;
+}
 .link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
 /* base.css sets height:auto on every img, so the fill is pinned here. Greyscale
    keeps borrowed photography inside the page's monochrome identity. */
