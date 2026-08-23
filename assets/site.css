@@ -254,8 +254,11 @@ html { scroll-behavior: smooth; }
 }
 
 /* The one live entry in the menu carries the heading weight, so the group reads
-   as one thing you can open and three you cannot yet. */
-.nav-menu__panel a { font-weight: var(--weight-heading); color: var(--ink); }
+   as one thing you can open and three you cannot yet. The weight goes on the
+   label rather than the anchor: on mobile the sub-line under it is a child, and
+   on the anchor it inherited the weight along with everything else. */
+.nav-menu__panel a { color: var(--ink); }
+.nav-menu__panel a .nav-entry__label { font-weight: var(--weight-heading); }
 
 /* Language. Three codes, so the whole set is shown rather than hidden behind a
    menu — cheaper to read and one click to switch. */
