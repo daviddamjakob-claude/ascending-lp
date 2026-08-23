@@ -820,6 +820,15 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    Downloadable assets (Resources). Each one is shown at its real proportions
    inside a hairline frame, so what is on the page is what gets exported.
    -------------------------------------------------------------------------- */
+/* Section head, stacked rather than split. The messaging these carry is one
+   claim per section with at most a single sentence under it — the opposite
+   proportion to the landing page's split, which pairs a short heading with a
+   long paragraph. Squeezed into a half-width column those claims run five and
+   six lines deep, so they get the full measure and the sentence sits beneath.
+   The top inset matches .split--pt so the rhythm down the page is unchanged. */
+.sec-head { padding-top: var(--space-12); max-width: 40ch; }
+.sec-head__lead { margin-top: var(--space-6); max-width: var(--measure-body); }
+
 .asset { display: grid; gap: var(--space-4); }
 .asset__head {
   display: flex; align-items: baseline; justify-content: space-between;
