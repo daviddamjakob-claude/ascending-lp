@@ -1260,9 +1260,15 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
      which sat inside the content gutter and pulled the header out of line. */
   .site-header { gap: var(--space-4); }
 
-  /* The hero is the whole screen on a phone, where the shared display clamp
-     bottoms out at 3rem — smaller than the width can carry. */
-  .hero .display { font-size: clamp(3.25rem, 15vw, 4.5rem); }
+  /* Sized so the second line, "to deploy enterprise AI", holds on one row: the
+     headline keeps the two lines it has on desktop instead of breaking into
+     three. That line runs 8.83em wide at this weight and tracking, and the
+     gutter takes a fixed 38px, so the tightest fit in this query is the
+     narrowest phone rather than the widest — at 320px it needs 9.99vw or less,
+     and 9.5vw leaves enough for the fallback face to be a little wider than
+     the webfont before the swap. The bounds only guard the ends: neither binds
+     between 295px and the 760px breakpoint. */
+  .hero .display { font-size: clamp(1.75rem, 9.5vw, 4.5rem); }
   .hero__inner { gap: var(--space-12); }
   .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
