@@ -908,6 +908,71 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    rather than as a paragraph — the point being not to repeat the split. */
 .sec-head__lead--full { max-width: none; }
 
+/* --------------------------------------------------------------------------
+   Inline popover, for an address that belongs in a sentence but should not be
+   a mailto. The trigger reads as a link because that is what it looks like to
+   the eye, but it is a button — it opens something rather than navigating.
+   -------------------------------------------------------------------------- */
+.pop { position: relative; display: inline-block; }
+.pop__trigger {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: var(--heading);
+  text-decoration: underline; text-underline-offset: 0.2em;
+}
+.pop__panel {
+  position: absolute; z-index: 30;
+  top: calc(100% + var(--space-3)); left: 0;
+  display: grid; gap: var(--space-4); justify-items: start;
+  width: max-content; max-width: min(22rem, 70vw);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  /* Opaque: it sits over the copy underneath it. */
+  background: var(--page);
+  box-shadow: inset 0 0 0 1px var(--line);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-0.35rem);
+  transition: opacity var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease),
+              visibility var(--dur-fast) var(--ease);
+}
+.pop[data-open="true"] .pop__panel { opacity: 1; visibility: visible; transform: none; }
+.pop__value { font-size: var(--fs-small); color: var(--heading); }
+.pop__copy { padding: 0.55rem 1.1rem; font-size: var(--fs-tiny); }
+
+/* --------------------------------------------------------------------------
+   Link cards — a picture, a claim and where it goes. The whole card is the
+   link, so there is no second target inside it to compete with.
+   -------------------------------------------------------------------------- */
+.link-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+  color: inherit;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.link-card:hover, .link-card:focus-visible { box-shadow: inset 0 0 0 1px var(--ink); text-decoration: none; }
+.link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
+/* base.css sets height:auto on every img, so the fill is pinned here. */
+.link-card__media img { width: 100%; height: 100%; object-fit: cover; }
+/* A logo is not a photograph — it keeps its own proportions and its own air. */
+.link-card__media--contain {
+  background: var(--page);
+  display: grid; place-items: center;
+  padding: var(--space-8);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.link-card__media--contain img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.link-card__body {
+  display: grid; gap: var(--space-3); align-content: start;
+  padding: var(--space-6);
+}
+.link-card__cue {
+  font-size: var(--fs-small); color: var(--meta);
+  text-decoration: underline; text-underline-offset: 0.2em;
+}
+
 /* Space held for something not built yet. Same flat grey the knowledge-base
    panel uses for its media slot, labelled so it reads as reserved rather than
    as a component that failed to load. */

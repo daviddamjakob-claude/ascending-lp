@@ -409,6 +409,72 @@
   markCurrent();
 })();
 
+/* Inline popovers holding an address, with a button that copies it.
+
+   The address is not a mailto: the point is to hand it over, not to launch
+   whatever the machine has registered as a mail client. Copy needs a secure
+   context, so where the clipboard is unavailable the button says so rather
+   than silently doing nothing. */
+(function () {
+  'use strict';
+
+  var pops = [].slice.call(document.querySelectorAll('.pop'));
+  if (!pops.length) return;
+
+  function close(pop) {
+    pop.setAttribute('data-open', 'false');
+    pop.querySelector('.pop__trigger').setAttribute('aria-expanded', 'false');
+  }
+  function closeAll() { pops.forEach(close); }
+
+  pops.forEach(function (pop) {
+    var trigger = pop.querySelector('.pop__trigger');
+    var copy = pop.querySelector('.pop__copy');
+    close(pop);
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var wasOpen = pop.getAttribute('data-open') === 'true';
+      closeAll();
+      if (wasOpen) return;
+      pop.setAttribute('data-open', 'true');
+      trigger.setAttribute('aria-expanded', 'true');
+    });
+
+    if (!copy) return;
+    var label = copy.textContent;
+    var revert = null;
+    copy.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var say = function (msg) {
+        copy.textContent = msg;
+        clearTimeout(revert);
+        revert = setTimeout(function () { copy.textContent = label; }, 2000);
+      };
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        say('Select it and copy');
+        return;
+      }
+      navigator.clipboard.writeText(copy.getAttribute('data-copy')).then(
+        function () { say('Copied'); },
+        function () { say('Select it and copy'); }
+      );
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.pop')) closeAll();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var open = pops.filter(function (p) { return p.getAttribute('data-open') === 'true'; })[0];
+    if (!open) return;
+    close(open);
+    open.querySelector('.pop__trigger').focus();
+  });
+})();
+
 /* Language. The copy is English only for now, so this records the choice and
    sets the document language; it does not yet swap any text. */
 (function () {
