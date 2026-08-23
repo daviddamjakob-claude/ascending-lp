@@ -130,7 +130,6 @@ html { scroll-behavior: smooth; }
      the 72rem cap, so once the container stopped growing the header kept
      widening and the two drifted apart — 136px of it by 1600px wide. */
   padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2));
-  border-bottom: 1px solid var(--hairline);
 }
 .brand {
   display: inline-flex;
@@ -1080,10 +1079,6 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 @media (max-width: 900px) {
   .nav-toggle { display: block; order: 3; margin-left: 0; }
   .lang { order: 2; margin-left: auto; }
-  /* No rule under the bar — with the menu open the bar and the sheet are one
-     surface, and with it closed the page below supplies its own separation. */
-  .site-header { border-bottom: 0; }
-
   .site-nav {
     display: none;
     /* Fixed, not absolute: the sheet is the screen, and it scrolls on its own
