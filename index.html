@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=31">
+<link rel="stylesheet" href="assets/site.css?v=32">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -77,7 +77,7 @@
   <main id="main">
 
     <!-- HERO -->
-    <section class="hero hero--center" id="platform">
+    <section class="hero" id="platform">
       <!-- A control for comparing the two hero grounds side by side, not part
            of the product surface. Remove this block, the .hero-swatch rules and
            the swatch script once the choice is made. -->
@@ -86,19 +86,16 @@
         <button class="hero-swatch__opt" type="button" data-hero="purple">Purple</button>
       </div>
       <div class="wrap hero__inner">
-        <!-- Two breaks, exactly one shown at a time: after "toolbox" on a
-             phone, after "to" where the line can carry more. Both are set here
-             rather than left to text-wrap:balance, which is not applied by
-             every browser. -->
-        <h1 class="display" style="max-width:18ch">The toolbox<br class="br-narrow"> to<br class="br-wide"> deploy enterprise AI</h1>
+        <!-- One break, at every width. No measure cap: the break decides the
+             first line, so a cap could only force a third one. -->
+        <h1 class="display">The toolbox<br> to deploy enterprise AI</h1>
         <!-- Wider than the system's 46ch lead measure, which breaks this copy
              over four lines. Between 598px and 618px it sets in three with the
              closing sentence alone on the last; 58.5ch is the middle of that
              band, so a small metric change cannot tip it either way. -->
         <p class="lead" style="max-width:58.5ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is <strong>really powerful while keeping company knowledge sovereign.</strong> European by design, for AI transformations that actually work.</p>
         <div class="hero__cta">
-          <a class="btn" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
-          <a class="link-underline" href="#solution">See the toolbox →</a>
+          <a class="btn btn--hero" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
         </div>
       </div>
     </section>
@@ -300,6 +297,6 @@
 
 </div>
 
-<script src="assets/site.js?v=31" defer></script>
+<script src="assets/site.js?v=32" defer></script>
 </body>
 </html>

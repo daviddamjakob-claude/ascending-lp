@@ -282,27 +282,34 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    HERO — display type over the knowledge-graph point cloud, on white.
    The graph is the identity; nothing else on the page is textured.
    -------------------------------------------------------------------------- */
-.hero {
-  position: relative;
-  /* An inset panel rather than a full-bleed band, following the reference: a
-     narrow margin all round so white shows at the edges and under the bar, a
-     large radius, and a soft gradient weighted to the upper right.
-
-     The margin costs no alignment here because the hero is centred — the panel
-     and the page share a centre line, so the type stays on it. A left-aligned
-     section could not take this inset without drifting off the columns. */
-  margin: var(--space-2);
+.hero { position: relative; }
+/* The panel is painted, not laid out: the section stays full width so the .wrap
+   inside it resolves its gutter against the viewport and lands on the same
+   columns as the header and every section below. Insetting the section itself
+   with a margin would shift that gutter by half the inset — invisible while the
+   hero was centred, but this one is left-aligned, so it would show. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-2);
+  z-index: 0;
   border-radius: var(--radius-lg);
   background-color: var(--ground-base);
   background-image: var(--ground-wash);
   transition: background-color var(--dur) var(--ease);
 }
+/* Slightly back from the display clamp: at full size the two lines crowded the
+   panel once the heading stopped being centred. */
+.hero .display { font-size: clamp(3rem, 6.6vw, 5.25rem); }
 
 /* Comparison control, not product chrome. It sits on the panel it changes so
    the two can be judged without the eye leaving the fold. */
 .hero-swatch {
   position: absolute;
-  top: var(--space-4); right: var(--space-4); z-index: 2;
+  /* The panel starts space-2 in, so add that to sit space-4 inside its edge. */
+  top: calc(var(--space-2) + var(--space-4));
+  right: calc(var(--space-2) + var(--space-4));
+  z-index: 2;
   display: flex; gap: var(--space-1);
   padding: 0.25rem;
   border-radius: var(--radius-pill);
@@ -332,9 +339,17 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   gap: var(--space-8);
   justify-items: start;
 }
-.hero--center .hero__inner { justify-items: center; text-align: center; }
-.hero--center .lead { margin-inline: auto; }
 .hero__cta { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
+/* The reference's call to action: a squarer corner than the system's pill, and
+   the label set small, spaced and upper case so it reads as a control rather
+   than a sentence. */
+.btn--hero {
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
 
 /* Nothing sits over the field. The design reference runs the graph straight
    behind the type — sparse nodes and hairline edges on white, with display type
@@ -1068,9 +1083,17 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    Pair with .dark, which re-declares the ink, hairline and fill tokens; the
    components inside then need no dark variants of their own.
    -------------------------------------------------------------------------- */
+/* Inset and rounded like the hero panel. The band and the outro below it are one
+   slab of black, so the radius is split between them — top corners here, bottom
+   corners on the footer — rather than each rounding itself and leaving a seam.
+
+   Insetting with a margin is safe on these two: their content sits in a .wrap
+   that is centred, and the sections above are centred in the same viewport, so
+   a symmetric inset moves nothing off its column. */
 .sec-dark {
   position: relative;
-  margin-top: var(--section-lg);
+  margin: var(--section-lg) var(--space-2) 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   /* Less inset above the eyebrow than a light section carries: on black the
      band's own edge already separates it, so the full section space read as a
      hole. The foot is short because the footer continues the same ground. */
@@ -1078,14 +1101,12 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 }
 
 /* The outro, on the same ground as the band above it. */
-.footer-band { background: var(--surface-dark); }
-.footer-band .site-footer { margin-top: 0; }
-/* Where the band meets the white above it, a lit edge rather than a hard seam. */
-.sec-dark::before {
-  content: "";
-  position: absolute; inset: 0 0 auto 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+.footer-band {
+  background: var(--surface-dark);
+  margin: 0 var(--space-2) var(--space-2);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
+.footer-band .site-footer { margin-top: 0; }
 /* On the dark ground a ring alone is thin — the reference fills its tiles too,
    and --fill is already the on-dark value inside .dark. */
 .dark .card--ring { background: var(--fill); }
@@ -1224,15 +1245,6 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   }
 }
 
-/* A headline break that differs by width. Exactly one of the pair is ever
-   displayed, so the wrap is set rather than left to the browser either way. */
-.br-wide { display: none; }
-.br-narrow { display: inline; }
-@media (min-width: 761px) {
-  .br-wide { display: inline; }
-  .br-narrow { display: none; }
-}
-
 @media (max-width: 760px) {
   /* Padding is inherited from the base rule rather than tightened to 1.25rem,
      which sat inside the content gutter and pulled the header out of line. */
@@ -1242,10 +1254,6 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
      bottoms out at 3rem — smaller than the width can carry. */
   .hero .display { font-size: clamp(3.25rem, 15vw, 4.5rem); }
   .hero__inner { gap: var(--space-12); }
-  /* Stacked: side by side, the second action ends up on its own line anyway,
-     but hanging off the button's edge rather than under it. */
-  .hero__cta { flex-direction: column; }
-  .hero--center .hero__cta { align-items: center; }
   .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
