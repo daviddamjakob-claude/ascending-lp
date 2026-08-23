@@ -380,6 +380,24 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   font-variant-numeric: tabular-nums;
   color: var(--ink-muted);
 }
+/* Tags standing where the panel number used to. justify-self keeps the row from
+   stretching the chips across the grid column, and a panel carrying more than
+   one is free to wrap it onto a second line.
+
+   A squeezed panel clips, which is fine for the title but slices a pill's
+   border off mid-curve. Bounding the chip to the panel and truncating instead
+   keeps the shape whole at every width. min-width:0 is what makes that work: a
+   grid and a flex item both default to min-width:auto, which is the chip's own
+   min-content — and nowrap text has no min-content smaller than itself, so the
+   cap is ignored until it is released. */
+.strip__tags { justify-self: start; max-width: 100%; min-width: 0; }
+.strip__tags .chip-outline {
+  white-space: nowrap;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .strip__title {
   font-size: 1.25rem;
   line-height: var(--lh-h3);
