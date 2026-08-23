@@ -1096,43 +1096,52 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
     flex-direction: column; align-items: stretch;
     gap: 0;
     margin: 0;
-    padding: 0 max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-12);
+    /* The list starts well clear of the bar rather than butting up under it. */
+    padding: var(--space-12) max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-12);
     background: var(--page);
   }
   .site-header[data-nav-open="true"] .site-nav { display: flex; }
 
   /* Every top-level entry is a row: label left, arrow right, hairline under. */
+  /* Rows are set to the reference: type near 26px, and only enough padding to
+     bring the pitch to roughly 47px — the space comes from the type, not from
+     padding around it. */
   .site-nav > a,
   .nav-menu__trigger {
     display: flex; align-items: center; justify-content: space-between;
     gap: var(--space-4);
     width: 100%;
-    padding-block: var(--space-4);
-    font-size: 1.375rem;
+    padding-block: var(--space-2);
+    font-size: 1.625rem;
     line-height: var(--lh-h3);
     letter-spacing: var(--tracking-h3);
     color: var(--heading);
     white-space: normal;
     text-align: left;
   }
-  /* Only a group that opens carries an arrow — on a plain link it promised a
-     level that is not there. */
+  /* A chevron, drawn rather than set: it points right while the group is shut
+     and turns to point down when it opens. Only a group that opens has one. */
   .nav-menu__trigger::after {
-    content: "→";
+    content: "";
     flex: none;
-    color: var(--meta);
+    width: 0.5rem; height: 0.5rem;
+    margin-right: 0.2rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
     transition: transform var(--dur-fast) var(--ease);
   }
-  .nav-menu[data-open="true"] > .nav-menu__trigger::after { transform: rotate(90deg); }
+  .nav-menu[data-open="true"] > .nav-menu__trigger::after { transform: rotate(45deg); }
   .nav-menu { width: 100%; }
 
-  /* The submenu opens in place, with no plate and no rule of its own. */
+  /* The submenu opens in place, on the same left edge as its parent, with no
+     plate and no rule of its own. */
   .nav-menu__panel {
     display: none;
     position: static;
     min-width: 0;
-    gap: var(--space-4);
-    padding: 0 0 var(--space-4);
+    gap: var(--space-6);
+    padding: var(--space-6) 0 var(--space-8);
     border-radius: 0;
     background: none;
     box-shadow: none;
@@ -1147,7 +1156,8 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   .nav-entry__sub {
     display: block;
     margin-top: var(--space-1);
-    font-size: var(--fs-small);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
     color: var(--meta);
   }
 }
