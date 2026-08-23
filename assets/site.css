@@ -183,9 +183,14 @@ html { scroll-behavior: smooth; }
 
 .site-nav { display: flex; align-items: center; gap: var(--space-8); margin-inline: auto; }
 
+/* The call to action lives in the menu markup but only ever appears once the
+   menu becomes a sheet. */
+.nav-cta { display: none; }
+
 /* One control style for the links and the Solutions trigger, so the row reads
-   as a single set rather than a mix of anchors and a button. */
-.site-nav a,
+   as a single set rather than a mix of anchors and a button. The button in the
+   sheet is excluded: it is a control, not one of the menu's links. */
+.site-nav a:not(.btn),
 .nav-menu__trigger {
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0; border: 0; background: none;
@@ -1267,6 +1272,20 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 
   /* The base .site-nav a rule makes every link in the nav an inline-flex row,
      which laid the sub-line out beside its label rather than under it. */
+  /* Pushed to the foot of the sheet rather than left trailing the last link:
+     the list ends around 520px on a phone and the rest of the screen was empty.
+     margin-top:auto only spends space that is actually free, so once the list
+     grows past the viewport the button simply follows it and the sheet scrolls;
+     the padding is the floor that keeps it off Resources in that case. */
+  .nav-cta {
+    display: block;
+    margin-top: auto;
+    padding-top: var(--space-12);
+  }
+  /* Full width here, unlike the hero's, because the sheet has no other content
+     on the line to set its width against. */
+  .site-nav .nav-cta .btn { display: block; width: 100%; text-align: center; }
+
   .site-nav .nav-entry { display: block; }
   /* The submenu sits well below the row that opens it in the reference — about
      16px against a 27px parent, where ours ran 18 against 26 and read as a
@@ -1304,7 +1323,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
      between 295px and the 760px breakpoint. */
   .hero .display { font-size: clamp(1.75rem, 9.5vw, 4.5rem); }
   .hero__inner { gap: var(--space-12); }
-  .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
 }
