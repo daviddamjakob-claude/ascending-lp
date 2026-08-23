@@ -277,10 +277,13 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
      section could not take this inset without drifting off the columns. */
   margin: var(--space-2);
   border-radius: var(--radius-lg);
-  background-color: #faf7ff;
+  /* The reference's geometry in the page's own ink: neutral black at low alpha
+     rather than a hue, so the fold still carries no colour. The deeper layer is
+     twice --chip, the grey an element takes under the pointer. */
+  background-color: #fafafa;
   background-image:
-    radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
-    radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
 }
 .hero__inner {
   position: relative;
