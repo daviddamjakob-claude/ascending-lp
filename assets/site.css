@@ -268,6 +268,10 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
+  /* The first screen sits on the same faint grey the page uses for an element
+     under the pointer, so the fold reads as its own panel. It runs edge to edge
+     and starts under the bar, which stays white and passes over it. */
+  background: var(--chip);
 }
 .hero__inner {
   position: relative;
