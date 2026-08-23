@@ -284,6 +284,42 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   background-image:
     radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
     radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+  transition: background-color var(--dur) var(--ease);
+}
+/* The reference's own hue, on the same two layers, for comparison against the
+   neutral above. Temporary — see the swatch note in the markup. */
+.hero[data-hero="purple"] {
+  background-color: #faf7ff;
+  background-image:
+    radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
+}
+
+/* Comparison control, not product chrome. It sits on the panel it changes so
+   the two can be judged without the eye leaving the fold. */
+.hero-swatch {
+  position: absolute;
+  top: var(--space-4); right: var(--space-4); z-index: 2;
+  display: flex; gap: var(--space-1);
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.hero-swatch__opt {
+  padding: 0.3rem 0.75rem;
+  border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--ink-muted);
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.hero-swatch__opt:hover { color: var(--ink); }
+.hero-swatch__opt[aria-current="true"] {
+  color: var(--ink);
+  font-weight: var(--weight-heading);
+  background: var(--chip);
 }
 .hero__inner {
   position: relative;

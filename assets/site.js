@@ -484,6 +484,39 @@
   });
 })();
 
+/* Hero ground swatch — a comparison control, not product chrome. Remove this
+   block along with the markup and the .hero-swatch rules once the ground is
+   settled. The choice is remembered so a reload does not undo the comparison. */
+(function () {
+  'use strict';
+
+  var hero = document.querySelector('.hero');
+  var opts = [].slice.call(document.querySelectorAll('.hero-swatch__opt'));
+  if (!hero || !opts.length) return;
+
+  var KEY = 'graph0:hero-ground';
+
+  function apply(name) {
+    if (name === 'purple') hero.setAttribute('data-hero', 'purple');
+    else hero.removeAttribute('data-hero');
+    opts.forEach(function (b) {
+      if (b.dataset.hero === name) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  apply(saved === 'purple' ? 'purple' : 'grey');
+
+  opts.forEach(function (b) {
+    b.addEventListener('click', function () {
+      apply(b.dataset.hero);
+      try { localStorage.setItem(KEY, b.dataset.hero); } catch (e) {}
+    });
+  });
+})();
+
 /* Language. The copy is English only for now, so this records the choice and
    sets the document language; it does not yet swap any text. */
 (function () {

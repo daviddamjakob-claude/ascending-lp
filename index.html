@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=29">
+<link rel="stylesheet" href="assets/site.css?v=30">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -78,6 +78,13 @@
 
     <!-- HERO -->
     <section class="hero hero--center" id="platform">
+      <!-- A control for comparing the two hero grounds side by side, not part
+           of the product surface. Remove this block, the .hero-swatch rules and
+           the swatch script once the choice is made. -->
+      <div class="hero-swatch" role="group" aria-label="Hero background">
+        <button class="hero-swatch__opt" type="button" data-hero="grey" aria-current="true">Grey</button>
+        <button class="hero-swatch__opt" type="button" data-hero="purple">Purple</button>
+      </div>
       <div class="wrap hero__inner">
         <!-- Two breaks, exactly one shown at a time: after "toolbox" on a
              phone, after "to" where the line can carry more. Both are set here
@@ -293,6 +300,6 @@
 
 </div>
 
-<script src="assets/site.js?v=29" defer></script>
+<script src="assets/site.js?v=30" defer></script>
 </body>
 </html>
