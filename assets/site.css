@@ -139,6 +139,21 @@ html { scroll-behavior: smooth; }
   flex: none;
 }
 .brand:hover { text-decoration: none; }
+/* base.css sets height:auto on every img, so both axes are pinned here or the
+   mark collapses to its intrinsic ratio against a fixed width. */
+.brand__mark { width: 1.5rem; height: 1.5rem; flex: none; }
+
+/* Emphasis inside copy. The system runs one heading weight, so this is 500 and
+   the heading ink rather than the browser's 700. */
+.page strong { font-weight: var(--weight-heading); color: var(--heading); }
+
+/* A break that only exists in the wide layout. Where a headline's break matters
+   it is set here rather than left to text-wrap:balance, which lands on the same
+   split in Chrome but is not applied everywhere — without it the greedy wrap
+   fills the first line instead. Narrow, the type is small enough to wrap well
+   on its own. */
+.br-wide { display: none; }
+@media (min-width: 901px) { .br-wide { display: inline; } }
 .site-nav { display: flex; align-items: center; gap: var(--space-8); margin-inline: auto; }
 
 /* One control style for the links and the Solutions trigger, so the row reads

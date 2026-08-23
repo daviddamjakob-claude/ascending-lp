@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=10">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -28,8 +28,9 @@
   <!-- Same header as the landing page. The in-page links point back at
        index.html, since those sections do not exist on this one. -->
   <header class="site-header">
-    <a class="brand" href="index.html" title="Ascending">
-      Ascending
+    <a class="brand" href="index.html" title="Graph0">
+      <img class="brand__mark" src="assets/graph0-mark.svg" alt="" width="64" height="64">
+      Graph0
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
@@ -72,12 +73,12 @@
          still points at the toolkit, which lives on the landing page. -->
     <section class="hero hero--center" id="platform">
       <div class="wrap hero__inner">
-        <h1 class="display" style="max-width:18ch">The toolbox to deploy enterprise AI</h1>
+        <h1 class="display" style="max-width:18ch">The toolbox to<br class="br-wide"> deploy enterprise AI</h1>
         <!-- Wider than the system's 46ch lead measure, which breaks this copy
              over four lines. Between 598px and 618px it sets in three with the
              closing sentence alone on the last; 58.5ch is the middle of that
              band, so a small metric change cannot tip it either way. -->
-        <p class="lead" style="max-width:58.5ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is really powerful while keeping company knowledge sovereign. European by design, for AI transformations that actually work.</p>
+        <p class="lead" style="max-width:58.5ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is really <strong>powerful</strong> while keeping company knowledge <strong>sovereign</strong>. European by design, for AI transformations that actually work.</p>
         <div class="hero__cta">
           <a class="btn" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
           <a class="link-underline" href="index.html#solutions">See the toolkit →</a>
@@ -176,6 +177,6 @@
 
 </div>
 
-<script src="assets/site.js?v=9" defer></script>
+<script src="assets/site.js?v=10" defer></script>
 </body>
 </html>
