@@ -1096,8 +1096,9 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
     flex-direction: column; align-items: stretch;
     gap: 0;
     margin: 0;
-    /* The list starts well clear of the bar rather than butting up under it. */
-    padding: var(--space-12) max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-12);
+    /* Clear of the bar, but not so far that the list starts low — the group
+       below opens by default, so the sheet already carries plenty. */
+    padding: var(--space-8) max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-12);
     background: var(--page);
   }
   .site-header[data-nav-open="true"] .site-nav { display: flex; }

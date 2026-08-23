@@ -324,7 +324,12 @@
 
   if (toggle) {
     toggle.addEventListener('click', function () {
-      openNav(header.getAttribute('data-nav-open') !== 'true');
+      var next = header.getAttribute('data-nav-open') !== 'true';
+      openNav(next);
+      /* The group starts open on a phone. The sheet is the whole screen and has
+         room for it, and it saves a tap to reach the one live entry in there.
+         Guarded on width so the floating dropdown does not open by itself. */
+      if (next && matchMedia(COMPACT).matches) openMenu(true);
     });
   }
 
@@ -345,7 +350,11 @@
   }
 
   document.addEventListener('click', function (e) {
-    if (menu && !menu.contains(e.target)) openMenu(false);
+    /* The menu button is excluded: it opens the group itself on a phone, and
+       this handler runs after it as the click bubbles, so without the guard it
+       shut the group again on the way up. */
+    var onToggle = toggle && toggle.contains(e.target);
+    if (menu && !menu.contains(e.target) && !onToggle) openMenu(false);
     if (!header.contains(e.target)) openNav(false);
   });
 
