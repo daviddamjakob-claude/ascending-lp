@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=6">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -73,7 +73,10 @@
     <section class="hero hero--center" id="platform">
       <div class="wrap hero__inner">
         <h1 class="display" style="max-width:18ch">The toolbox to deploy enterprise AI</h1>
-        <p class="lead">Our managed infrastructure enables in-house teams and integrators to deploy AI that is really powerful while keeping company knowledge sovereign. European by design, for AI transformations that actually work.</p>
+        <!-- Wider than the system's 46ch lead measure, which breaks this copy
+             over four lines. 58ch is where it falls to three; 66ch sits inside
+             that band rather than on its edge. -->
+        <p class="lead" style="max-width:66ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is really powerful while keeping company knowledge sovereign. European by design, for AI transformations that actually work.</p>
         <div class="hero__cta">
           <a class="btn" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
           <a class="link-underline" href="index.html#solutions">See the toolkit →</a>
@@ -88,13 +91,16 @@
       <hr class="rule">
       <div class="split split--end split--pt">
         <h2 class="h2">Out-of-the-box AI is often insufficient</h2>
-        <p class="lead">Claude, ChatGPT, Copilot or Langdock are quickly implemented and bring advanced agentic capabilities. The gap to real impact is a focused strategy and organized change management. Together with a middle layer platform that makes outcomes robust and keeps knowledge secure and sovereign.</p>
+        <div class="lead-group">
+          <p class="lead">Claude, ChatGPT, Copilot or Langdock are quickly implemented and bring advanced agentic capabilities.</p>
+          <p class="lead">The gap to real impact is a focused strategy and organized change management. Together with a middle layer platform that makes outcomes robust and keeps knowledge secure and sovereign.</p>
+        </div>
       </div>
 
       <div class="strip" style="margin-top:var(--space-12)">
         <button class="strip__panel" type="button">
           <span class="strip__num">01</span>
-          <span class="strip__title">Usage with little governance and unclear ROI</span>
+          <span class="strip__title">Self-usage without focus, little governance and unclear ROI</span>
           <span class="strip__body">Lorem ipsum est.</span>
         </button>
         <button class="strip__panel" type="button">
@@ -127,6 +133,6 @@
 
 </div>
 
-<script src="assets/site.js?v=5" defer></script>
+<script src="assets/site.js?v=6" defer></script>
 </body>
 </html>

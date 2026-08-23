@@ -568,6 +568,11 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   color: var(--heading); text-wrap: pretty;
 }
 .lead { color: var(--body); text-wrap: pretty; }
+/* Several leads stacked in one split column. They drop the 46ch measure cap and
+   run to the column's own right edge, and the gap between them is wide enough to
+   read as a deliberate break rather than a paragraph space. */
+.lead-group { display: grid; gap: var(--space-12); }
+.lead-group .lead { max-width: none; }
 .body, .small { color: var(--body); }
 .tiny { color: var(--meta); }
 .note-line {
