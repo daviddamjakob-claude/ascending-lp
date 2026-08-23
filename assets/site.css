@@ -125,7 +125,11 @@ html { scroll-behavior: smooth; }
   display: flex;
   align-items: center;
   gap: var(--space-8);
-  padding-inline: max(2.5rem, 5vw);
+  /* The same side margin .wrap resolves to, so the wordmark and the language
+     set sit on the page's own columns. A plain 5vw tracked the gutter but not
+     the 72rem cap, so once the container stopped growing the header kept
+     widening and the two drifted apart — 136px of it by 1600px wide. */
+  padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2));
   border-bottom: 1px solid var(--hairline);
 }
 .brand {
@@ -964,7 +968,7 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
     flex-direction: column; align-items: flex-start;
     gap: var(--space-6);
     margin: 0;
-    padding: var(--space-6) max(1.25rem, 5vw) var(--space-8);
+    padding: var(--space-6) max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-8);
     background: var(--page);
     border-bottom: 1px solid var(--hairline);
   }
@@ -987,7 +991,9 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 }
 
 @media (max-width: 760px) {
-  .site-header { gap: var(--space-4); padding-inline: 1.25rem; }
+  /* Padding is inherited from the base rule rather than tightened to 1.25rem,
+     which sat inside the content gutter and pulled the header out of line. */
+  .site-header { gap: var(--space-4); }
   .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
