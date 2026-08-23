@@ -500,9 +500,16 @@
 
   var KEY = 'graph0:hero-ground';
 
+  /* Grey is the tokens as declared on .page, so it is the absence of the
+     attribute rather than a value of it. Every other ground is its own name,
+     read off the button — adding one is a button and a CSS block, not a case
+     here. A stored name with no button left is ignored, so dropping an option
+     cannot strand the page on a ground nothing can switch away from. */
   function apply(name) {
-    if (name === 'purple') page.setAttribute('data-ground', 'purple');
-    else page.removeAttribute('data-ground');
+    var known = opts.some(function (b) { return b.dataset.hero === name; });
+    if (!known || name === 'grey') name = 'grey';
+    if (name === 'grey') page.removeAttribute('data-ground');
+    else page.setAttribute('data-ground', name);
     opts.forEach(function (b) {
       if (b.dataset.hero === name) b.setAttribute('aria-current', 'true');
       else b.removeAttribute('aria-current');
@@ -511,7 +518,7 @@
 
   var saved;
   try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
-  apply(saved === 'purple' ? 'purple' : 'grey');
+  apply(saved);
 
   opts.forEach(function (b) {
     b.addEventListener('click', function () {

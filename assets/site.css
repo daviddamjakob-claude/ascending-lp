@@ -87,6 +87,16 @@
     radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
     radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
 }
+/* The mark's orange, #ee5b2b. At full strength it is a signal colour and would
+   read as a warning behind the heading, so the ground takes it the way the
+   purple takes its accent: the hue only in the wash, at low alpha, and the
+   second layer a tint of it rather than the colour again. */
+.page[data-ground="orange"] {
+  --ground-base: #fff8f4;
+  --ground-wash:
+    radial-gradient(90% 120% at 95% 0%, rgba(238, 91, 43, 0.30), rgba(238, 91, 43, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(249, 168, 130, 0.30), rgba(249, 168, 130, 0) 60%);
+}
 
 .dark {
   background: var(--surface-dark);
