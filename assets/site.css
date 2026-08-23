@@ -196,7 +196,9 @@ html { scroll-behavior: smooth; }
    that quietly do nothing. Muted so the one live entry reads as the live one. */
 .nav-entry { display: block; }
 .nav-entry__label {
-  display: inline-flex; align-items: baseline; gap: var(--space-2);
+  /* Centred, not baseline: the tag is a pill, and sitting it on the label's
+     baseline hangs it low against the cap height beside it. */
+  display: inline-flex; align-items: center; gap: var(--space-2);
   font-size: var(--fs-small);
   white-space: nowrap;
 }
@@ -1105,16 +1107,16 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
     display: flex; align-items: center; justify-content: space-between;
     gap: var(--space-4);
     width: 100%;
-    padding-block: var(--space-6);
-    font-size: var(--fs-h3);
+    padding-block: var(--space-4);
+    font-size: 1.375rem;
     line-height: var(--lh-h3);
     letter-spacing: var(--tracking-h3);
     color: var(--heading);
-    border-bottom: 1px solid var(--hairline);
     white-space: normal;
     text-align: left;
   }
-  .site-nav > a::after,
+  /* Only a group that opens carries an arrow — on a plain link it promised a
+     level that is not there. */
   .nav-menu__trigger::after {
     content: "→";
     flex: none;
@@ -1124,21 +1126,23 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   .nav-menu[data-open="true"] > .nav-menu__trigger::after { transform: rotate(90deg); }
   .nav-menu { width: 100%; }
 
-  /* The submenu opens in place, indented, with no plate of its own. */
+  /* The submenu opens in place, with no plate and no rule of its own. */
   .nav-menu__panel {
     display: none;
     position: static;
     min-width: 0;
-    gap: var(--space-6);
-    padding: var(--space-6) 0;
+    gap: var(--space-4);
+    padding: 0 0 var(--space-4);
     border-radius: 0;
     background: none;
     box-shadow: none;
     opacity: 1; visibility: visible; transform: none;
-    border-bottom: 1px solid var(--hairline);
   }
   .nav-menu[data-open="true"] .nav-menu__panel { display: grid; }
 
+  /* The base .site-nav a rule makes every link in the nav an inline-flex row,
+     which laid the sub-line out beside its label rather than under it. */
+  .site-nav .nav-entry { display: block; }
   .nav-entry__label { font-size: var(--fs-lead); white-space: normal; }
   .nav-entry__sub {
     display: block;
