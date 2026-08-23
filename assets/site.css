@@ -190,18 +190,30 @@ html { scroll-behavior: smooth; }
    to navigate to, so they are neither clickable nor focusable rather than links
    that quietly do nothing. Muted so the one live entry reads as the live one. */
 .nav-soon {
-  display: inline-flex; align-items: baseline; gap: 0.45rem;
+  display: inline-flex; align-items: baseline; gap: var(--space-2);
   font-size: var(--fs-small);
   color: var(--ink-muted);
-  opacity: 0.55;
   cursor: default;
   white-space: nowrap;
 }
+/* The system's own chip, at the scale a menu row can carry. It reads as a
+   status rather than more label, which a muted word beside the name did not —
+   so the row no longer needs blanket opacity to say it is not ready. */
 .nav-soon__tag {
+  flex: none;
   font-size: var(--fs-tiny);
+  line-height: 1.5;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
+  color: var(--meta);
+  padding: 0.05rem 0.5rem;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--line);
 }
+
+/* The one live entry in the menu carries the heading weight, so the group reads
+   as one thing you can open and three you cannot yet. */
+.nav-menu__panel a { font-weight: var(--weight-heading); color: var(--ink); }
 
 /* Language. Three codes, so the whole set is shown rather than hidden behind a
    menu — cheaper to read and one click to switch. */
