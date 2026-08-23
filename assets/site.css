@@ -971,10 +971,9 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   display: grid; gap: var(--space-3); align-content: start;
   padding: var(--space-6);
 }
-.link-card__cue {
-  font-size: var(--fs-small); color: var(--meta);
-  text-decoration: underline; text-underline-offset: 0.2em;
-}
+/* No visible destination inside the card — the card itself is the link, so a
+   second underlined thing in it only read as a target competing with it. Where
+   it went is still announced, from a visually hidden line in the body. */
 
 /* Space held for something not built yet. Same flat grey the knowledge-base
    panel uses for its media slot, labelled so it reads as reserved rather than
