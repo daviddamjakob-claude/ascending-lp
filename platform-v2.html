@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -87,7 +87,7 @@
 
     <!-- 01 — CHALLENGES, built on the landing page's 02 — Solutions layout:
          split heading, then the strip whose panels open on hover. -->
-    <section class="wrap sec sec--pb" id="challenges">
+    <section class="wrap sec" id="challenges">
       <span class="eyebrow">01 — Challenges</span>
       <hr class="rule">
       <div class="split split--end split--pt">
@@ -122,6 +122,39 @@
       </div>
     </section>
 
+    <!-- 02 — SOLUTIONS. Head and claim run the full measure rather than the
+         split used above, so the two sections do not read as the same block
+         twice. Cards are the landing page's 01 — Challenges reveal cards. -->
+    <section class="wrap sec sec--pb" id="solutions">
+      <span class="eyebrow">02 — Solutions</span>
+      <hr class="rule">
+      <h2 class="h2 sec-head">Empowering organizations to drive their AI transformation.</h2>
+      <p class="lead sec-head__lead sec-head__lead--full">Teams can focus on strategy &amp; change management — we make sure the technology is not the bottleneck and doesn’t push timelines or budget.</p>
+
+      <div class="grid-4" style="margin-top:var(--space-12)">
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">01</span>
+          <h3 class="card-reveal__title">Ready to deploy</h3>
+          <p class="small card-reveal__body">We give you instantly what takes months of building — and even then is extremely difficult to deliver at highest security and functionality needs.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">02</span>
+          <h3 class="card-reveal__title">Participate in maintenance at scale</h3>
+          <p class="small card-reveal__body">We enable you to participate in maintenance at scale, in an AI ecosystem that is advancing at rapid speed &amp; complexity.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">03</span>
+          <h3 class="card-reveal__title">Data intelligence</h3>
+          <p class="small card-reveal__body">Our platform can give you the data and synthesized insights to find and design the use cases that will deliver real business impact.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">04</span>
+          <h3 class="card-reveal__title">Modular toolbox</h3>
+          <p class="small card-reveal__body">You get just what you need: Integrations. Ingestion as a service. A knowledge base with integrations and ingestion that integrates by MCP. Or a full product with UI and agents in Slack and MS Teams.</p>
+        </article>
+      </div>
+    </section>
+
   </main>
 
   <footer class="wrap site-footer">
@@ -134,6 +167,6 @@
 
 </div>
 
-<script src="assets/site.js?v=7" defer></script>
+<script src="assets/site.js?v=8" defer></script>
 </body>
 </html>

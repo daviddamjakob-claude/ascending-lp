@@ -862,6 +862,10 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    The top inset matches .split--pt so the rhythm down the page is unchanged. */
 .sec-head { padding-top: var(--space-12); max-width: 40ch; }
 .sec-head__lead { margin-top: var(--space-6); max-width: var(--measure-body); }
+/* Drops the body measure and runs to the container edge like the head above it.
+   At this length that is a single line, which reads as a second statement
+   rather than as a paragraph — the point being not to repeat the split. */
+.sec-head__lead--full { max-width: none; }
 
 .asset { display: grid; gap: var(--space-4); }
 .asset__head {
