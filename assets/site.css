@@ -268,10 +268,19 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  /* The first screen sits on the same faint grey the page uses for an element
-     under the pointer, so the fold reads as its own panel. It runs edge to edge
-     and starts under the bar, which stays white and passes over it. */
-  background: var(--chip);
+  /* An inset panel rather than a full-bleed band, following the reference: a
+     narrow margin all round so white shows at the edges and under the bar, a
+     large radius, and a soft gradient weighted to the upper right.
+
+     The margin costs no alignment here because the hero is centred — the panel
+     and the page share a centre line, so the type stays on it. A left-aligned
+     section could not take this inset without drifting off the columns. */
+  margin: var(--space-2);
+  border-radius: var(--radius-lg);
+  background-color: #faf7ff;
+  background-image:
+    radial-gradient(90% 120% at 95% 0%, rgba(139, 92, 246, 0.34), rgba(139, 92, 246, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(196, 181, 253, 0.28), rgba(196, 181, 253, 0) 60%);
 }
 .hero__inner {
   position: relative;
