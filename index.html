@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ascending AI — The toolbox to deploy enterprise AI</title>
-<meta name="description" content="We work with in-house development teams and integrators to deploy a robust, secure and sovereign AI setup in European companies.">
-<meta property="og:title" content="Ascending AI — The toolbox to deploy enterprise AI">
-<meta property="og:description" content="A robust, secure and sovereign AI setup for European companies. For AI transformations that actually work.">
+<title>graph0 — The toolbox to deploy enterprise AI</title>
+<meta name="description" content="Our managed infrastructure enables in-house teams and integrators to deploy AI that is really powerful while keeping company knowledge sovereign.">
+<meta property="og:title" content="graph0 — The toolbox to deploy enterprise AI">
+<meta property="og:description" content="Our managed infrastructure enables in-house teams and integrators to deploy AI that is really powerful while keeping company knowledge sovereign.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=19">
+<link rel="stylesheet" href="assets/site.css?v=20">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -25,6 +25,8 @@
 
 <div class="page">
 
+  <!-- The wordmark is the way back to the top of the site, which is why the nav
+       carries no entry for this page. -->
   <header class="site-header">
     <a class="brand" href="#platform" title="graph0">
       <img class="brand__mark" src="assets/graph0-mark.svg" alt="" width="64" height="64">
@@ -37,20 +39,27 @@
     </button>
 
     <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <a href="#platform">Platform</a>
-      <a href="platform-v2.html">Platform v2</a>
-
       <div class="nav-menu">
-        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">
-          Toolbox<span class="nav-menu__chev" aria-hidden="true"></span>
-        </button>
+        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">Toolbox</button>
         <div class="nav-menu__panel" id="nav-toolbox">
-          <a href="knowledge-base.html">Knowledge Base</a>
+          <a class="nav-entry" href="knowledge-base.html">
+            <span class="nav-entry__label">Knowledge Base</span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </a>
           <!-- No deep dive behind these yet, so they are text rather than links
                that would quietly go nowhere. -->
-          <span class="nav-soon">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
-          <span class="nav-soon">Integrations for your products &amp; agents <span class="nav-soon__tag">soon</span></span>
-          <span class="nav-soon">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Integrations for your products &amp; agents <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
         </div>
       </div>
 
@@ -70,136 +79,162 @@
     <!-- HERO -->
     <section class="hero hero--center" id="platform">
       <div class="wrap hero__inner">
-        <h1 class="display" style="max-width:18ch">The toolbox to deploy enterprise AI</h1>
-        <p class="lead">We work with in-house development teams and integrators to deploy a robust, secure and sovereign AI setup in European companies. For AI transformations that actually work.</p>
+        <!-- Two breaks, exactly one shown at a time: after "toolbox" on a
+             phone, after "to" where the line can carry more. Both are set here
+             rather than left to text-wrap:balance, which is not applied by
+             every browser. -->
+        <h1 class="display" style="max-width:18ch">The toolbox<br class="br-narrow"> to<br class="br-wide"> deploy enterprise AI</h1>
+        <!-- Wider than the system's 46ch lead measure, which breaks this copy
+             over four lines. Between 598px and 618px it sets in three with the
+             closing sentence alone on the last; 58.5ch is the middle of that
+             band, so a small metric change cannot tip it either way. -->
+        <p class="lead" style="max-width:58.5ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is <strong>really powerful while keeping company knowledge sovereign.</strong> European by design, for AI transformations that actually work.</p>
         <div class="hero__cta">
           <a class="btn" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
-          <a class="link-underline" href="#solutions">See the toolbox →</a>
+          <a class="link-underline" href="#solution">See the toolbox →</a>
         </div>
       </div>
     </section>
 
-    <!-- 01 — CHALLENGES -->
+    <!-- 01 — CHALLENGES: split heading, then the strip whose panels open on
+         hover and squeeze their neighbours. -->
     <section class="wrap sec" id="challenges">
       <span class="eyebrow">01 — Challenges</span>
       <hr class="rule">
-      <div class="split split--end split--pt">
-        <h2 class="h2">AI productivity platforms are not sufficient</h2>
-        <p class="lead">A setup on Claude, ChatGPT, Copilot or Langdock without a complementary knowledge base is not enough for companies where knowledge is proprietary and dynamic, and insights must be accurate and auditable. We hear the same stories over and over again.</p>
-      </div>
-
-      <div class="grid-4" style="margin-top:var(--space-12)">
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">01</span>
-          <h3 class="card-reveal__title">Core systems are not connected</h3>
-          <p class="small card-reveal__body">Copilot, Claude and ChatGPT reach Drive and SharePoint. They don’t reach AFAS, DATEV, or the vertical systems many European companies actually run on.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">02</span>
-          <h3 class="card-reveal__title">Knowledge decay is now exponential</h3>
-          <p class="small card-reveal__body">Documents multiply and versions diverge. What was previously a filing problem is now an input: agents draw conclusions, take actions and generate “new knowledge” from contradictory sources, then feed that output back in as a source of its own.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">03</span>
-          <h3 class="card-reveal__title">Insights are not reliable</h3>
-          <p class="small card-reveal__body">The system reasons over what it happened to retrieve — not an exhaustive scan, and not checked against what is outdated or contradicted elsewhere. It returns an answer and a few citations, never the full list of relevant source documents. The answer can sound complete, but rarely is.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">04</span>
-          <h3 class="card-reveal__title">Insufficient understanding</h3>
-          <p class="small card-reveal__body">The system matches words, not the relationships between them, so two connected facts remain two separate answers. When someone connects them anyway, that insight stays personal. Organisational knowledge does not accumulate.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">05</span>
-          <h3 class="card-reveal__title">Silent exposure of sensitive data</h3>
-          <p class="small card-reveal__body">Access control is enforced at the source system, and nowhere else. This exposes sensitive information the moment it is pulled into a summary, a prompt, or an agent’s memory — extracted, recombined, and no longer covered by its source permissions.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">06</span>
-          <h3 class="card-reveal__title">Admins cannot enforce governance</h3>
-          <p class="small card-reveal__body">Usage is not measured, model choice is not supervised, and quality is judged anecdotally. Spend is measured reactively or not at all and nobody can assess its actual impact.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">07</span>
-          <h3 class="card-reveal__title">Knowledge inside a black box</h3>
-          <p class="small card-reveal__body">Knowledge sits in the system as embeddings, legible to a machine but not to a person. Every question goes back through the black box. There is no way to verify a claim, review what is stored, or simply browse.</p>
-        </article>
-        <article class="card card--ring card--compact card--reveal" tabindex="0">
-          <span class="card-num">08</span>
-          <h3 class="card-reveal__title">Loss of control</h3>
-          <p class="small card-reveal__body">The knowledge that used to be a company’s hardest-to-copy advantage now accumulates inside a vendor’s model rather than inside the company. Companies risk losing their edge when the subscription ends.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 02 — SOLUTIONS -->
-    <section class="wrap sec" id="solutions">
-      <span class="eyebrow">02 — Solutions</span>
-      <hr class="rule">
-      <div class="split split--end split--pt">
-        <h2 class="h2">The development tools to deploy and maintain AI effectively</h2>
-        <p class="lead">Taking the AI Leap is a high stakes strategy and change management effort. We provide the required technology to build the robust &amp; sovereign AI infrastructure that actually reaps the benefits in production. Our solution portfolio is a modular toolkit and plugs into the demands of various development models:</p>
+      <div class="split split--start split--pt">
+        <h2 class="h2">Out-of-the-box AI is often insufficient.</h2>
+        <div class="lead-group">
+          <p class="lead">Claude, ChatGPT, Copilot or Langdock are quickly implemented and bring advanced agentic capabilities. The gap</p>
+          <p class="lead">to real impact is a focused strategy and organized change management. Together with a middle layer platform that makes outcomes robust and keeps knowledge secure and sovereign.</p>
+        </div>
       </div>
 
       <div class="strip" style="margin-top:var(--space-12)">
         <button class="strip__panel" type="button">
-          <span class="strip__num">01</span>
-          <span class="strip__title">Integrations for your products &amp; agents</span>
-          <span class="strip__body">Code-first integrations, with auth and agent access built in. Ready-to-use for AFAS, Exact, DATEV and many more European software suites. With rapidly expanding coverage as per your and your customers needs — every API &amp; use case is within reach.</span>
+          <span class="chip-row strip__tags">
+            <span class="chip-outline">Strategy &amp; Change Management</span>
+          </span>
+          <span class="strip__title">Self-usage without focus, little governance and unclear ROI</span>
+          <span class="strip__body">Lorem ipsum est.</span>
         </button>
         <button class="strip__panel" type="button">
-          <span class="strip__num">02</span>
-          <span class="strip__title">Ingestion as a service</span>
-          <span class="strip__body">Managed pipelines that keep the layer current, not a one-off load. Scheduled and incremental sync with change detection, deletion propagation and permission refresh, plus backfill and reprocessing when a schema or a source moves. Runs on our infrastructure by default, or in your own cloud where residency requires it.</span>
+          <span class="chip-row strip__tags">
+            <span class="chip-outline">Knowledge Base</span>
+          </span>
+          <span class="strip__title">Enterprise data in siloed systems</span>
+          <span class="strip__body">Lorem ipsum est.</span>
         </button>
         <button class="strip__panel" type="button">
-          <span class="strip__num">03</span>
-          <span class="strip__title">Knowledge Base (Context Layer)</span>
-          <span class="strip__body">Graph RAG with a permission-aware API, built to be the one source of truth for every AI application. Aggregates your source systems into a company brain that learns with usage and stays under your control. Plugs into Claude, ChatGPT, Copilot, Langdock and any MCP client — every call carries a principal, enforced inside the query before ranking, so your agents consume the layer without a second permission system to maintain.</span>
+          <span class="chip-row strip__tags">
+            <span class="chip-outline">Knowledge Base</span>
+          </span>
+          <span class="strip__title">Inaccurate and unreliable results</span>
+          <span class="strip__body">Lorem ipsum est.</span>
         </button>
         <button class="strip__panel" type="button">
-          <span class="strip__num">04</span>
-          <span class="strip__title">Agents in Slack / MS Teams / White Label UI</span>
-          <span class="strip__body">The knowledge base with ready-made interfaces, white-label throughout. Web UI as well as Slack and MS Teams agents, both for personal or group conversations, where the audience is the principal and permissions hold for every participant. Full chat plus document and artefact creation in Markdown, Word, PDF and HTML, with automations for custom workflows.</span>
+          <span class="chip-row strip__tags">
+            <span class="chip-outline">Knowledge Base</span>
+            <span class="chip-outline">LLM</span>
+          </span>
+          <span class="strip__title">Loss of control and exposure of sensitive data</span>
+          <span class="strip__body">Lorem ipsum est.</span>
         </button>
       </div>
     </section>
 
-    <!-- 03 — KNOWLEDGE BASE -->
-    <section class="wrap sec" id="knowledge-base">
-      <span class="eyebrow">03 — Knowledge Base</span>
+    <!-- 02 — SOLUTION. Head and claim run the full measure rather than the
+         split used above, so the two sections do not read as the same block
+         twice. Cards reveal their copy on hover at a fixed height. -->
+    <section class="wrap sec" id="solution">
+      <span class="eyebrow">02 — Solution</span>
+      <hr class="rule">
+      <h2 class="h2 sec-head">Empowering organizations to drive their AI transformation.</h2>
+      <p class="lead sec-head__lead sec-head__lead--full">Teams can focus on strategy &amp; change management — we make sure the technology is not the bottleneck and doesn’t push timelines or budget.</p>
+
+      <div class="grid-4" style="margin-top:var(--space-12)">
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">01</span>
+          <h3 class="card-reveal__title">Ready to deploy</h3>
+          <p class="small card-reveal__body">We give you instantly what takes months of building — and even then is extremely difficult to deliver at highest security and functionality needs.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">02</span>
+          <h3 class="card-reveal__title">Maintenance at scale</h3>
+          <p class="small card-reveal__body">We enable you to participate in maintenance at scale, in an AI ecosystem that is advancing at rapid speed &amp; complexity.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">03</span>
+          <h3 class="card-reveal__title">Data intelligence</h3>
+          <p class="small card-reveal__body">Our platform can give you the data and synthesized insights to find and design the use cases that will deliver real business impact.</p>
+        </article>
+        <article class="card card--ring card--compact card--reveal" tabindex="0">
+          <span class="card-num">04</span>
+          <h3 class="card-reveal__title">Modular toolbox</h3>
+          <p class="small card-reveal__body">You get just what you need: A knowledge base with integrations and ingestion that integrates by MCP. The full platform with UI and agents in Slack and MS Teams. Or just integrations / ingestion to build the remaining infrastructure yourself.</p>
+        </article>
+      </div>
+
+      <div class="placeholder" style="margin-top:var(--space-12)">Toolbox section</div>
+    </section>
+
+    <!-- 03 — TEAM & ECOSYSTEM. -->
+    <section class="wrap sec" id="team">
+      <span class="eyebrow">03 — Team &amp; Ecosystem</span>
       <hr class="rule">
       <div class="split split--start split--pt">
-        <div class="stack-24">
-          <h2 class="h2">One powerful system that finds what your agents (should) search</h2>
-          <p class="lead">Knowledge is the multiplier when it can be found. Our Graph RAG accumulates it from scattered data, secures it, maintains &amp; improves it, and makes it accessible for AI Agents to deliver reliable outcomes.</p>
-          <div class="kb-list" role="tablist" aria-label="Knowledge base capabilities" id="kb-list"></div>
+        <h2 class="h2">Made in Europe, for Europe.</h2>
+        <div class="lead-group">
+          <p class="lead">We are a pan-European team of AI Engineers based in Amsterdam and Berlin. <span class="pop"><button class="pop__trigger" type="button" aria-expanded="false" aria-controls="pop-recruiting">Reach out to us</button><span class="pop__panel" id="pop-recruiting"><span class="pop__value">recruiting@ascending.ai</span><button class="btn pop__copy" type="button" data-copy="recruiting@ascending.ai">Copy email address</button></span></span> if you want to get in contact and discuss current job openings.</p>
+          <p class="lead">We made it our mission to get European companies to maintain and even strengthen their competitive position in a new environment. While pioneering technology of the next AI era that gets humans and agents to work hand in hand, with the human in full control.</p>
         </div>
-        <aside class="kb-detail" id="kb-detail">
-          <div class="kb-detail__media" aria-hidden="true"></div>
-          <div class="kb-detail__text" id="kb-text" aria-live="polite"></div>
-        </aside>
       </div>
 
-      <div class="kb-close dark">
-        <p class="kb-close__statement">Your knowledge base. That makes AI applications really powerful and keeps them sovereign.</p>
-        <p class="kb-close__with">
-          <!-- The cycling word is read once, in full, rather than announced on
-               every swap; the animated copy is hidden from assistive tech. -->
-          <span class="vh">Compatible with Claude, Copilot, ChatGPT, Langdock, or a white-label UI by Ascending.</span>
-          <span aria-hidden="true">Compatible with <span class="rot" id="kb-rot"><span class="rot__word">Claude.</span></span></span>
-        </p>
+      <!-- Images are hotlinked from each publisher rather than copied into this
+           repo, so nothing here republishes someone else's photography. -->
+      <div class="grid-3" style="margin-top:var(--space-12)">
+        <a class="link-card" href="https://fd.nl/tech-en-innovatie/1598537/als-onze-kinderen-opgroeien-met-kunstmatige-intelligentie-wil-je-meer-controle-over-de-modellen" target="_blank" rel="noopener">
+          <span class="link-card__body">
+            <h3 class="h4-card">Founder Story</h3>
+            <p class="small">Portrait of graph0 Founder &amp; CEO Lennard Zwart and his ambitions with graph0 (formerly Ascending AI) in Het Financieele Dagblad.</p>
+            <span class="vh">Opens fd.nl in a new tab</span>
+          </span>
+          <span class="link-card__media">
+            <img src="https://images.fd.nl/818748-825923.jpeg?auto=format&amp;w=1280&amp;q=45" alt="" loading="lazy">
+          </span>
+        </a>
+        <a class="link-card" href="https://aithos.org/" target="_blank" rel="noopener">
+          <span class="link-card__body">
+            <h3 class="h4-card">Aithos Research Foundation</h3>
+            <p class="small">As part of the Ascending AI ecosystem we directly benefit from Aithos research on autonomy and pluralism in an age of increasingly powerful AI systems.</p>
+            <span class="vh">Opens aithos.org in a new tab</span>
+          </span>
+          <span class="link-card__media link-card__media--contain">
+            <img src="https://aithos.org/logos/aithos-foundation-black-cropped.svg" alt="" loading="lazy">
+          </span>
+        </a>
+        <a class="link-card" href="https://thestack.ai/" target="_blank" rel="noopener">
+          <span class="link-card__body">
+            <h3 class="h4-card">The Stack AI Hub</h3>
+            <p class="small">Also as part of the Ascending AI ecosystem we benefit from the network and ecosystem around Amsterdam’s new AI Hub “The Stack”.</p>
+            <span class="vh">Opens thestack.ai in a new tab</span>
+          </span>
+          <span class="link-card__media">
+            <img src="https://thestack.ai/assets/og/the-stack-exterior.jpg" alt="" loading="lazy">
+          </span>
+        </a>
       </div>
     </section>
 
-    <!-- 04 — SECURITY -->
-    <section class="wrap sec" id="security">
+    <!-- 04 — SECURITY. The page's one dark block, and the only full-bleed band
+         on it: the ground changes edge to edge while the content stays on the
+         page's own columns. Cards pick up the on-dark fill and hairline from
+         the .dark context rather than being restyled here. -->
+    <section class="sec-dark dark" id="security">
+      <div class="wrap">
       <span class="eyebrow">04 — Security</span>
       <hr class="rule">
-      <div class="split split--end split--pt">
-        <h2 class="h2">Non-negotiable in every piece of our software</h2>
-        <p class="lead">Ascending had been founded on the conviction that European companies and governments are becoming dependent on US AI infrastructure at exactly the moment AI becomes the core of how organisations work. Hence security and compliance to the highest European standards is non-negotiable in every piece of our technology.</p>
-      </div>
+      <h2 class="h2 sec-head">Security and Compliance, built in.</h2>
+      <p class="lead sec-head__lead sec-head__lead--full">Ascending had been founded on the conviction that European companies and governments are becoming dependent on US AI infrastructure at exactly the moment AI becomes the core of how organisations work. Hence security and compliance to the highest European standards is non-negotiable in every piece of our technology.</p>
 
       <!-- Compliance -->
       <div class="stack-16" style="padding-top:var(--space-12)">
@@ -239,64 +274,25 @@
           </article>
         </div>
       </div>
-
-      <!-- Models and permissions -->
-      <div class="grid-2" style="padding-top:var(--section-md)">
-        <div class="stack-16">
-          <span class="eyebrow eyebrow--accent">Models</span>
-          <ul class="checklist">
-            <li><span class="check" aria-hidden="true">✓</span><span>EU-hosted models for processing your content, or self-hosted open-weight models in your environment.</span></li>
-            <li><span class="check" aria-hidden="true">✓</span><span>Your data is never used to train models. Guaranteed in writing in every contract.</span></li>
-          </ul>
-        </div>
-        <div class="stack-16">
-          <span class="eyebrow eyebrow--accent">Permissions</span>
-          <ul class="checklist">
-            <li><span class="check" aria-hidden="true">✓</span><span>We respect the permissions of your systems of record. Access rights from SharePoint, Drive, and your other sources carry into Ascending: every user only ever sees what they are already allowed to see.</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 — TEAM & ECOSYSTEM -->
-    <section class="wrap sec sec--pb" id="team">
-      <span class="eyebrow">05 — Team &amp; Ecosystem</span>
-      <hr class="rule">
-      <div class="split split--end split--pt">
-        <h2 class="h2">Made in Europe, for Europe.</h2>
-        <p class="lead">We are a pan-European team of AI Engineers based in the two beautiful capitals of the Netherlands and Germany: Amsterdam and Berlin. We made it our mission to get European companies to maintain and even strengthen their competitive position in a new environment. While pioneering technology of the next AI era that gets humans and agents to work hand in hand, with the human in full control.</p>
-      </div>
-
-      <!-- Marked "tbd" in the brief. The system's rule is that unwritten content
-           stays visible rather than being filled in or quietly dropped. -->
-      <div class="grid-3" style="margin-top:var(--space-12)">
-        <article class="card card--ring card--muted" style="gap:var(--space-3)">
-          <span class="eyebrow">tbd</span>
-          <p class="small">Photos of the team.</p>
-        </article>
-        <article class="card card--ring card--muted" style="gap:var(--space-3)">
-          <span class="eyebrow">tbd</span>
-          <p class="small">Part of a grander European AI ecosystem (Aithos Research Foundation, The Stack).</p>
-        </article>
-        <article class="card card--ring card--muted" style="gap:var(--space-3)">
-          <span class="eyebrow">tbd</span>
-          <p class="small">Articles, e.g. Lennard’s personal story; The Stack; anything on Aithos?</p>
-        </article>
       </div>
     </section>
 
   </main>
 
-  <footer class="wrap site-footer">
-    <span>© 2026 Ascending AI B.V. · Amsterdam, NL</span>
-    <div class="chip-row">
-      <span class="chip-outline">GDPR</span>
-      <span class="chip-outline">EU AI Act</span>
+  <!-- The dark band runs on through the outro, so the page ends on black
+       rather than dropping back to white for the last few lines. -->
+  <footer class="footer-band dark">
+    <div class="wrap site-footer">
+      <span>© 2026 Ascending AI B.V. · Amsterdam, NL</span>
+      <div class="chip-row">
+        <span class="chip-outline">GDPR</span>
+        <span class="chip-outline">EU AI Act</span>
+      </div>
     </div>
   </footer>
 
 </div>
 
-<script src="assets/site.js?v=19" defer></script>
+<script src="assets/site.js?v=20" defer></script>
 </body>
 </html>

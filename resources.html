@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=19">
+<link rel="stylesheet" href="assets/site.css?v=20">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -25,8 +25,8 @@
 
 <div class="page">
 
-  <!-- Same header as the landing page. The in-page links point back at
-       index.html, since there are no sections to jump to on this one. -->
+  <!-- The wordmark is the way back to the top of the site, which is why the nav
+       carries no entry for this page. -->
   <header class="site-header">
     <a class="brand" href="index.html" title="graph0">
       <img class="brand__mark" src="assets/graph0-mark.svg" alt="" width="64" height="64">
@@ -39,20 +39,27 @@
     </button>
 
     <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <a href="index.html#platform">Platform</a>
-      <a href="platform-v2.html">Platform v2</a>
-
       <div class="nav-menu">
-        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">
-          Toolbox<span class="nav-menu__chev" aria-hidden="true"></span>
-        </button>
+        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">Toolbox</button>
         <div class="nav-menu__panel" id="nav-toolbox">
-          <a href="knowledge-base.html">Knowledge Base</a>
+          <a class="nav-entry" href="knowledge-base.html">
+            <span class="nav-entry__label">Knowledge Base</span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </a>
           <!-- No deep dive behind these yet, so they are text rather than links
                that would quietly go nowhere. -->
-          <span class="nav-soon">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
-          <span class="nav-soon">Integrations for your products &amp; agents <span class="nav-soon__tag">soon</span></span>
-          <span class="nav-soon">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Integrations for your products &amp; agents <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
+          <span class="nav-entry nav-entry--soon">
+            <span class="nav-entry__label">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__sub">lorem ipsum est</span>
+          </span>
         </div>
       </div>
 
@@ -261,6 +268,6 @@
 
 </div>
 
-<script src="assets/site.js?v=19" defer></script>
+<script src="assets/site.js?v=20" defer></script>
 </body>
 </html>

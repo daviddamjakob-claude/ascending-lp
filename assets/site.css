@@ -172,15 +172,8 @@ html { scroll-behavior: smooth; }
 .site-nav a[aria-current],
 .nav-menu[data-current="true"] > .nav-menu__trigger { font-weight: var(--weight-heading); color: var(--ink); }
 
-/* Solutions dropdown. Depth is the ring, as everywhere else on the page. */
+/* Toolbox dropdown. Depth is the ring, as everywhere else on the page. */
 .nav-menu { position: relative; }
-.nav-menu__chev {
-  width: 0.4rem; height: 0.4rem;
-  border-right: 1px solid currentColor; border-bottom: 1px solid currentColor;
-  transform: translateY(-0.12em) rotate(45deg);
-  transition: transform var(--dur-fast) var(--ease);
-}
-.nav-menu[data-open="true"] .nav-menu__chev { transform: translateY(0.1em) rotate(-135deg); }
 .nav-menu__panel {
   position: absolute;
   top: calc(100% + var(--space-4)); left: calc(var(--space-6) * -1);
@@ -201,12 +194,17 @@ html { scroll-behavior: smooth; }
 /* Menu entries with nothing behind them yet. Text, not links — there is no page
    to navigate to, so they are neither clickable nor focusable rather than links
    that quietly do nothing. Muted so the one live entry reads as the live one. */
-.nav-soon {
+.nav-entry { display: block; }
+.nav-entry__label {
   display: inline-flex; align-items: baseline; gap: var(--space-2);
   font-size: var(--fs-small);
+  white-space: nowrap;
+}
+/* Only the phone menu has room for a line under each entry. */
+.nav-entry__sub { display: none; }
+.nav-entry--soon {
   color: var(--ink-muted);
   cursor: default;
-  white-space: nowrap;
 }
 /* The system's own chip, at the scale a menu row can carry. It reads as a
    status rather than more label, which a muted word beside the name did not —
@@ -1069,38 +1067,81 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
 }
 .cta-row { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
 
-/* Below this the three nav items plus the language set stop fitting beside the
-   wordmark, so the nav drops into a panel under the header and Solutions
-   un-nests into a plain indented group rather than a floating menu. */
+/* Below this the nav stops fitting beside the wordmark and becomes a full
+   screen menu: the panel covers everything under the header, entries run at
+   heading scale as rows with an arrow at their right edge, and each one in the
+   Toolbox group carries a line of grey under it. */
 @media (max-width: 900px) {
   .nav-toggle { display: block; order: 3; margin-left: 0; }
   .lang { order: 2; margin-left: auto; }
+  /* No rule under the bar — with the menu open the bar and the sheet are one
+     surface, and with it closed the page below supplies its own separation. */
+  .site-header { border-bottom: 0; }
+
   .site-nav {
     display: none;
-    position: absolute; top: 100%; left: 0; right: 0;
-    flex-direction: column; align-items: flex-start;
-    gap: var(--space-6);
+    /* Fixed, not absolute: the sheet is the screen, and it scrolls on its own
+       rather than moving with the page behind it. Below the header so the
+       close button stays reachable. */
+    position: fixed;
+    inset: 72px 0 0 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    flex-direction: column; align-items: stretch;
+    gap: 0;
     margin: 0;
-    padding: var(--space-6) max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-8);
+    padding: 0 max(var(--gutter), calc((100% - var(--container)) / 2)) var(--space-12);
     background: var(--page);
-    border-bottom: 1px solid var(--hairline);
   }
   .site-header[data-nav-open="true"] .site-nav { display: flex; }
-  .site-nav a, .nav-menu__trigger, .nav-soon { font-size: var(--fs-lead); }
-  /* At lead size these entries are far too wide for a phone to hold on one
-     line, and the panel is in the flow here rather than floating. */
-  .nav-menu__panel a, .nav-soon { white-space: normal; }
+
+  /* Every top-level entry is a row: label left, arrow right, hairline under. */
+  .site-nav > a,
+  .nav-menu__trigger {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+    padding-block: var(--space-6);
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+    letter-spacing: var(--tracking-h3);
+    color: var(--heading);
+    border-bottom: 1px solid var(--hairline);
+    white-space: normal;
+    text-align: left;
+  }
+  .site-nav > a::after,
+  .nav-menu__trigger::after {
+    content: "→";
+    flex: none;
+    color: var(--meta);
+    transition: transform var(--dur-fast) var(--ease);
+  }
+  .nav-menu[data-open="true"] > .nav-menu__trigger::after { transform: rotate(90deg); }
+  .nav-menu { width: 100%; }
+
+  /* The submenu opens in place, indented, with no plate of its own. */
   .nav-menu__panel {
     display: none;
     position: static;
     min-width: 0;
-    padding: var(--space-3) 0 0 var(--space-4);
+    gap: var(--space-6);
+    padding: var(--space-6) 0;
     border-radius: 0;
     background: none;
     box-shadow: none;
     opacity: 1; visibility: visible; transform: none;
+    border-bottom: 1px solid var(--hairline);
   }
   .nav-menu[data-open="true"] .nav-menu__panel { display: grid; }
+
+  .nav-entry__label { font-size: var(--fs-lead); white-space: normal; }
+  .nav-entry__sub {
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--fs-small);
+    color: var(--meta);
+  }
 }
 
 /* A headline break that differs by width. Exactly one of the pair is ever
