@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=11">
+<link rel="stylesheet" href="assets/site.css?v=12">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -139,7 +139,7 @@
     <!-- 02 — SOLUTIONS. Head and claim run the full measure rather than the
          split used above, so the two sections do not read as the same block
          twice. Cards are the landing page's 01 — Challenges reveal cards. -->
-    <section class="wrap sec sec--pb" id="solution">
+    <section class="wrap sec" id="solution">
       <span class="eyebrow">02 — Solution</span>
       <hr class="rule">
       <h2 class="h2 sec-head">Empowering organizations to drive their AI transformation.</h2>
@@ -167,6 +167,83 @@
           <p class="small card-reveal__body">You get just what you need: A knowledge base with integrations and ingestion that integrates by MCP. The full platform with UI and agents in Slack and MS Teams. Or just integrations / ingestion to build the remaining infrastructure yourself.</p>
         </article>
       </div>
+
+      <div class="placeholder" style="margin-top:var(--space-12)">Toolbox section</div>
+    </section>
+
+    <!-- 03 — SECURITY, from the landing page. Head and claim run the full
+         measure here rather than the split they use there. -->
+    <section class="wrap sec" id="security">
+      <span class="eyebrow">03 — Security</span>
+      <hr class="rule">
+      <h2 class="h2 sec-head">Non-negotiable in every piece of our software</h2>
+      <p class="lead sec-head__lead sec-head__lead--full">Ascending had been founded on the conviction that European companies and governments are becoming dependent on US AI infrastructure at exactly the moment AI becomes the core of how organisations work. Hence security and compliance to the highest European standards is non-negotiable in every piece of our technology.</p>
+
+      <!-- Compliance -->
+      <div class="stack-16" style="padding-top:var(--space-12)">
+        <span class="eyebrow eyebrow--accent">Compliance</span>
+        <div class="grid-3">
+          <article class="card card--ring" style="gap:var(--space-3)">
+            <h3 class="h4-card">GDPR compliant</h3>
+            <p class="small">Customer data is processed in the EU and handled in line with GDPR.</p>
+          </article>
+          <article class="card card--ring" style="gap:var(--space-3)">
+            <h3 class="h4-card">EU AI Act-ready</h3>
+            <p class="small">Transparent AI interaction. No emotion recognition, no ranking of people, no individual-level analytics.</p>
+          </article>
+          <article class="card card--ring" style="gap:var(--space-3)">
+            <h3 class="h4-card">ISO 27001 <span class="note-line">(in progress)</span></h3>
+            <p class="small">Certification underway; our security management system follows the standard today.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Deployment -->
+      <div class="stack-16" style="padding-top:var(--section-md)">
+        <span class="eyebrow eyebrow--accent">Deployment</span>
+        <div class="grid-3">
+          <article class="card card--ring" style="gap:var(--space-3)">
+            <h3 class="h4-card">Dedicated single-tenant cloud</h3>
+            <p class="small">Your own isolated environment on EU infrastructure.</p>
+          </article>
+          <article class="card card--ring" style="gap:var(--space-3)">
+            <h3 class="h4-card">Bring your own cloud</h3>
+            <p class="small">Runs in your cloud account, in your region, under your controls.</p>
+          </article>
+          <article class="card card--ring card--muted" style="gap:var(--space-3)">
+            <span class="eyebrow">Undecided</span>
+            <h3 class="h4-card">On-premise</h3>
+            <p class="small">On request — the brief marks this third card as conditional.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 — TEAM & ECOSYSTEM, from the landing page, keeping its split head. -->
+    <section class="wrap sec sec--pb" id="team">
+      <span class="eyebrow">04 — Team &amp; Ecosystem</span>
+      <hr class="rule">
+      <div class="split split--end split--pt">
+        <h2 class="h2">Made in Europe, for Europe.</h2>
+        <p class="lead">We are a pan-European team of AI Engineers based in Amsterdam and Berlin. We made it our mission to get European companies to maintain and even strengthen their competitive position in a new environment. While pioneering technology of the next AI era that gets humans and agents to work hand in hand, with the human in full control.</p>
+      </div>
+
+      <!-- Marked "tbd" in the brief. The system's rule is that unwritten content
+           stays visible rather than being filled in or quietly dropped. -->
+      <div class="grid-3" style="margin-top:var(--space-12)">
+        <article class="card card--ring card--muted" style="gap:var(--space-3)">
+          <span class="eyebrow">tbd</span>
+          <p class="small">Photos of the team.</p>
+        </article>
+        <article class="card card--ring card--muted" style="gap:var(--space-3)">
+          <span class="eyebrow">tbd</span>
+          <p class="small">Part of a grander European AI ecosystem (Aithos Research Foundation, The Stack).</p>
+        </article>
+        <article class="card card--ring card--muted" style="gap:var(--space-3)">
+          <span class="eyebrow">tbd</span>
+          <p class="small">Articles, e.g. Lennard’s personal story; The Stack; anything on Aithos?</p>
+        </article>
+      </div>
     </section>
 
   </main>
@@ -181,6 +258,6 @@
 
 </div>
 
-<script src="assets/site.js?v=11" defer></script>
+<script src="assets/site.js?v=12" defer></script>
 </body>
 </html>

@@ -904,6 +904,21 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
    rather than as a paragraph — the point being not to repeat the split. */
 .sec-head__lead--full { max-width: none; }
 
+/* Space held for something not built yet. Same flat grey the knowledge-base
+   panel uses for its media slot, labelled so it reads as reserved rather than
+   as a component that failed to load. */
+.placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 18rem;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: #ececec;
+  color: var(--ink-muted);
+  font-size: var(--fs-small);
+  text-align: center;
+}
+
 .asset { display: grid; gap: var(--space-4); }
 .asset__head {
   display: flex; align-items: baseline; justify-content: space-between;
