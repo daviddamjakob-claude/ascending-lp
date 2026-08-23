@@ -186,6 +186,23 @@ html { scroll-behavior: smooth; }
 }
 .nav-menu[data-open="true"] .nav-menu__panel { opacity: 1; visibility: visible; transform: none; }
 
+/* Menu entries with nothing behind them yet. Text, not links — there is no page
+   to navigate to, so they are neither clickable nor focusable rather than links
+   that quietly do nothing. Muted so the one live entry reads as the live one. */
+.nav-soon {
+  display: inline-flex; align-items: baseline; gap: 0.45rem;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  opacity: 0.55;
+  cursor: default;
+  white-space: nowrap;
+}
+.nav-soon__tag {
+  font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
 /* Language. Three codes, so the whole set is shown rather than hidden behind a
    menu — cheaper to read and one click to switch. */
 .lang { display: flex; align-items: center; gap: var(--space-1); flex: none; }
@@ -879,7 +896,10 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
     border-bottom: 1px solid var(--hairline);
   }
   .site-header[data-nav-open="true"] .site-nav { display: flex; }
-  .site-nav a, .nav-menu__trigger { font-size: var(--fs-lead); }
+  .site-nav a, .nav-menu__trigger, .nav-soon { font-size: var(--fs-lead); }
+  /* At lead size these entries are far too wide for a phone to hold on one
+     line, and the panel is in the flow here rather than floating. */
+  .nav-menu__panel a, .nav-soon { white-space: normal; }
   .nav-menu__panel {
     display: none;
     position: static;

@@ -16,7 +16,7 @@
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -44,8 +44,12 @@
           Solutions<span class="nav-menu__chev" aria-hidden="true"></span>
         </button>
         <div class="nav-menu__panel" id="nav-solutions">
-          <a href="#solutions">All Solutions</a>
-          <a href="#knowledge-base">Knowledge Base</a>
+          <a href="knowledge-base.html">Knowledge Base</a>
+          <!-- No deep dive behind these yet, so they are text rather than links
+               that would quietly go nowhere. -->
+          <span class="nav-soon">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
+          <span class="nav-soon">Integrations for your products &amp; agents <span class="nav-soon__tag">soon</span></span>
+          <span class="nav-soon">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
         </div>
       </div>
 
@@ -292,6 +296,6 @@
 
 </div>
 
-<script src="assets/site.js?v=4" defer></script>
+<script src="assets/site.js?v=5" defer></script>
 </body>
 </html>
