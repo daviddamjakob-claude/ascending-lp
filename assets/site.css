@@ -1057,10 +1057,28 @@ section[id] { scroll-margin-top: calc(72px + var(--space-8)); }
   .nav-menu[data-open="true"] .nav-menu__panel { display: grid; }
 }
 
+/* A headline break that differs by width. Exactly one of the pair is ever
+   displayed, so the wrap is set rather than left to the browser either way. */
+.br-wide { display: none; }
+.br-narrow { display: inline; }
+@media (min-width: 761px) {
+  .br-wide { display: inline; }
+  .br-narrow { display: none; }
+}
+
 @media (max-width: 760px) {
   /* Padding is inherited from the base rule rather than tightened to 1.25rem,
      which sat inside the content gutter and pulled the header out of line. */
   .site-header { gap: var(--space-4); }
+
+  /* The hero is the whole screen on a phone, where the shared display clamp
+     bottoms out at 3rem — smaller than the width can carry. */
+  .hero .display { font-size: clamp(3.25rem, 15vw, 4.5rem); }
+  .hero__inner { gap: var(--space-12); }
+  /* Stacked: side by side, the second action ends up on its own line anyway,
+     but hanging off the button's edge rather than under it. */
+  .hero__cta { flex-direction: column; }
+  .hero--center .hero__cta { align-items: center; }
   .header-cta { display: none; }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
