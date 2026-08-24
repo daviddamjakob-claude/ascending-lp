@@ -1530,6 +1530,98 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 
 /* --------------------------------------------------------------------------
+   Knowledge Base page — a split fold and the two-layer grid under it.
+   -------------------------------------------------------------------------- */
+
+/* The landing hero stacks one column and ranges left. This one is a pair: the
+   claim on the left, the drawing on the right, both centred against each other
+   so the title sits opposite the middle of the diagram rather than its top. */
+.hero--split .hero__inner--split {
+  /* Weighted to the drawing, not evenly. The title is capped at 18ch and needs
+     no more than it gets; the diagram is 1100 units wide and every pixel it is
+     given comes straight off the size of its labels. */
+  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+  gap: var(--space-12);
+  align-items: center;
+  justify-items: stretch;
+}
+/* Well back from the landing page's 84px: this title carries nine words in a
+   column a little under half the page, where the display size would set it in
+   six lines. */
+.hero--split .hero__title {
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  max-width: 18ch;
+}
+.hero__figure {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+.hero__figure svg { display: block; width: 100%; height: auto; }
+
+/* Two layers, side by side, because the section's whole point is that they are
+   two. Same material as everything else that holds content: white, a hairline
+   ring, no shadow. */
+.layer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-12);
+}
+.layer-card {
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+.layer-card .rule { margin-block: var(--space-4) 0; }
+.layer-card__role {
+  margin: var(--space-4) 0 var(--space-6);
+  font-size: var(--fs-lead);
+  color: var(--heading);
+}
+.layer-list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+/* Padding out and margin back in, the same trick the diagram's bullets use, so
+   a row has something to highlight without moving from where it sat. */
+.layer-list li {
+  margin-inline: calc(var(--space-3) * -1);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--body);
+  transition: background-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.layer-list li:hover,
+.layer-list li:focus-within {
+  background-color: var(--fill);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+@media (max-width: 900px) {
+  .hero--split .hero__inner--split { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .hero--split .hero__title { max-width: none; }
+  .layer-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .hero__figure { padding: var(--space-4); }
+  .layer-card { padding: var(--space-6); }
+
+  /* Same problem the diagram at the foot of the page has, same answer, same
+     number: its smallest label is 11.5 units, so 860px is what puts it back at
+     9px on screen. Scaled to fit a phone it renders at 3.3. */
+  .hero__figure {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .hero__figure > svg { min-width: 860px; }
+}
+
+/* --------------------------------------------------------------------------
    Embedded diagram — the stack comparison on the Knowledge Base page.
 
    The graphic arrives self-contained and is left untouched; this is the one
