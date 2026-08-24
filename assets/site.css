@@ -1292,9 +1292,14 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
     min-width: 0;
     /* 20px between entries, 10 above the group and 20 below — tight to the row
        that opened it, looser to the one after, so the group reads as belonging
-       to Toolbox rather than floating between it and Security. */
+       to Toolbox rather than floating between it and Security.
+
+       No inline padding, and none on the entries below either: the group is a
+       flat list on the sheet's own left edge, not a nested one. Both are stated
+       rather than left to the base rules, which do indent the desktop panel. */
     gap: 20px;
     padding: 10px 0 20px;
+    justify-items: stretch;
     border-radius: 0;
     background: none;
     box-shadow: none;
@@ -1318,7 +1323,12 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 
   /* The base link rule lays every link out as an inline-flex row, which put the
      sub-line beside its label rather than under it. */
-  .site-nav .nav-entry { display: block; }
+  .site-nav .nav-entry {
+    display: block;
+    margin-inline: 0;
+    padding-inline: 0;
+    text-indent: 0;
+  }
   /* Their two presets, verbatim. The label is set solid — 16px on 16px leading —
      and the line under it 16px on 24px, four pixels below. Same size for both:
      the sub-line is separated by weight and colour, not by being smaller, which
@@ -1349,15 +1359,18 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   .nav-entry__sub {
     display: block;
     margin-top: 4px;
-    font-size: 16px;
-    line-height: 24px;
+    /* A step down from the reference's own 16/24, which set this line at the
+       same size as the label above it and left the two too close in weight to
+       read as different levels. 14 on 20 keeps the entry compact. */
+    font-size: 14px;
+    line-height: 20px;
     letter-spacing: -0.02em;
     font-weight: 300;
-    /* #717680, off their own ramp. I had read this as roughly #ababab from the
-       screenshot and pulled back from it over contrast; the real value is a
-       step darker and clears AA on white at 4.6:1, so there was nothing to
-       trade off. */
-    color: var(--ref-muted);
+    /* Between the reference's #717680 and the #a4a7ae above it on its ramp.
+       #a4a7ae itself is 2.4:1 on white; this holds 3.2:1, which is still under
+       AA for text this size — worth knowing once this line carries real copy
+       rather than placeholder. */
+    color: #8b9099;
   }
 }
 
