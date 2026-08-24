@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=73">
+<link rel="stylesheet" href="assets/site.css?v=74">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -49,7 +49,7 @@
           <!-- No deep dive behind these yet, so they are text rather than links
                that would quietly go nowhere. -->
           <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Platform &amp; Agents <span class="nav-soon__tag">soon</span></span>
+            <span class="nav-entry__label">Search &amp; Agents <span class="nav-soon__tag">soon</span></span>
             <span class="nav-entry__sub">lorem ipsum est</span>
           </span>
           <span class="nav-entry nav-entry--soon">
@@ -107,7 +107,7 @@
            sizes="100vw" width="2400" height="1018" loading="lazy" decoding="async">
       <div class="wrap hero__inner hero__inner--split">
         <div class="hero__copy">
-          <h1 class="display hero__title">Context that makes enterprise AI powerful and resilient</h1>
+          <h1 class="display hero__title">Context that makes enterprise AI powerful and sovereign</h1>
           <!-- The fold used to be a title alone, which left it lighter than the
                section heading underneath it. The sub-title gives the claim a
                second beat and hands the reader down into the page. -->
@@ -261,7 +261,7 @@
           <p class="layer-card__role">What people use.</p>
           <ul class="layer-list">
           <li><strong>Natural-language interface.</strong> Makes the knowledge base accessible through simple conversation — no query language required.</li>
-          <li><strong>Advanced agentic capabilities.</strong> Acts on the knowledge base — executing tasks and workflows, not just answering questions.</li>
+          <li><strong>Advanced agentic capabilities.</strong> Executes tasks and workflows across the knowledge base — agents propose, people approve.</li>
           <li><strong>Web access for external information.</strong> Reaches beyond company knowledge for public or external context — no need to switch tools to search elsewhere.</li>
           <li><strong>Persistent context and memory.</strong> Carries context forward across a conversation and related chats within a project, so answers stay coherent without repeating yourself.</li>
           <li><strong>Meets you where you work.</strong> Available through the web, Slack, and Microsoft Teams — no context-switching to a separate tool.</li>
@@ -275,6 +275,7 @@
           <ul class="layer-list">
           <li><strong>Universal integration.</strong> Connects to every system that holds company knowledge — including tools like AFAS and DATEV that have no off-the-shelf MCP.</li>
           <li><strong>Full control, current and compounding.</strong> You own everything — the knowledge you start with, and everything the AI compounds on top of it — never the vendor.</li>
+          <li><strong>EU data residency.</strong> Stays in Europe, on European-owned infrastructure — no US-owned dependency anywhere in the chain.</li>
           <li><strong>Fact-level permissions.</strong> Governs access down to the individual fact, so the AI assistant can act freely without ever exposing what a user shouldn’t see.</li>
           <li><strong>Sensitive-data masking.</strong> Blocks sensitive information such as IBANs from ever reaching the LLM.</li>
           <li><strong>Continuous maintenance.</strong> Actively checks for outdated information and inconsistencies, keeping the source of truth accurate over time.</li>
@@ -600,7 +601,18 @@
             /* Narrower gutter on a phone. Set through the token so the toggle
                follows it. */
             .af-flow2{ --af-pad-x:16px; }
-            .af-flow2 .af-panel{ padding-bottom:22px; }
+            .af-flow2 .af-panel{ padding-top:20px; padding-bottom:22px; }
+            /* The tab labels are long enough now that the absolute control ran
+               off the left edge of a 320px panel — it is anchored by its right
+               edge, so it had nowhere to go. Below this width it leaves the
+               corner and sits in the flow, still ranged right, directly above
+               the drawing, and wraps to two rows if it still does not fit. */
+            .af-flow2 .af-toggle{
+              position:static;
+              width:max-content; max-width:100%;
+              margin:0 0 12px auto;
+              flex-wrap:wrap; justify-content:flex-end;
+            }
             /* The toggle's own size is no longer restated here: this block was
                putting the padding and the font back up to 7px/11.5 on exactly
                the screens where the control is tightest. */
@@ -625,11 +637,11 @@
 
         <div class="af-panel">
           <div class="af-toggle">
-            <label for="af-tab-direct" class="af-toggle-opt af-opt-direct">Direct MCP connection</label>
-            <label for="af-tab-kb" class="af-toggle-opt af-opt-kb">Knowledge Base</label>
+            <label for="af-tab-direct" class="af-toggle-opt af-opt-direct">One-to-one connections</label>
+            <label for="af-tab-kb" class="af-toggle-opt af-opt-kb">Knowledge Base as middleware</label>
           </div>
 
-          <!-- ================= VIEW 1 — Direct MCP connection ================= -->
+          <!-- ================= VIEW 1 — One-to-one connections ================= -->
           <div class="af-view af-view-direct">
             <div class="af-row">
               <div class="af-diagram-col">
@@ -815,7 +827,7 @@
             <div class="af-bullets-anchor">
               <div class="af-bullets-col" style="top:47.414%">
                 <p class="af-bullets-title">Ungoverned access, compromised outcomes</p>
-                <ul class="af-bullets"><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Incomplete answers</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Outdated, contradicting information</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Sensitive data reaches the wrong user</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Foreign vendor gets ungated access</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>New knowledge stays locked with the vendor</span></li></ul>
+                <ul class="af-bullets"><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Incomplete answers</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Outdated, contradicting information</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Sensitive data reaches the wrong user</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>Non-European vendor gets ungated access</span></li><li><svg class="af-bullet-icon af-bullet-icon-con" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5.3 5.3l5.4 5.4M10.7 5.3l-5.4 5.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg><span>New knowledge stays locked with the vendor</span></li></ul>
               </div>
             </div>
             </div>
@@ -945,7 +957,7 @@
             <div class="af-bullets-anchor">
               <div class="af-bullets-col" style="top:47.414%">
                 <p class="af-bullets-title">Full context with built-in protection</p>
-                <ul class="af-bullets"><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Complete, ranked answers</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Consistent, current knowledge</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sensitivity protected by fact-level permissions</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Foreign vendor never touches raw data directly</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Enterprise owns its compounding knowledge</span></li></ul>
+                <ul class="af-bullets"><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Complete, ranked answers</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Consistent, current knowledge</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sensitivity protected by fact-level permissions</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Source systems shielded from non-European infrastructure</span></li><li><svg class="af-bullet-icon af-bullet-icon-pro" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 8.3l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Enterprise owns its compounding knowledge</span></li></ul>
               </div>
             </div>
             </div>
@@ -1069,6 +1081,6 @@
 
 </div>
 
-<script src="assets/site.js?v=73" defer></script>
+<script src="assets/site.js?v=74" defer></script>
 </body>
 </html>
