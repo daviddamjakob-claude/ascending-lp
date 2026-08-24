@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=57">
+<link rel="stylesheet" href="assets/site.css?v=59">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -273,15 +273,24 @@
             margin:-6px -8px;
             border-radius:var(--radius-sm);
             transition:background-color var(--dur) var(--ease),
+                       box-shadow var(--dur) var(--ease),
                        color var(--dur) var(--ease);
           }
-          /* The same ground the strip panels and the cards on the landing page
-             lift onto, read from the same tokens, so a bullet answers the pointer
-             with the page's own material rather than a colour of its own. */
+          /* --fill, the chip, which is what the site already uses to mark a small
+             control it is pointing at — the language codes and the ground swatch
+             both. Not --ground-base: that is #fafafa, a five-value step off white,
+             which reads on a panel the size of the hero and disappears entirely
+             on a row twelve pixels tall. The chip is 5% black and actually shows. */
           .af-flow2 .af-bullets li:hover{
-            background-color:var(--ground-base);
-            background-image:var(--ground-wash);
-            background-size:var(--ground-size);
+            background-color:var(--fill);
+            box-shadow:inset 0 0 0 1px var(--hairline);
+            color:var(--ink);
+          }
+          /* A pointer is not the only way in. The rows are static text, so this
+             is for the keyboard and for touch, where :hover is unreliable. */
+          .af-flow2 .af-bullets li:focus-within{
+            background-color:var(--fill);
+            box-shadow:inset 0 0 0 1px var(--hairline);
             color:var(--ink);
           }
           .af-flow2 .af-bullet-icon{ flex:none; margin-top:1.5px; }
@@ -313,7 +322,11 @@
             font-size:11.5px; font-weight:var(--weight-heading); letter-spacing:var(--tracking-eyebrow); text-transform:uppercase;
             fill:var(--af-muted);
           }
-          .af-flow2 .af-ast-rect{ fill:var(--af-card-bg); stroke:var(--af-ink); stroke-width:1.4; }
+          /* These two were solid black at 1.4, which is the heaviest line on the page and
+     reads as a border in a system that does not draw them. The emphasis moves to
+     the fill: hairline outline like every other box, chip ground to lift it off
+     the panel. */
+          .af-flow2 .af-ast-rect{ fill:var(--fill); stroke:var(--hairline); stroke-width:1; }
           .af-flow2 .af-ast-title{
             font-family:var(--af-font);
             font-size:15px; font-weight:var(--weight-heading); fill:var(--af-ink);
@@ -338,11 +351,14 @@
           .af-flow2 .af-ping-ring{ fill:none; stroke:var(--ink); stroke-width:1.4; }
 
           /* ---- knowledge-layer view ---- */
-          .af-flow2 .af-kb-rect{ fill:var(--chip); stroke:var(--af-ink); stroke-width:1.4; }
+          .af-flow2 .af-kb-rect{ fill:var(--fill); stroke:var(--hairline); stroke-width:1; }
           .af-flow2 .af-kb-title{
             font-family:var(--af-font);
             font-size:15px; font-weight:var(--weight-heading); fill:var(--af-ink);
           }
+          /* The stacked bars in the knowledge node, which carried their black stroke as
+             an inline attribute rather than through a class. */
+          .af-flow2 .af-stack-rect{ stroke:var(--hairline); stroke-width:1; }
           .af-flow2 .af-kb-sub{
             font-family:var(--af-font);
             font-size:11.5px; fill:var(--af-muted);
@@ -645,9 +661,9 @@
 
                   <rect class="af-kb-rect" x="510" y="190" width="160" height="240" rx="18"/>
                   <g transform="translate(574.0,224)">
-                    <rect x="0" y="0" width="32" height="10" rx="4" fill="none" stroke="#131316" stroke-width="1.6"/>
-                    <rect x="0" y="13" width="32" height="10" rx="4" fill="none" stroke="#131316" stroke-width="1.6"/>
-                    <rect x="0" y="26" width="32" height="10" rx="4" fill="none" stroke="#131316" stroke-width="1.6"/>
+                    <rect x="0" y="0" width="32" height="10" rx="4" fill="none" class="af-stack-rect"/>
+                    <rect x="0" y="13" width="32" height="10" rx="4" fill="none" class="af-stack-rect"/>
+                    <rect x="0" y="26" width="32" height="10" rx="4" fill="none" class="af-stack-rect"/>
                   </g>
                   <text class="af-kb-title" x="590.0" y="298" text-anchor="middle">Knowledge Base</text>
                   <text class="af-kb-sub" x="590.0" y="318" text-anchor="middle">Holds everything,</text>
@@ -721,6 +737,6 @@
 
 </div>
 
-<script src="assets/site.js?v=57" defer></script>
+<script src="assets/site.js?v=59" defer></script>
 </body>
 </html>
