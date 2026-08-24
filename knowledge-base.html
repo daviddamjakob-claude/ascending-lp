@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=71">
+<link rel="stylesheet" href="assets/site.css?v=72">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -106,7 +106,13 @@
                    assets/media/hero-fields-2400.jpg 2400w"
            sizes="100vw" width="2400" height="1018" loading="lazy" decoding="async">
       <div class="wrap hero__inner hero__inner--split">
-        <h1 class="display hero__title">A context layer makes enterprise AI powerful and resilient</h1>
+        <div class="hero__copy">
+          <h1 class="display hero__title">A context layer makes enterprise AI powerful and resilient</h1>
+          <!-- The fold used to be a title alone, which left it lighter than the
+               section heading underneath it. The sub-title gives the claim a
+               second beat and hands the reader down into the page. -->
+          <p class="lead hero__lead">Connect your systems once. A knowledge base resolves what they hold into one governed structure, so every assistant you use answers from the full picture.</p>
+        </div>
 
         <!-- The diagram from the foot of this page, held to its knowledge-base
              view and stripped of the animation, so the fold shows the shape of
@@ -243,7 +249,7 @@
 
     <!-- WHAT EACH LAYER DOES -->
     <section class="wrap sec" id="layers">
-      <h2 class="h2 sec-head" style="max-width:34ch">Companies that make the right architectural choices get the full productivity benefits of AI &mdash; while keeping their knowledge governed, protected, and sovereign.</h2>
+      <h2 class="h2 sec-head" style="max-width:44ch">Companies that make the right architectural choices get the full productivity benefits of AI &mdash; while keeping their knowledge governed, protected, and sovereign.</h2>
 
       <!-- Two columns because the point is that these are two layers, not one
            list. The assistant is what people touch; the knowledge base is what
@@ -1063,6 +1069,6 @@
 
 </div>
 
-<script src="assets/site.js?v=71" defer></script>
+<script src="assets/site.js?v=72" defer></script>
 </body>
 </html>

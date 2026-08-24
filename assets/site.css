@@ -1533,6 +1533,23 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    Knowledge Base page — a split fold and the two-layer grid under it.
    -------------------------------------------------------------------------- */
 
+/* Knowledge Base only. Both section headings sat at the h2 step, 56px across
+   the full container, which put more weight below the fold than in it — the
+   hero title is capped by the split it shares with the diagram and cannot
+   answer that. Dropping them one step on the scale restores the order: the
+   claim in the fold, then the sections under it. The landing page keeps 56,
+   where the hero runs at the full display size and can carry it. */
+/* .sec-head's own padding is there to clear an eyebrow and rule; this section
+   has neither, so it was stacking 48px on top of the section's 128px and
+   opening a chasm between the fold and the first line under it. */
+#layers .sec-head { padding-top: 0; }
+#layers .sec-head,
+#capabilities .h2 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--tracking-h3);
+}
+
 /* The landing hero stacks one column and ranges left. This one is a pair: the
    claim on the left, the drawing on the right, both centred against each other
    so the title sits opposite the middle of the diagram rather than its top. */
@@ -1540,18 +1557,23 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   /* Weighted to the drawing, not evenly. The title is capped at 18ch and needs
      no more than it gets; the diagram is 1100 units wide and every pixel it is
      given comes straight off the size of its labels. */
-  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+  grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
   gap: var(--space-12);
   align-items: center;
   justify-items: stretch;
 }
-/* Well back from the landing page's 84px: this title carries nine words in a
-   column a little under half the page, where the display size would set it in
-   six lines. */
+/* Well back from the landing page's 84px — this title carries nine words in a
+   column a little under half the page — but it has to stay ahead of the section
+   headings below it, or the fold reads as the smallest thing on the page. The
+   split is what caps it: every pixel the title takes comes off the diagram,
+   whose labels are already the tightest type here. */
 .hero--split .hero__title {
-  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
-  max-width: 18ch;
+  font-size: clamp(2.25rem, 4.7vw, 3.75rem);
+  max-width: 20ch;
 }
+/* Sits under the title rather than beside it, so the fold has a second, quieter
+   line to step down through on the way into the page. */
+.hero__lead { margin-top: var(--space-6); max-width: 42ch; }
 .hero__figure {
   margin: 0;
   padding: var(--space-4);
@@ -1604,6 +1626,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 @media (max-width: 900px) {
   .hero--split .hero__inner--split { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
   .hero--split .hero__title { max-width: none; }
+  .hero__lead { max-width: var(--measure-body); }
   .layer-grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
