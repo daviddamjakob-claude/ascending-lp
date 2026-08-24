@@ -1621,6 +1621,56 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   .hero__figure > svg { min-width: 860px; }
 }
 
+/* The five layers of the graph. Each row is the label and the claim on one
+   side, what the layer is made of on the other — the same two-column split the
+   landing page uses for a heading and its lead, at row scale.
+
+   Hairlines between rows rather than around them: five bordered cards would be
+   five objects, and this is one list. */
+.cap-list {
+  display: grid;
+  margin: var(--space-12) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cap {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-6);
+  /* Pulled out by the same amount the padding adds, so the rows keep the page
+     column while still having somewhere to put a highlight. */
+  margin-inline: calc(var(--space-6) * -1);
+  border-top: 1px solid var(--hairline);
+  transition: background-color var(--dur) var(--ease);
+}
+.cap:last-child { border-bottom: 1px solid var(--hairline); }
+/* The ground, like the strip panels and the cards on the landing page: these
+   are large enough surfaces for it to read, and it follows the switch. */
+.cap:hover,
+.cap:focus-within {
+  background-color: var(--ground-base);
+  background-image: var(--ground-wash);
+  background-size: var(--ground-size);
+}
+.cap__head { display: grid; gap: var(--space-4); align-content: start; }
+.cap__title {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-h3);
+  font-weight: var(--weight-heading);
+  color: var(--heading);
+  margin: 0;
+}
+.cap__body { display: grid; gap: var(--space-4); align-content: start; }
+.cap__body .small { margin: 0; max-width: var(--measure-body); }
+
+@media (max-width: 900px) {
+  .cap { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+}
+@media (max-width: 760px) {
+  .cap { padding: var(--space-6) var(--space-4); margin-inline: calc(var(--space-4) * -1); }
+}
+
 /* --------------------------------------------------------------------------
    Embedded diagram — the stack comparison on the Knowledge Base page.
 
