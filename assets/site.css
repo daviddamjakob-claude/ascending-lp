@@ -632,10 +632,28 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .strip:hover .strip__panel:hover,
 .strip:not(:hover) .strip__panel:focus-visible {
   flex-grow: 2.6;
-  background-color: var(--ground-base);
-  background-image: var(--ground-wash);
-  background-size: var(--ground-size);
+  /* Black, and no longer the hero's ground: the active panel is its own
+     statement, not a preview of the fold's colour. The shorthand is deliberate
+     — it clears the wash image and size the ground rule used to set. */
+  background: var(--surface-dark);
+  /* The same token flip .dark performs, applied to one panel instead of a
+     band, so the chip, the hairline and the number invert with it. */
+  color: var(--ink-invert);
+  --heading: var(--ink-invert);
+  --body: var(--ink-muted-invert);
+  --meta: rgba(255, 255, 255, 0.55);
+  --line: var(--hairline-invert);
+  --fill: var(--fill-invert);
+  --accent-text: var(--ink-invert);
 }
+/* The title and the body name --ink and --ink-muted directly rather than the
+   contextual pair, so the flip above cannot reach them. */
+.strip:hover .strip__panel:hover .strip__title,
+.strip:not(:hover) .strip__panel:focus-visible .strip__title { color: var(--ink-invert); }
+.strip:hover .strip__panel:hover .strip__num,
+.strip:not(:hover) .strip__panel:focus-visible .strip__num,
+.strip:hover .strip__panel:hover .strip__body,
+.strip:not(:hover) .strip__panel:focus-visible .strip__body { color: var(--ink-muted-invert); }
 
 /* The system's focus ring is offset and rounded, which floats oddly on a panel
    that sits flush against its neighbours — inset it instead. */
@@ -955,9 +973,17 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .card--reveal { transition: background-color var(--dur) var(--ease); }
 .card--reveal:hover,
 .card--reveal:focus-within {
-  background-color: var(--ground-base);
-  background-image: var(--ground-wash);
-  background-size: var(--ground-size);
+  /* Black, matching the strip in 01, and off the hero's ground for the same
+     reason. Everything inside reads through the contextual tokens, so the ring
+     and the number come with it. */
+  background: var(--surface-dark);
+  color: var(--ink-invert);
+  --heading: var(--ink-invert);
+  --body: var(--ink-muted-invert);
+  --meta: rgba(255, 255, 255, 0.55);
+  --line: var(--hairline-invert);
+  --fill: var(--fill-invert);
+  --accent-text: var(--ink-invert);
 }
 
 /* Two steps up from .h5-card — at this size the title alone can carry the card. */
@@ -1233,11 +1259,18 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   color: inherit;
   transition: background-color var(--dur) var(--ease);
 }
+/* No fill at all here, unlike 01 and 02: these cards carry photography, and a
+   ground behind an image only shows in the margins. The link marks itself the
+   way a link does — the title underlines, and nothing else moves. */
 .link-card:hover, .link-card:focus-visible {
-  background-color: var(--ground-base);
-  background-image: var(--ground-wash);
-  background-size: var(--ground-size);
+  background: transparent;
   text-decoration: none;
+}
+.link-card:hover .h4-card,
+.link-card:focus-visible .h4-card {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 .link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
 /* base.css sets height:auto on every img, so the fill is pinned here. Greyscale
