@@ -1717,7 +1717,13 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    full-width parent, with only their text ranged centre. */
 .hero--stack .hero__title,
 .hero--stack .hero__lead { margin-inline: auto; }
-.hero--stack .hero__figure { width: 100%; margin-top: var(--space-12); }
+/* The fold has to end inside the first screen — the whole point of the stack is
+   that you see the claim and the drawing together, and at full width with the
+   hero's own 88px padding the edge of the section landed 340px below the fold
+   on a 800-tall laptop. The drawing gives back a fifth of its width and the air
+   around it comes in; nothing else about the arrangement changes. */
+.hero--stack .hero__figure { width: 66%; margin-top: var(--space-4); }
+.hero--stack .hero__inner--stack { padding-block: 32px 24px; }
 /* Sits under the title rather than beside it, so the fold has a second, quieter
    line to step down through on the way into the page. */
 .hero__lead { margin-top: var(--space-6); max-width: 42ch; }
@@ -1763,6 +1769,10 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   font-size: var(--fs-lead);
   color: var(--heading);
 }
+/* Bold, which the system otherwise does not use — the same deliberate exception
+   the diagram's bullets title makes, and the face carries a real 700 so this is
+   Geist Bold rather than a smeared 500. */
+.layer-card__role .hl { font-weight: 700; }
 .layer-list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
 /* Padding out and margin back in, the same trick the diagram's bullets use, so
    a row has something to highlight without moving from where it sat. */
@@ -1786,7 +1796,10 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 @media (max-width: 900px) {
   .hero--stack .hero__title { max-width: none; }
   .hero__lead { max-width: var(--measure-body); }
-  .hero--stack .hero__figure { margin-top: var(--space-8); }
+  /* The 66% cap is there to keep the fold inside a laptop screen. On a phone
+     the figure is a scroll box around an 860px drawing, so capping it only
+     narrows the window onto it. */
+  .hero--stack .hero__figure { width: 100%; margin-top: var(--space-8); }
   .layer-grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
