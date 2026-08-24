@@ -1793,7 +1793,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .layer-list li:focus-within {
   background-color: var(--wash-grey-base);
   background-image: var(--wash-grey);
-  box-shadow: inset 0 0 0 1px var(--hairline);
 }
 
 @media (max-width: 900px) {
