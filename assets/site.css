@@ -133,6 +133,19 @@
   --ground-size: auto, 13px 13px, auto;
 }
 
+/* A photograph in the hero, and everywhere else a flat grey. The wash is the
+   thing that ties the fold to the surfaces that lift under the pointer, and a
+   photograph cannot be a wash — it only belongs in the one place large enough
+   to read as an image. So this ground drops the wash entirely rather than
+   pairing the picture with a gradient that echoes nothing. The grey steps up
+   from the #fafafa the other grounds use, because with no gradient over it that
+   value was too close to the page to register as a change at all. */
+.page[data-ground="nature"] {
+  --ground-base: #f2f2f2;
+  --ground-wash: none;
+  --ground-size: auto;
+}
+
 .dark {
   background: var(--surface-dark);
   color: var(--ink-invert);
@@ -369,6 +382,45 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   background-size: var(--ground-size);
   transition: background-color var(--dur) var(--ease);
 }
+
+/* The photograph, on the one ground that has it. Same inset and radius as the
+   painted panel, so the fold keeps its shape whichever ground is showing.
+   Hidden rather than merely covered, so the other four never carry the
+   download — which also means it loads on the click that reveals it, and the
+   panel underneath is what shows for that moment. That is why the base colour
+   stays on ::before rather than being swapped out for the scrim: the hero is
+   grey while the image arrives, not white.
+
+   Three layers over the panel, then: image, scrim, type. The scrim is its own
+   pseudo-element because it has to sit above the image while the ground colour
+   stays below it. */
+.hero__media {
+  display: none;
+  position: absolute;
+  inset: var(--space-2);
+  z-index: 1;
+  width: calc(100% - var(--space-2) * 2);
+  height: calc(100% - var(--space-2) * 2);
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+.page[data-ground="nature"] .hero__media { display: block; }
+
+/* Near-black type over a bright sky. The image is lifted from the left, where
+   the heading and the lead sit, and left alone on the right. A legibility
+   scrim, not decoration — the system's rule against protection gradients
+   assumes type on flat colour, and this is the one surface where it is not. */
+.hero::after { content: none; }
+.page[data-ground="nature"] .hero::after {
+  content: "";
+  position: absolute;
+  inset: var(--space-2);
+  z-index: 2;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.62) 34%, rgba(255, 255, 255, 0.12) 62%, rgba(255, 255, 255, 0) 78%);
+  pointer-events: none;
+}
+
 /* Slightly back from the display clamp: at full size the two lines crowded the
    panel once the heading stopped being centred. */
 .hero .display { font-size: clamp(3rem, 6.6vw, 5.25rem); }
@@ -404,7 +456,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 .hero__inner {
   position: relative;
-  z-index: 1;
+  /* Above all three of the hero's grounds: the painted panel, the photograph on
+     the Nature ground, and the scrim over it. */
+  z-index: 3;
   padding-block: clamp(4rem, 11vh, 7.5rem);
   display: grid;
   gap: var(--space-8);
@@ -1424,6 +1478,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   /* Padding is inherited from the base rule rather than tightened to 1.25rem,
      which sat inside the content gutter and pulled the header out of line. */
   .site-header { gap: var(--space-4); }
+
+  /* On a phone the copy runs the full width of the panel, so it reaches into
+     the part of the scrim that had faded to nothing — the lead fell to 3.8:1
+     against the photograph there. The gradient keeps its direction but never
+     drops below 0.66, which is the difference between veiling the left of the
+     image and veiling all of it. */
+  .page[data-ground="nature"] .hero::after {
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.82) 45%, rgba(255, 255, 255, 0.68) 100%);
+  }
+
+  /* Five options no longer fit the panel at this width. Wraps as a last resort
+     rather than overflowing, and the row is right-aligned so a wrapped line
+     stays under the one above it. Scaffolding — it goes with the swatch. */
+  .hero-swatch { flex-wrap: wrap; justify-content: flex-end; max-width: calc(100% - var(--space-2) * 2 - var(--space-4) * 2); }
+  .hero-swatch__opt { padding: 0.3rem 0.5rem; }
 
   /* Sized so the second line, "to deploy enterprise AI", holds on one row: the
      headline keeps the two lines it has on desktop instead of breaking into
