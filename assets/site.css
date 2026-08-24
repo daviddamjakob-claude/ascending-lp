@@ -142,29 +142,14 @@
    right where the cover has already gone transparent, so the two never fight. */
 .page[data-ground="dots"] {
   --ground-base: #fafafa;
-  /* A halftone, not a flat field of dots at one size. That is the whole
-     character of the reference: the dot grows as it moves right, from nothing,
-     through a speckle, to something close to a tint. A tiled background paints
-     one dot size, so this is three grids on the same 11px pitch and the same
-     phase — every dot in the large grid sits on top of one in the small — each
-     revealed by its own cover.
-
-     Layers paint first-listed on top, and each cover is the base colour, opaque
-     where it hides and clear where it lets the grid under it through. So the
-     covers step outward: the first clears the copy's column entirely, the next
-     two hold the bigger dots back until further right. Where two grids show at
-     once the wider radius is what you see, which is what makes the ramp read as
-     one dot growing rather than as three fields overlapping. */
+  /* The pattern itself is the canvas in the fold, not a background layer — see
+     .hero__dither. What is left here is the plain grey ground, so the surfaces
+     that lift under the pointer still match the fold's colour without trying to
+     carry its texture at card size. */
   --ground-wash:
-    radial-gradient(100% 150% at -10% 45%, #fafafa 38%, rgba(250, 250, 250, 0) 62%),
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.10) 0.85px, rgba(0, 0, 0, 0) 1.35px),
-    radial-gradient(100% 150% at -10% 45%, #fafafa 52%, rgba(250, 250, 250, 0) 76%),
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.12) 1.3px, rgba(0, 0, 0, 0) 1.8px),
-    radial-gradient(100% 150% at -10% 45%, #fafafa 68%, rgba(250, 250, 250, 0) 92%),
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 1.8px, rgba(0, 0, 0, 0) 2.3px),
-    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.055), rgba(0, 0, 0, 0) 62%);
-  /* One entry per layer, in the same order. Only the three grids tile. */
-  --ground-size: auto, 11px 11px, auto, 11px 11px, auto, 11px 11px, auto;
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+  --ground-size: auto;
 }
 
 /* A photograph in the hero, and everywhere else a flat grey. The wash is the
@@ -200,15 +185,8 @@
   --ground-wash: none;
   --ground-size: auto;
   --hero-base: #0a0a0a;
-  --hero-wash:
-    radial-gradient(100% 150% at -10% 45%, #0a0a0a 38%, rgba(10, 10, 10, 0) 62%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.11) 0.85px, rgba(255, 255, 255, 0) 1.35px),
-    radial-gradient(100% 150% at -10% 45%, #0a0a0a 52%, rgba(10, 10, 10, 0) 76%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.13) 1.3px, rgba(255, 255, 255, 0) 1.8px),
-    radial-gradient(100% 150% at -10% 45%, #0a0a0a 68%, rgba(10, 10, 10, 0) 92%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.16) 1.8px, rgba(255, 255, 255, 0) 2.3px),
-    radial-gradient(90% 120% at 95% 0%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 62%);
-  --hero-size: auto, 11px 11px, auto, 11px 11px, auto, 11px 11px, auto;
+  --hero-wash: none;
+  --hero-size: auto;
 }
 
 /* The fold is the one place the contextual tokens are re-declared per ground.
@@ -480,6 +458,30 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   background-image: var(--hero-wash);
   background-size: var(--hero-size);
   transition: background-color var(--dur) var(--ease);
+}
+
+/* Same box as the painted panel it sits on, and above it. Only the two pattern
+   grounds show it; the script paints in currentColor, so the ground picks the
+   ink by setting `color` here rather than by talking to the script. */
+.hero__dither {
+  position: absolute;
+  inset: var(--space-2);
+  z-index: 1;
+  display: none;
+  /* A canvas is a replaced element: with `width:auto` it takes its intrinsic
+     300x150 rather than stretching to the insets, so the box has to be stated. */
+  width: calc(100% - var(--space-2) * 2);
+  height: calc(100% - var(--space-2) * 2);
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+}
+.page[data-ground="dots"] .hero__dither {
+  display: block;
+  color: rgba(0, 0, 0, 0.22);
+}
+.page[data-ground="black-dots"] .hero__dither {
+  display: block;
+  color: rgba(255, 255, 255, 0.26);
 }
 
 /* The photograph, on the one ground that has it. Same inset and radius as the

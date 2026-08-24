@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=84">
+<link rel="stylesheet" href="assets/site.css?v=87">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -74,6 +74,13 @@
         <button class="hero-swatch__opt" type="button" data-hero="black">Black</button>
         <button class="hero-swatch__opt" type="button" data-hero="black-dots">Black pattern</button>
       </div>
+      <!-- The pattern ground here too, or Grey Pattern would be plain grey on
+           this page. Same canvas and the same block in site.js, held further
+           right and smaller than the landing page's: that fold ranges its copy
+           left and has a clear half to give away, this one centres the copy and
+           runs the drawing the full width, so the field has to stay off both. -->
+      <canvas class="hero__dither" data-dither data-cx="1.2" data-cy="0.5" data-radius="0.8"
+              aria-hidden="true"></canvas>
       <!-- Carried over so the Nature ground has its photograph here too;
            without it that one option would fall back to flat grey. -->
       <img class="hero__media" alt=""
@@ -1057,6 +1064,6 @@
 
 </div>
 
-<script src="assets/site.js?v=84" defer></script>
+<script src="assets/site.js?v=87" defer></script>
 </body>
 </html>

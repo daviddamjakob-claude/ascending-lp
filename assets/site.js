@@ -563,3 +563,133 @@
     });
   });
 })();
+
+/* --------------------------------------------------------------------------
+   Dither — the pattern ground in the fold
+
+   The reference's pattern is not a field of dots. It is an ordered dither: the
+   panel is divided into square cells, a radial ramp gives each cell a value,
+   and an 8x8 Bayer matrix decides cell by cell whether that value is enough to
+   fill the square solid. Nothing is drawn at half strength, which is what gives
+   the field its scatter — near the centre almost every cell passes, at the edge
+   only the cells the matrix ranks lowest do, and in between the pattern breaks
+   up into the irregular checker the reference shows.
+
+   Kept in a canvas because no tiled background can do this: a tile repeats one
+   mark, and here every cell is a separate decision. The ink comes from the
+   element's own `color`, so the ground chooses it in CSS.
+   -------------------------------------------------------------------------- */
+(function () {
+  var canvases = document.querySelectorAll('canvas[data-dither]');
+  if (!canvases.length) return;
+
+  /* The 8x8 Bayer matrix, built rather than typed: each pass doubles the last
+     one, scaling its values by four and adding the quadrant's own rank. */
+  var BAYER = (function () {
+    var m = [[0]];
+    for (var n = 1; n < 8; n *= 2) {
+      var next = [];
+      for (var y = 0; y < n * 2; y++) {
+        next[y] = [];
+        for (var x = 0; x < n * 2; x++) {
+          var quad = (y >= n ? 2 : 0) + (x >= n ? 1 : 0);
+          next[y][x] = m[y % n][x % n] * 4 + [0, 2, 3, 1][quad];
+        }
+      }
+      m = next;
+    }
+    return m;
+  })();
+
+  function num(el, name, fallback) {
+    var v = parseFloat(el.dataset[name]);
+    return isNaN(v) ? fallback : v;
+  }
+
+  function draw(el) {
+    var ctx = el.getContext('2d');
+    if (!ctx) return;
+    var w = el.clientWidth;
+    var h = el.clientHeight;
+    if (!w || !h) return;
+
+    /* The centre of the ramp, as a fraction of the panel. Off the right edge by
+       default: the copy sits left, so the field has to fall away towards it. */
+    var cx = num(el, 'cx', 1.02);
+    var cy = num(el, 'cy', 0.42);
+    var radius = num(el, 'radius', 1.15);
+    var block = num(el, 'block', 3);
+    /* Above 1 the ramp falls away faster than distance. The pair is what sets
+       the field's shape: reach decides where the first squares appear, falloff
+       how hard it is packed once they do. At 1.15 and 3 the field starts half
+       way across and tops out around three fifths filled, rather than running
+       to solid at the edge. */
+    var falloff = num(el, 'falloff', 2.5);
+
+    /* Backing store in device pixels, so a 3px block is 3 CSS px on a retina
+       screen rather than 1.5. */
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    el.width = Math.round(w * dpr);
+    el.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = getComputedStyle(el).color;
+
+    var fx = cx * w;
+    var fy = cy * h;
+    var reach = radius * Math.hypot(w, h) * 0.5;
+    var cols = Math.ceil(w / block);
+    var rows = Math.ceil(h / block);
+
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < cols; col++) {
+        var px = col * block + block / 2;
+        var py = row * block + block / 2;
+        var d = Math.hypot(px - fx, py - fy);
+        var value = Math.pow(Math.max(0, 1 - d / reach), falloff);
+        if (value > (BAYER[row % 8][col % 8] + 0.5) / 64) {
+          ctx.fillRect(col * block, row * block, block, block);
+        }
+      }
+    }
+  }
+
+  function paint() {
+    for (var i = 0; i < canvases.length; i++) draw(canvases[i]);
+  }
+
+  /* rAF to coalesce, but it does not fire in a background tab — and a resize or
+     a ground switch can happen there, in a second window or before the tab is
+     first looked at. The timer is what guarantees the paint lands either way;
+     whichever runs first clears the other. */
+  var frame = null, timer = null;
+  function schedule() {
+    if (frame || timer) return;
+    frame = requestAnimationFrame(run);
+    timer = setTimeout(run, 120);
+  }
+  function run() {
+    if (frame) cancelAnimationFrame(frame);
+    if (timer) clearTimeout(timer);
+    frame = timer = null;
+    paint();
+  }
+
+  /* The ground switch changes the ink, and a canvas does not re-paint itself
+     when its colour changes — watch the attribute the swatch writes. */
+  var page = document.querySelector('.page');
+  if (page && window.MutationObserver) {
+    new MutationObserver(schedule).observe(page, {
+      attributes: true, attributeFilter: ['data-ground']
+    });
+  }
+
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(schedule);
+    for (var i = 0; i < canvases.length; i++) ro.observe(canvases[i]);
+  } else {
+    addEventListener('resize', schedule);
+  }
+
+  paint();
+})();

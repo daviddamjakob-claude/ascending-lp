@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=84">
+<link rel="stylesheet" href="assets/site.css?v=87">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -73,6 +73,13 @@
         <button class="hero-swatch__opt" type="button" data-hero="black">Black</button>
         <button class="hero-swatch__opt" type="button" data-hero="black-dots">Black pattern</button>
       </div>
+      <!-- The pattern ground, and a canvas rather than a background because of
+           what the pattern is: an 8x8 ordered dither of solid square blocks,
+           the same construction the reference uses. A tiled gradient can only
+           repeat one mark; this one has to decide each cell separately. Drawn
+           by the dither block in site.js, and only ever visible on the two
+           pattern grounds. -->
+      <canvas class="hero__dither" data-dither aria-hidden="true"></canvas>
       <!-- Only painted on the Nature ground. lazy, because six of the seven
            grounds never show it and it is the heaviest thing on the page. -->
       <img class="hero__media" alt=""
@@ -306,6 +313,6 @@
 
 </div>
 
-<script src="assets/site.js?v=84" defer></script>
+<script src="assets/site.js?v=87" defer></script>
 </body>
 </html>
