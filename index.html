@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=74">
+<link rel="stylesheet" href="assets/site.css?v=75">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -39,32 +39,9 @@
     </button>
 
     <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <div class="nav-menu">
-        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">Toolbox</button>
-        <div class="nav-menu__panel" id="nav-toolbox">
-          <a class="nav-entry" href="knowledge-base.html">
-            <span class="nav-entry__label">Knowledge Base</span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </a>
-          <!-- No deep dive behind these yet, so they are text rather than links
-               that would quietly go nowhere. -->
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Search &amp; Agents <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Integrations <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-        </div>
-      </div>
-
+      <a href="#platform" aria-current="page">Platform</a>
+      <a href="knowledge-base.html">Knowledge Base</a>
       <a href="#security">Security</a>
-      <a href="resources.html">Resources</a>
 
       <!-- Only ever seen in the sheet. The desktop bar has no room for it, and
            there the same call is one scroll away in the hero. -->
@@ -318,6 +295,6 @@
 
 </div>
 
-<script src="assets/site.js?v=74" defer></script>
+<script src="assets/site.js?v=75" defer></script>
 </body>
 </html>

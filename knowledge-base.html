@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=74">
+<link rel="stylesheet" href="assets/site.css?v=75">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -39,32 +39,9 @@
     </button>
 
     <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <div class="nav-menu" data-current="true">
-        <button class="nav-menu__trigger" type="button" aria-expanded="false" aria-controls="nav-toolbox">Toolbox</button>
-        <div class="nav-menu__panel" id="nav-toolbox">
-          <a class="nav-entry" href="knowledge-base.html" aria-current="page">
-            <span class="nav-entry__label">Knowledge Base</span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </a>
-          <!-- No deep dive behind these yet, so they are text rather than links
-               that would quietly go nowhere. -->
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Search &amp; Agents <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Integrations <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-          <span class="nav-entry nav-entry--soon">
-            <span class="nav-entry__label">Ingestion as a service <span class="nav-soon__tag">soon</span></span>
-            <span class="nav-entry__sub">lorem ipsum est</span>
-          </span>
-        </div>
-      </div>
-
+      <a href="index.html">Platform</a>
+      <a href="knowledge-base.html" aria-current="page">Knowledge Base</a>
       <a href="index.html#security">Security</a>
-      <a href="resources.html">Resources</a>
 
       <!-- Only ever seen in the sheet. The desktop bar has no room for it, and
            there the same call is one scroll away in the hero. -->
@@ -111,7 +88,7 @@
           <!-- The fold used to be a title alone, which left it lighter than the
                section heading underneath it. The sub-title gives the claim a
                second beat and hands the reader down into the page. -->
-          <p class="lead hero__lead">Our knowledge graph turns everything your organization knows into one connected, reasoned structure. From there, AI just works &mdash; securely, and with answers you can always trust.</p>
+          <p class="lead hero__lead">Our knowledge base turns your organization&rsquo;s data into one connected, reasoned structure. From there, AI just works &mdash; securely, and with answers you can always trust.</p>
         </div>
 
         <!-- The diagram from the foot of this page, held to its knowledge-base
@@ -349,7 +326,7 @@
                This carried a 40px drop shadow and a border; the ring replaces
                both and costs no layout width. */
             box-shadow:inset 0 0 0 1px var(--af-panel-border);
-            padding:40px var(--af-pad-x) 28px;
+            padding:28px var(--af-pad-x) 28px;
           }
           .af-flow2 .af-radio{
             position:absolute; top:0; left:0; width:0; height:0; margin:0; padding:0;
@@ -357,12 +334,15 @@
             -webkit-appearance:none; appearance:none;
           }
           .af-flow2 .af-toggle{
-            position:absolute;
-            /* The panel's own padding, which is what sets the right edge of the
-               bullets card below, so the two hang off the same line at every
-               width instead of missing each other by eight pixels. */
-            top:20px; right:var(--af-pad-x);
+            /* In the flow above the drawing rather than floating over its top
+               corner. margin-left:auto is what ranges it right, so it still
+               hangs off the same line as the bullets card below — which is set
+               by the panel's own padding — at every width. */
+            width:max-content; max-width:100%;
+            margin:0 0 16px auto;
             display:flex;
+            flex-wrap:wrap;
+            justify-content:flex-end;
             gap:2px;
             background:var(--surface);
             box-shadow:inset 0 0 0 1px var(--hairline);
@@ -602,17 +582,13 @@
                follows it. */
             .af-flow2{ --af-pad-x:16px; }
             .af-flow2 .af-panel{ padding-top:20px; padding-bottom:22px; }
-            /* The tab labels are long enough now that the absolute control ran
-               off the left edge of a 320px panel — it is anchored by its right
-               edge, so it had nowhere to go. Below this width it leaves the
-               corner and sits in the flow, still ranged right, directly above
-               the drawing, and wraps to two rows if it still does not fit. */
-            .af-flow2 .af-toggle{
-              position:static;
-              width:max-content; max-width:100%;
-              margin:0 0 12px auto;
-              flex-wrap:wrap; justify-content:flex-end;
-            }
+            .af-flow2 .af-toggle{ margin-bottom:12px; }
+            /* The drawing leaves the page here. It is 1100 units of small type
+               and thin rules; at this width it either scales until the labels
+               are unreadable or scrolls sideways, and neither is worth the
+               room. The toggle and the bullets carry the same comparison in
+               words, which is what survives the size. */
+            .af-flow2 .af-diagram-col{ display:none; }
             /* The toggle's own size is no longer restated here: this block was
                putting the padding and the font back up to 7px/11.5 on exactly
                the screens where the control is tightest. */
@@ -1081,6 +1057,6 @@
 
 </div>
 
-<script src="assets/site.js?v=74" defer></script>
+<script src="assets/site.js?v=75" defer></script>
 </body>
 </html>
