@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=69">
+<link rel="stylesheet" href="assets/site.css?v=70">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -197,6 +197,7 @@
 
             
                       <path id="af-kb-link-path-hero" class="af-line-base" d="M670,310 L850,310"/>
+                    <path class="af-line-flow" d="M670,310 L850,310"/>
                       <path class="af-line-glow" d="M670,310 L850,310">
                         <animate attributeName="opacity" values="0;0;0.85;0.85;0;0" keyTimes="0;0.00000;0.03571;0.51190;0.54762;1" dur="4.2s" begin="0s" repeatCount="indefinite" />
                       </path>
@@ -566,6 +567,19 @@
             font-family:var(--af-font);
             font-size:11.5px; fill:var(--af-muted);
           }
+          /* The channel out of the knowledge base, made to flow the way the feeds
+             into it do. Everything that moved on this segment before was SMIL —
+             the pill, the ping, the glow — and all three sit at opacity 0 until
+             that clock runs, so wherever it does not this half of the diagram is
+             not merely still, it is blank. Same keyframe and same dash as the
+             ingestion lines, so both halves move alike and neither depends on
+             SMIL. The solid rail stays underneath: many dotted feeds in, one
+             channel out, a current inside it. */
+          .af-flow2 .af-line-flow{
+            fill:none; stroke:var(--ink); stroke-opacity:0.55; stroke-width:1.5;
+            stroke-linecap:round; stroke-dasharray:1 7;
+            animation:af2-dash 0.9s linear infinite;
+          }
           .af-flow2 .af-line-kb{
             fill:none; stroke:var(--ink); stroke-opacity:0.4; stroke-width:1.5;
             stroke-linecap:round; stroke-dasharray:1 7;
@@ -591,6 +605,7 @@
             .af-flow2 .af-line-glow, .af-flow2 .af-chip-pulse{ display:none; }
             .af-flow2 .af-packet-core, .af-flow2 .af-packet-glow, .af-flow2 .af-ping-ring{ display:none; }
             .af-flow2 .af-line-kb{ animation:none; stroke-dasharray:none; stroke-opacity:0.3; }
+            .af-flow2 .af-line-flow{ animation:none; stroke-dasharray:none; stroke-opacity:0.3; }
             .af-flow2 .af-pill-core, .af-flow2 .af-pill-glow{ display:none; }
             .af-flow2 g[data-anim] > animateMotion,
             .af-flow2 g[data-anim] > animate,
@@ -879,6 +894,7 @@
 
             
             <path id="af-kb-link-path" class="af-line-base" d="M670,310 L850,310"/>
+                    <path class="af-line-flow" d="M670,310 L850,310"/>
             <path class="af-line-glow" d="M670,310 L850,310">
               <animate attributeName="opacity" values="0;0;0.85;0.85;0;0" keyTimes="0;0.00000;0.03571;0.51190;0.54762;1" dur="4.2s" begin="0s" repeatCount="indefinite" />
             </path>
@@ -945,6 +961,6 @@
 
 </div>
 
-<script src="assets/site.js?v=69" defer></script>
+<script src="assets/site.js?v=70" defer></script>
 </body>
 </html>
