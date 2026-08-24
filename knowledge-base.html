@@ -15,9 +15,9 @@
      running ten-minute-old CSS and JS. Bump it in the same commit as an edit
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=60">
+<link rel="stylesheet" href="assets/site.css?v=61">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -169,10 +169,12 @@
           }
           .af-flow2 .af-toggle-opt{
             font-family:var(--af-font);
-            font-size:var(--fs-tiny);
+            /* Sentence case, and smaller with it. The tracking goes too: it is
+               there to open up capitals and only makes lower case look loose. */
+            font-size:11px;
             font-weight:var(--weight-heading);
-            letter-spacing:var(--tracking-eyebrow);
-            text-transform:uppercase;
+            letter-spacing:normal;
+            text-transform:none;
             color:var(--af-ink-soft);
             /* The type stays on the scale at 12px; the box around it comes in.
                This was 0.85/1.1em, which made the control 43px tall and nearly
@@ -239,11 +241,12 @@
           }
           .af-flow2 .af-bullets-title{
             font-family:var(--af-font);
-            /* The system's eyebrow: tiny, tracked, upper case, and 500 like every
-               other heading. It was 11px at 700, a weight the system does not
-               have. */
+            /* The system's eyebrow otherwise, but bold rather than the single
+               heading weight. That is a deliberate exception, and it needed the
+               face to exist: only 400 and 500 were being fetched, so a 700 here
+               would have been the browser smearing 500 rather than Geist Bold. */
             font-size:var(--fs-tiny);
-            font-weight:var(--weight-heading);
+            font-weight:700;
             letter-spacing:var(--tracking-eyebrow);
             text-transform:uppercase;
             color:var(--af-ink);
@@ -737,6 +740,6 @@
 
 </div>
 
-<script src="assets/site.js?v=60" defer></script>
+<script src="assets/site.js?v=61" defer></script>
 </body>
 </html>
