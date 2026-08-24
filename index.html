@@ -15,8 +15,9 @@
      running ten-minute-old CSS and JS. Bump it in the same commit as an edit
      to either file. The design-system entry below is upstream and unversioned
      because nothing here edits it. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=46">
+<link rel="stylesheet" href="assets/site.css?v=48">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -98,10 +99,12 @@
              first line, so a cap could only force a third one. -->
         <h1 class="display">The toolbox<br> to deploy enterprise AI</h1>
         <!-- Wider than the system's 46ch lead measure, which breaks this copy
-             over four lines. Between 598px and 618px it sets in three with the
-             closing sentence alone on the last; 58.5ch is the middle of that
-             band, so a small metric change cannot tip it either way. -->
-        <p class="lead" style="max-width:58.5ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is <strong>really powerful while keeping company knowledge sovereign.</strong> European by design, for AI transformations that actually work.</p>
+             over four lines. Between 642px and 660px it sets in three with the
+             closing sentence alone on the last; 54.6ch is the middle of that
+             band, so a small metric change cannot tip it either way. Re-measured
+             for Geist — ch is a property of the face, and the old 58.5 was the
+             middle of Inter Tight's band, which is 90px narrower per ch. -->
+        <p class="lead" style="max-width:54.6ch">Our managed infrastructure enables in-house teams and integrators to deploy AI that is <strong>really powerful while keeping company knowledge sovereign.</strong> European by design, for AI transformations that actually work.</p>
         <div class="hero__cta">
           <a class="btn btn--hero" href="mailto:david@ascending.ai?subject=Ascending%20AI">Book a founder call</a>
         </div>
@@ -305,6 +308,6 @@
 
 </div>
 
-<script src="assets/site.js?v=46" defer></script>
+<script src="assets/site.js?v=48" defer></script>
 </body>
 </html>

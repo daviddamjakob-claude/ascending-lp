@@ -9,6 +9,17 @@
    Rule 8 of the system still holds — components read the semantic layer, and
    this only changes what that layer resolves to.
    ========================================================================== */
+/* The face. The system ships Inter Tight as a stand-in for a licensed face it
+   cannot include, and says to swap it by editing tokens/typography.css. That is
+   the vendored tree, which loads unversioned and would sit in a browser cache
+   for ten minutes with no way to bust it, so the swap is made here instead —
+   same token, one layer up, and it rides the ?v= on this file. Inter Tight
+   stays behind it as the fallback, since it is already being fetched. */
+:root {
+  --font-sans: "Geist", "Inter Tight", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
 :root,
 [data-surface="light"] {
   --page: #ffffff;
@@ -1416,13 +1427,12 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 
   /* Sized so the second line, "to deploy enterprise AI", holds on one row: the
      headline keeps the two lines it has on desktop instead of breaking into
-     three. That line runs 8.83em wide at this weight and tracking, and the
-     gutter takes a fixed 38px, so the tightest fit in this query is the
-     narrowest phone rather than the widest — at 320px it needs 9.99vw or less,
-     and 9.5vw leaves enough for the fallback face to be a little wider than
-     the webfont before the swap. The bounds only guard the ends: neither binds
-     between 295px and the 760px breakpoint. */
-  .hero .display { font-size: clamp(1.75rem, 9.5vw, 4.5rem); }
+     three. Re-fitted for Geist, which sets that line 8% wider than Inter Tight
+     did — 9.53em against 8.83 — so the old 9.5vw tipped it onto a third line at
+     the narrow end. The ceiling is 9.44vw at 320px and rises with width, so the
+     narrowest phone is what binds; 9.15 clears it by 3%. The bounds only guard
+     the ends: neither binds between 306px and the 760px breakpoint. */
+  .hero .display { font-size: clamp(1.75rem, 9.15vw, 4.5rem); }
   .hero__inner { gap: var(--space-12); }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
