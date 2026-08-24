@@ -1529,6 +1529,29 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   }
 }
 
+/* --------------------------------------------------------------------------
+   Embedded diagram — the stack comparison on the Knowledge Base page.
+
+   The graphic arrives self-contained and is left untouched; this is the one
+   thing the page has to say about it. Its SVG scales to fit, which on a phone
+   means a 1100-unit drawing rendered 317 wide: the chip labels naming
+   SharePoint, DATEV and the rest come out at 3.3px, which is not small type,
+   it is texture. Since those names are most of the diagram's point, it keeps
+   its size below the breakpoint and pans instead.
+
+   860px puts the smallest label back at 9px. Only the drawing scrolls — the
+   bullets beside it are ordinary HTML in a sibling column and stay in the flow
+   at 10.5px, so the argument reads without touching the diagram at all.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .af-diagram-col {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .af-diagram-col > svg { min-width: 860px; }
+}
+
 @media (max-width: 760px) {
   /* Padding is inherited from the base rule rather than tightened to 1.25rem,
      which sat inside the content gutter and pulled the header out of line. */
