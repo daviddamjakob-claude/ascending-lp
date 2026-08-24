@@ -142,23 +142,29 @@
    right where the cover has already gone transparent, so the two never fight. */
 .page[data-ground="dots"] {
   --ground-base: #fafafa;
+  /* A halftone, not a flat field of dots at one size. That is the whole
+     character of the reference: the dot grows as it moves right, from nothing,
+     through a speckle, to something close to a tint. A tiled background paints
+     one dot size, so this is three grids on the same 11px pitch and the same
+     phase — every dot in the large grid sits on top of one in the small — each
+     revealed by its own cover.
+
+     Layers paint first-listed on top, and each cover is the base colour, opaque
+     where it hides and clear where it lets the grid under it through. So the
+     covers step outward: the first clears the copy's column entirely, the next
+     two hold the bigger dots back until further right. Where two grids show at
+     once the wider radius is what you see, which is what makes the ramp read as
+     one dot growing rather than as three fields overlapping. */
   --ground-wash:
-    /* The cover. It used to sit on the bottom-left corner, which cleared the
-       floor of the panel but left the field running all the way into the top
-       left, over the headline. Centred on the left edge instead, so the whole
-       column the copy sits in is clean top to bottom and the field arrives
-       from the right. */
-    radial-gradient(110% 160% at -5% 50%, #fafafa 18%, rgba(250, 250, 250, 0) 65%),
-    /* A soft light over the field at the upper right, which is what gives the
-       reference its bloom — the dots stay drawn there and are washed out rather
-       than removed. Above the dots, below the cover. */
-    radial-gradient(42% 52% at 76% 14%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 72%),
-    /* A shade larger and darker than before, and on a slightly wider pitch, so
-       the field reads as a drawn grid rather than as texture. */
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.20) 1.25px, rgba(0, 0, 0, 0) 1.75px),
-    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.085), rgba(0, 0, 0, 0) 62%);
-  /* One entry per layer, in the same order. Only the dots tile. */
-  --ground-size: auto, auto, 14px 14px, auto;
+    radial-gradient(100% 150% at -10% 45%, #fafafa 38%, rgba(250, 250, 250, 0) 62%),
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.10) 0.85px, rgba(0, 0, 0, 0) 1.35px),
+    radial-gradient(100% 150% at -10% 45%, #fafafa 52%, rgba(250, 250, 250, 0) 76%),
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.12) 1.3px, rgba(0, 0, 0, 0) 1.8px),
+    radial-gradient(100% 150% at -10% 45%, #fafafa 68%, rgba(250, 250, 250, 0) 92%),
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 1.8px, rgba(0, 0, 0, 0) 2.3px),
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.055), rgba(0, 0, 0, 0) 62%);
+  /* One entry per layer, in the same order. Only the three grids tile. */
+  --ground-size: auto, 11px 11px, auto, 11px 11px, auto, 11px 11px, auto;
 }
 
 /* A photograph in the hero, and everywhere else a flat grey. The wash is the
@@ -195,11 +201,14 @@
   --ground-size: auto;
   --hero-base: #0a0a0a;
   --hero-wash:
-    radial-gradient(110% 160% at -5% 50%, #0a0a0a 18%, rgba(10, 10, 10, 0) 65%),
-    radial-gradient(42% 52% at 76% 14%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 72%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 1.25px, rgba(255, 255, 255, 0) 1.75px),
-    radial-gradient(90% 120% at 95% 0%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 62%);
-  --hero-size: auto, auto, 14px 14px, auto;
+    radial-gradient(100% 150% at -10% 45%, #0a0a0a 38%, rgba(10, 10, 10, 0) 62%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.11) 0.85px, rgba(255, 255, 255, 0) 1.35px),
+    radial-gradient(100% 150% at -10% 45%, #0a0a0a 52%, rgba(10, 10, 10, 0) 76%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.13) 1.3px, rgba(255, 255, 255, 0) 1.8px),
+    radial-gradient(100% 150% at -10% 45%, #0a0a0a 68%, rgba(10, 10, 10, 0) 92%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.16) 1.8px, rgba(255, 255, 255, 0) 2.3px),
+    radial-gradient(90% 120% at 95% 0%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 62%);
+  --hero-size: auto, 11px 11px, auto, 11px 11px, auto, 11px 11px, auto;
 }
 
 /* The fold is the one place the contextual tokens are re-declared per ground.
@@ -738,8 +747,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    section's chips are on these two grounds. */
 .page[data-page="home"]:not([data-ground]) .strip__tags .chip-outline,
 .page[data-page="home"][data-ground="dots"] .strip__tags .chip-outline {
-  color: var(--hl);
-  box-shadow: inset 0 0 0 1px var(--hl);
+  background: var(--hl);
+  color: #ffffff;
+  box-shadow: none;
 }
 
 /* The title and the body name --ink and --ink-muted directly rather than the
