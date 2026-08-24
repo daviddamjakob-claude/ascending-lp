@@ -1294,11 +1294,15 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
        that opened it, looser to the one after, so the group reads as belonging
        to Toolbox rather than floating between it and Security.
 
-       No inline padding, and none on the entries below either: the group is a
-       flat list on the sheet's own left edge, not a nested one. Both are stated
-       rather than left to the base rules, which do indent the desktop panel. */
+       Indented 8px, which the reference does not do — its submenu is flush with
+       the rows around it. Flush is what reads wrong here: Toolbox at 24px sits
+       directly above Knowledge Base at 16, and against that much heavier stem
+       the smaller line looks misaligned rather than aligned even when the two
+       edges agree to a fraction of a pixel. 8px is the smallest step on the
+       scale that reads as chosen instead of missed. It goes on the group, so
+       the label and the line under it can never drift apart. */
     gap: 20px;
-    padding: 10px 0 20px;
+    padding: 10px 0 20px var(--space-2);
     justify-items: stretch;
     border-radius: 0;
     background: none;
@@ -1342,21 +1346,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   /* Block-level flex, not inline: as an inline box it sat on a line whose height
      came from the parent's strut, which added 4px per entry and put the group
      pitch at 68 instead of 64. */
-  /* Optically aligned, not box-aligned. Every level's layout box sits at 40, but
-     a glyph does not start at its box edge — it starts a side bearing in, and
-     the bearing scales with the type size while the box does not. Measured in
-     Inter Tight: T of Toolbox 0.5px at 24, K of Knowledge Base 0.9px and P/I
-     1.0px at 16, l of lorem 0.7px at 14. So the smaller levels began up to half
-     a pixel right of the row above them — about 1.5 device pixels on a 3x phone,
-     which is small but reads as a drift because the eye lines everything up
-     against the first and largest item.
-
-     Pulled back by the difference so the ink agrees rather than the boxes. Only
-     valid for this face: on a fallback the bearings differ and this becomes a
-     small error in whichever direction that face runs. */
   .nav-entry__label {
     display: flex;
-    margin-left: -0.5px;
     font-size: 16px;
     line-height: 16px;
     letter-spacing: -0.02em;
@@ -1372,9 +1363,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   .nav-entry__sub {
     display: block;
     margin-top: 4px;
-    /* Same optical correction as the label, smaller because l carries less
-       bearing at 14px than K does at 16. */
-    margin-left: -0.25px;
     /* A step down from the reference's own 16/24, which set this line at the
        same size as the label above it and left the two too close in weight to
        read as different levels. 14 on 20 keeps the entry compact. */
