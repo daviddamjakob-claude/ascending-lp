@@ -1699,6 +1699,10 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    which is where its smallest labels were losing. */
 .hero--stack .hero__inner--stack {
   display: grid;
+  /* The grid's own 32px row gap is the other half of the air above the drawing —
+     zeroing the figure's margin alone leaves it. Spacing between the copy and
+     the drawing is set on the figure, in one place. */
+  gap: 0;
   justify-items: center;
   text-align: center;
 }
@@ -1718,10 +1722,11 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .hero--stack .hero__title,
 .hero--stack .hero__lead { margin-inline: auto; }
 /* The drawing keeps its size and the title keeps the hero's own 88px above it;
-   only the air around the drawing comes in — half the gap above it, and the
-   section's bottom padding well back from 88. */
-.hero--stack .hero__figure { width: 100%; margin-top: var(--space-6); }
-.hero--stack .hero__inner--stack { padding-bottom: 40px; }
+   the air around the drawing is gone entirely. It can carry that: the viewBox
+   starts 40 units in and the artwork sits well inside its own box, so the
+   drawing brings its own margin with it. */
+.hero--stack .hero__figure { width: 100%; margin-top: 0; }
+.hero--stack .hero__inner--stack { padding-bottom: 0; }
 /* Sits under the title rather than beside it, so the fold has a second, quieter
    line to step down through on the way into the page. */
 .hero__lead { margin-top: var(--space-6); max-width: 42ch; }
@@ -1794,7 +1799,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 @media (max-width: 900px) {
   .hero--stack .hero__title { max-width: none; }
   .hero__lead { max-width: var(--measure-body); }
-  .hero--stack .hero__figure { margin-top: var(--space-8); }
+  .hero--stack .hero__figure { margin-top: var(--space-4); }
   .layer-grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
