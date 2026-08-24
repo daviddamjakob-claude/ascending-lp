@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=63">
+<link rel="stylesheet" href="assets/site.css?v=64">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -362,7 +362,11 @@
           .af-flow2 .af-ping-ring{ fill:none; stroke:var(--ink); stroke-width:1.4; }
 
           /* ---- knowledge-layer view ---- */
-          .af-flow2 .af-kb-rect{ fill:var(--fill); stroke:var(--hairline); stroke-width:1; }
+          /* White like the assistant box. It had kept the chip fill to read as a
+             layer rather than an endpoint, but that left it the only grey box in
+             either view, and a filled box is not how this system separates
+             things — surfaces are white and the hairline does the work. */
+          .af-flow2 .af-kb-rect{ fill:var(--surface); stroke:var(--hairline); stroke-width:1; }
           .af-flow2 .af-kb-title{
             font-family:var(--af-font);
             font-size:15px; font-weight:var(--weight-heading); fill:var(--af-ink);
@@ -753,6 +757,6 @@
 
 </div>
 
-<script src="assets/site.js?v=63" defer></script>
+<script src="assets/site.js?v=64" defer></script>
 </body>
 </html>
