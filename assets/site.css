@@ -79,6 +79,10 @@
   --ground-wash:
     radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
     radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+  /* Every wash so far is gradients, which size themselves to the box. The dot
+     ground has a layer that has to tile instead, so the size travels with the
+     wash and each surface sets both. */
+  --ground-size: auto;
 }
 /* The reference's hue on the same two layers — see the swatch note in index.html. */
 .page[data-ground="purple"] {
@@ -96,6 +100,26 @@
   --ground-wash:
     radial-gradient(90% 120% at 95% 0%, rgba(238, 91, 43, 0.30), rgba(238, 91, 43, 0) 62%),
     radial-gradient(80% 110% at 0% 100%, rgba(249, 168, 130, 0.30), rgba(249, 168, 130, 0) 60%);
+}
+
+/* The grey ground again, with a dot field over it. The reference draws its
+   version on a canvas, so there is nothing to copy directly — this is the same
+   idea in the one place our tokens can carry it: a tiled dot, and the fade done
+   by painting the ground back over it.
+
+   Background layers paint first-listed on top, so layer one is the base colour
+   again, opaque at the lower left and clearing by the middle. It does not dim
+   the dots, it covers them, which is what lets the field arrive out of nothing
+   the way the reference's does. The shading sits underneath both, at the upper
+   right where the cover has already gone transparent, so the two never fight. */
+.page[data-ground="dots"] {
+  --ground-base: #fafafa;
+  --ground-wash:
+    radial-gradient(115% 115% at 2% 98%, #fafafa 22%, rgba(250, 250, 250, 0) 72%),
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.17) 1.1px, rgba(0, 0, 0, 0) 1.6px),
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.085), rgba(0, 0, 0, 0) 62%);
+  /* One entry per layer, in the same order. Only the middle one tiles. */
+  --ground-size: auto, 13px 13px, auto;
 }
 
 .dark {
@@ -331,6 +355,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   border-radius: var(--radius-lg);
   background-color: var(--ground-base);
   background-image: var(--ground-wash);
+  background-size: var(--ground-size);
   transition: background-color var(--dur) var(--ease);
 }
 /* Slightly back from the display clamp: at full size the two lines crowded the
@@ -489,6 +514,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   flex-grow: 2.6;
   background-color: var(--ground-base);
   background-image: var(--ground-wash);
+  background-size: var(--ground-size);
 }
 
 /* The system's focus ring is offset and rounded, which floats oddly on a panel
@@ -811,6 +837,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .card--reveal:focus-within {
   background-color: var(--ground-base);
   background-image: var(--ground-wash);
+  background-size: var(--ground-size);
 }
 
 /* Two steps up from .h5-card — at this size the title alone can carry the card. */
@@ -1089,6 +1116,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .link-card:hover, .link-card:focus-visible {
   background-color: var(--ground-base);
   background-image: var(--ground-wash);
+  background-size: var(--ground-size);
   text-decoration: none;
 }
 .link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
