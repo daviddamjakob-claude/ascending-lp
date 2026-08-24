@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=56">
+<link rel="stylesheet" href="assets/site.css?v=57">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -110,24 +110,32 @@
       <div class="af-flow2" role="img" aria-label="Two diagrams comparing a direct MCP connection to source systems versus a knowledge base middleware that aggregates all sources before answering.">
         <style>
           .af-flow2{
-            --af-ink:#131316;
-            --af-ink-soft:#54545c;
-            --af-muted:#8b8b94;
-            --af-line:#000000;
-            --af-panel-bg:#ffffff;
-            --af-panel-border:#e4e4e9;
-            --af-card-bg:#ffffff;
-            --af-card-border:#dcdce2;
-            --af-track-bg:#f0f0f3;
-            --af-font:"Geist","Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-            /* matches the site's own .btn--hero ("Book a founder call"): near-black
-               fill, white label, a squarer 8px corner rather than a full pill, and
-               small tracked uppercase type — see --green-900 / --radius-sm /
-               --tracking-eyebrow / --fs-tiny in the site's design-system tokens. */
-            --af-cta-bg:#06180f;
-            --af-cta-ink:#ffffff;
-            --af-cta-radius:8px;
-            --af-cta-ease:cubic-bezier(0.2,0.6,0.2,1);
+            /* Every one of these now reads the site's semantic layer instead of
+               carrying its own value, so the component follows the page rather
+               than approximating it. The originals are kept in the comments as
+               a record of what was replaced.
+
+               Note --af-muted: the system has one muted ink, not two. The third
+               tier this used (#8b8b94) is gone and de-emphasis is left to the
+               opacity the component already applies to inactive chips. */
+            --af-ink:var(--ink);                 /* was #131316 */
+            --af-ink-soft:var(--ink-muted);      /* was #54545c */
+            --af-muted:var(--ink-muted);         /* was #8b8b94, a third ink */
+            --af-line:var(--ink);
+            --af-panel-bg:var(--surface);
+            --af-panel-border:var(--hairline);   /* was #e4e4e9 */
+            --af-card-bg:var(--surface);
+            --af-card-border:var(--hairline);    /* was #dcdce2 */
+            --af-track-bg:var(--chip);           /* was #f0f0f3 */
+            --af-font:var(--font-sans);
+            /* Matches .btn--hero. It was written against --green-900 (#06180f),
+               which is the identity this page layer neutralises — the accent
+               resolves to black here, so the selected pill was quietly dark
+               green on an otherwise monochrome page. */
+            --af-cta-bg:var(--accent);
+            --af-cta-ink:var(--accent-ink);
+            --af-cta-radius:var(--radius-sm);
+            --af-cta-ease:var(--ease);
             width:100%;
             max-width:1280px;
             margin:0 auto;
@@ -138,10 +146,12 @@
           .af-flow2 .af-panel{
             position:relative;
             width:100%;
-            border-radius:20px;
+            border-radius:var(--radius-lg);
             background:var(--af-panel-bg);
-            border:1px solid var(--af-panel-border);
-            box-shadow:0 16px 40px -24px rgba(20,20,25,0.18);
+            /* The system runs zero box-shadow: depth is an inset hairline ring.
+               This carried a 40px drop shadow and a border; the ring replaces
+               both and costs no layout width. */
+            box-shadow:inset 0 0 0 1px var(--af-panel-border);
             padding:40px 28px 28px;
           }
           .af-flow2 .af-radio{
@@ -154,17 +164,17 @@
             top:20px; right:20px;
             display:flex;
             gap:2px;
-            background:#ffffff;
-            border:1px solid #c4c4cc;
+            background:var(--surface);
+            box-shadow:inset 0 0 0 1px var(--hairline);
             border-radius:calc(var(--af-cta-radius) + 3px);
             padding:3px;
             z-index:2;
           }
           .af-flow2 .af-toggle-opt{
             font-family:var(--af-font);
-            font-size:11px;
-            font-weight:500;
-            letter-spacing:0.08em;
+            font-size:var(--fs-tiny);
+            font-weight:var(--weight-heading);
+            letter-spacing:var(--tracking-eyebrow);
             text-transform:uppercase;
             color:var(--af-ink-soft);
             padding:0.85em 1.1em;
@@ -222,17 +232,20 @@
             display:flex;
             flex-direction:column;
             justify-content:center;
-            background:#ffffff;
-            border:1px solid #c4c4cc;
-            border-radius:16px;
+            background:var(--surface);
+            border-radius:var(--radius-md);
             padding:16px 18px;
-            box-shadow:0 1px 2px rgba(20,20,25,0.05), 0 6px 16px -12px rgba(20,20,25,0.16);
+            box-shadow:inset 0 0 0 1px var(--hairline);
           }
           .af-flow2 .af-bullets-title{
             font-family:var(--af-font);
-            font-size:11px;
-            font-weight:700;
-            letter-spacing:0.02em;
+            /* The system's eyebrow: tiny, tracked, upper case, and 500 like every
+               other heading. It was 11px at 700, a weight the system does not
+               have. */
+            font-size:var(--fs-tiny);
+            font-weight:var(--weight-heading);
+            letter-spacing:var(--tracking-eyebrow);
+            text-transform:uppercase;
             color:var(--af-ink);
             margin:0 0 12px;
           }
@@ -249,9 +262,27 @@
             align-items:flex-start;
             gap:7px;
             font-family:var(--af-font);
-            font-size:10.5px;
-            line-height:1.35;
+            /* 12px, the bottom of the system's scale. It was 10.5, which is off
+               it and below anything else the site sets. */
+            font-size:var(--fs-tiny);
+            line-height:var(--lh-body);
             color:var(--af-ink-soft);
+            /* Padding out, margin back in: the row gets something to highlight
+               without moving from where it sat. */
+            padding:6px 8px;
+            margin:-6px -8px;
+            border-radius:var(--radius-sm);
+            transition:background-color var(--dur) var(--ease),
+                       color var(--dur) var(--ease);
+          }
+          /* The same ground the strip panels and the cards on the landing page
+             lift onto, read from the same tokens, so a bullet answers the pointer
+             with the page's own material rather than a colour of its own. */
+          .af-flow2 .af-bullets li:hover{
+            background-color:var(--ground-base);
+            background-image:var(--ground-wash);
+            background-size:var(--ground-size);
+            color:var(--ink);
           }
           .af-flow2 .af-bullet-icon{ flex:none; margin-top:1.5px; }
           .af-flow2 .af-bullet-icon-con{ color:var(--af-muted); }
@@ -268,28 +299,28 @@
           .af-flow2 .af-chip-rect{ fill:var(--af-card-bg); stroke:var(--af-card-border); stroke-width:1.2; }
           .af-flow2 .af-chip-label{
             font-family:var(--af-font);
-            font-size:13.5px; font-weight:600; fill:var(--af-ink);
+            font-size:13.5px; font-weight:var(--weight-heading); fill:var(--af-ink);
           }
           .af-flow2 .af-chip-muted{ opacity:0.42; }
           .af-flow2 .af-chip-muted .af-chip-rect{ stroke-dasharray:3 4; }
-          .af-flow2 .af-logo-tile{ fill:#ffffff; stroke:var(--af-card-border); stroke-width:1.2; }
+          .af-flow2 .af-logo-tile{ fill:var(--surface); stroke:var(--af-card-border); stroke-width:1.2; }
           .af-flow2 .af-mono{
             font-family:var(--af-font);
-            font-weight:700; fill:#ffffff;
+            font-weight:var(--weight-heading); fill:var(--surface);
           }
           .af-flow2 .af-section-label{
             font-family:var(--af-font);
-            font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+            font-size:11.5px; font-weight:var(--weight-heading); letter-spacing:var(--tracking-eyebrow); text-transform:uppercase;
             fill:var(--af-muted);
           }
           .af-flow2 .af-ast-rect{ fill:var(--af-card-bg); stroke:var(--af-ink); stroke-width:1.4; }
           .af-flow2 .af-ast-title{
             font-family:var(--af-font);
-            font-size:15px; font-weight:700; fill:var(--af-ink);
+            font-size:15px; font-weight:var(--weight-heading); fill:var(--af-ink);
           }
           .af-flow2 .af-ast-label{
             font-family:var(--af-font);
-            font-size:11px; font-weight:600; fill:var(--af-ink-soft);
+            font-size:11px; font-weight:var(--weight-heading); fill:var(--af-ink-soft);
           }
           .af-flow2 .af-ast-sub{
             font-family:var(--af-font);
@@ -297,34 +328,34 @@
           }
 
           /* ---- direct view ---- */
-          .af-flow2 .af-line-base{ fill:none; stroke:#000; stroke-opacity:0.10; stroke-width:1.3; }
-          .af-flow2 .af-line-glow{ fill:none; stroke:#000; stroke-width:1.6; opacity:0; }
-          .af-flow2 .af-line-muted{ fill:none; stroke:#c7c7cf; stroke-width:1.3; stroke-dasharray:1 6; stroke-linecap:round; }
+          .af-flow2 .af-line-base{ fill:none; stroke:var(--ink); stroke-opacity:0.10; stroke-width:1.3; }
+          .af-flow2 .af-line-glow{ fill:none; stroke:var(--ink); stroke-width:1.6; opacity:0; }
+          .af-flow2 .af-line-muted{ fill:none; stroke:var(--hairline); stroke-width:1.3; stroke-dasharray:1 6; stroke-linecap:round; }
           .af-flow2 .af-chip-pulse{ fill:none; stroke:var(--af-ink); stroke-width:1.6; opacity:0; }
           .af-flow2 .af-packet, .af-flow2 .af-packet-ping{ opacity:0; }
-          .af-flow2 .af-packet-core{ fill:#111214; }
-          .af-flow2 .af-packet-glow{ fill:#111214; opacity:0.55; filter:url(#af-blur); }
-          .af-flow2 .af-ping-ring{ fill:none; stroke:#131316; stroke-width:1.4; }
+          .af-flow2 .af-packet-core{ fill:var(--ink); }
+          .af-flow2 .af-packet-glow{ fill:var(--ink); opacity:0.55; filter:url(#af-blur); }
+          .af-flow2 .af-ping-ring{ fill:none; stroke:var(--ink); stroke-width:1.4; }
 
           /* ---- knowledge-layer view ---- */
-          .af-flow2 .af-kb-rect{ fill:#f5f5f7; stroke:var(--af-ink); stroke-width:1.4; }
+          .af-flow2 .af-kb-rect{ fill:var(--chip); stroke:var(--af-ink); stroke-width:1.4; }
           .af-flow2 .af-kb-title{
             font-family:var(--af-font);
-            font-size:15px; font-weight:700; fill:var(--af-ink);
+            font-size:15px; font-weight:var(--weight-heading); fill:var(--af-ink);
           }
           .af-flow2 .af-kb-sub{
             font-family:var(--af-font);
             font-size:11.5px; fill:var(--af-muted);
           }
           .af-flow2 .af-line-kb{
-            fill:none; stroke:#000; stroke-opacity:0.4; stroke-width:1.5;
+            fill:none; stroke:var(--ink); stroke-opacity:0.4; stroke-width:1.5;
             stroke-linecap:round; stroke-dasharray:1 7;
             animation:af2-dash 0.9s linear infinite;
           }
           @keyframes af2-dash{ to{ stroke-dashoffset:-16; } }
           .af-flow2 .af-pill{ opacity:0; }
-          .af-flow2 .af-pill-core{ fill:#111214; }
-          .af-flow2 .af-pill-glow{ fill:#111214; opacity:0.5; filter:url(#af-blur-kb); }
+          .af-flow2 .af-pill-core{ fill:var(--ink); }
+          .af-flow2 .af-pill-glow{ fill:var(--ink); opacity:0.5; filter:url(#af-blur-kb); }
 
           @media (max-width:640px){
             .af-flow2 .af-panel{ padding:40px 16px 22px; }
@@ -690,6 +721,6 @@
 
 </div>
 
-<script src="assets/site.js?v=56" defer></script>
+<script src="assets/site.js?v=57" defer></script>
 </body>
 </html>
