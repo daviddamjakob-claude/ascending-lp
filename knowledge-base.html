@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=68">
+<link rel="stylesheet" href="assets/site.css?v=69">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -84,10 +84,11 @@
 
     <!-- ABOVE THE FOLD -->
     <section class="hero hero--split" id="context-layer">
-      <!-- The same comparison control the landing page carries, and the same
-           script drives it: the choice is stored under one key, so switching
-           here switches there. Goes with the swatch when the ground is settled. -->
-      <div class="hero-swatch" role="group" aria-label="Hero background">
+      <!-- The same comparison control the landing page carries, on its own
+           stored key: the two pages are being judged against each other, so a
+           ground picked here must not follow you there. Goes with the swatch
+           when the ground is settled. -->
+      <div class="hero-swatch" data-ground-key="knowledge-base" role="group" aria-label="Hero background">
         <button class="hero-swatch__opt" type="button" data-hero="grey" aria-current="true">Grey</button>
         <button class="hero-swatch__opt" type="button" data-hero="purple">Purple</button>
         <button class="hero-swatch__opt" type="button" data-hero="orange">Orange</button>
@@ -197,14 +198,18 @@
             
                       <path id="af-kb-link-path-hero" class="af-line-base" d="M670,310 L850,310"/>
                       <path class="af-line-glow" d="M670,310 L850,310">
-              
+                        <animate attributeName="opacity" values="0;0;0.85;0.85;0;0" keyTimes="0;0.00000;0.03571;0.51190;0.54762;1" dur="4.2s" begin="0s" repeatCount="indefinite" />
                       </path>
-            
+                      <g class="af-packet-ping">
+                        <circle class="af-ping-ring" r="6"/>
+                        <animateMotion dur="4.2s" begin="0s" repeatCount="indefinite" keyPoints="1;1;0;0" keyTimes="0;0.00000;0.20238;1" calcMode="linear"><mpath href="#af-kb-link-path-hero"/></animateMotion>
+                        <animate attributeName="opacity" values="0;0;0.9;0.9;0;0" keyTimes="0;0.00000;0.01190;0.19048;0.20238;1" dur="4.2s" begin="0s" repeatCount="indefinite" />
+                      </g>
                       <g class="af-pill" data-anim="1">
                         <ellipse class="af-pill-glow" cx="0" cy="0" rx="13" ry="7"/>
                         <ellipse class="af-pill-core" cx="0" cy="0" rx="7" ry="4"/>
-              
-              
+                        <animateMotion dur="4.2s" begin="0s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.28571;0.54762;1" calcMode="linear"><mpath href="#af-kb-link-path-hero"/></animateMotion>
+                        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.28571;0.30000;0.53333;0.54762;1" dur="4.2s" begin="0s" repeatCount="indefinite" />
                       </g>
 
             
@@ -940,6 +945,6 @@
 
 </div>
 
-<script src="assets/site.js?v=68" defer></script>
+<script src="assets/site.js?v=69" defer></script>
 </body>
 </html>

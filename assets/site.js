@@ -486,7 +486,7 @@
 
 /* Ground swatch — a comparison control, not product chrome. Remove this block
    along with the markup and the .hero-swatch rules once the ground is settled.
-   The choice is remembered so a reload does not undo the comparison.
+   Each page remembers its own choice, so the two can be judged side by side.
 
    The attribute goes on .page rather than the hero: that is where the ground
    tokens are declared, so the hero panel and every element that lifts under the
@@ -498,7 +498,12 @@
   var opts = [].slice.call(document.querySelectorAll('.hero-swatch__opt'));
   if (!page || !opts.length) return;
 
-  var KEY = 'graph0:hero-ground';
+  /* One key per page, named in the markup rather than derived from the URL:
+     the same page answers to both /path/ and /path/index.html, which would
+     split a pathname-keyed choice in two. Pages are compared against each
+     other, so a ground picked on one must not follow you to the next. */
+  var scope = (document.querySelector('.hero-swatch') || {}).dataset;
+  var KEY = 'graph0:hero-ground:' + ((scope && scope.groundKey) || 'default');
 
   /* Grey is the tokens as declared on .page, so it is the absence of the
      attribute rather than a value of it. Every other ground is its own name,
