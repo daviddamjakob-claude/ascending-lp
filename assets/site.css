@@ -214,6 +214,19 @@
 }
 
 /* --------------------------------------------------------------------------
+   Blue accent — landing page, grey grounds only
+
+   A variant treatment rather than a second brand colour: it exists on the two
+   grey options and nowhere else, so switching the ground switches it off. The
+   marks that carry it (the slash, and .hl in three headings) fall back to
+   inherit, which is why they stay black on every other ground and on the other
+   pages, with no per-page rule needed.
+   -------------------------------------------------------------------------- */
+.page[data-page="home"]:not([data-ground]),
+.page[data-page="home"][data-ground="dots"] { --hl: #0000ff; }
+.hl, .brand__slash { color: var(--hl, inherit); }
+
+/* --------------------------------------------------------------------------
    Shell
    -------------------------------------------------------------------------- */
 .wrap { width: min(var(--container), 100% - var(--gutter) * 2); margin-inline: auto; }
@@ -646,6 +659,36 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   --fill: var(--fill-invert);
   --accent-text: var(--ink-invert);
 }
+/* Grey grounds get a flat panel instead of the black one — the same #f2f2f2 the
+   nature and black grounds already use where they need grey without a gradient.
+   Restating the token block is what puts the ink back: without it the panel
+   would be light with white type on it. */
+.page[data-page="home"]:not([data-ground]) .strip:hover .strip__panel:hover,
+.page[data-page="home"]:not([data-ground]) .strip:not(:hover) .strip__panel:focus-visible,
+.page[data-page="home"][data-ground="dots"] .strip:hover .strip__panel:hover,
+.page[data-page="home"][data-ground="dots"] .strip:not(:hover) .strip__panel:focus-visible {
+  background: #f2f2f2;
+  color: var(--ink);
+  --heading: var(--ink);
+  --body: var(--ink-muted);
+  --meta: var(--ink-muted);
+  --line: var(--hairline);
+  --fill: var(--fill);
+  --accent-text: var(--accent);
+}
+.page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__title,
+.page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__title,
+.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__title,
+.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__title { color: var(--ink); }
+.page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__num,
+.page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__body,
+.page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__num,
+.page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__body,
+.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__num,
+.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__body,
+.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__num,
+.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__body { color: var(--ink-muted); }
+
 /* The title and the body name --ink and --ink-muted directly rather than the
    contextual pair, so the flip above cannot reach them. */
 .strip:hover .strip__panel:hover .strip__title,
@@ -985,6 +1028,24 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   --fill: var(--fill-invert);
   --accent-text: var(--ink-invert);
 }
+
+/* Grey grounds drop the fill entirely and mark the active card with a heavier
+   ring — 2px where the resting card carries a hairline. The ring is inset, so
+   nothing in the box model moves and the grid cannot jump. */
+.page[data-page="home"]:not([data-ground]) .card--reveal:hover,
+.page[data-page="home"]:not([data-ground]) .card--reveal:focus-within,
+.page[data-page="home"][data-ground="dots"] .card--reveal:hover,
+.page[data-page="home"][data-ground="dots"] .card--reveal:focus-within {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ink);
+  color: var(--ink);
+  --heading: var(--ink);
+  --body: var(--ink-muted);
+  --meta: var(--ink-muted);
+  --line: var(--hairline);
+  --accent-text: var(--accent);
+}
+.page[data-page="home"] .card--reveal { transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 
 /* Two steps up from .h5-card — at this size the title alone can carry the card. */
 .card-reveal__title {

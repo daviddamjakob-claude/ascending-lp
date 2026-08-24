@@ -17,20 +17,20 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=75">
+<link rel="stylesheet" href="assets/site.css?v=76">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
 
 <a class="skip" href="#main">Skip to content</a>
 
-<div class="page">
+<div class="page" data-page="home">
 
   <!-- The wordmark is the way back to the top of the site, which is why the nav
        carries no entry for this page. -->
   <header class="site-header">
-    <a class="brand" href="#platform" title="graph-zero">
-      graph-zero
+    <a class="brand" href="#platform" title="/graphzero">
+      <span class="brand__slash">/</span>graphzero
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
@@ -66,9 +66,9 @@
            the swatch script once the choice is made. -->
       <div class="hero-swatch" data-ground-key="home" role="group" aria-label="Hero background">
         <button class="hero-swatch__opt" type="button" data-hero="grey" aria-current="true">Grey</button>
+        <button class="hero-swatch__opt" type="button" data-hero="dots">Grey Pattern</button>
         <button class="hero-swatch__opt" type="button" data-hero="purple">Purple</button>
         <button class="hero-swatch__opt" type="button" data-hero="orange">Orange</button>
-        <button class="hero-swatch__opt" type="button" data-hero="dots">Pattern</button>
         <button class="hero-swatch__opt" type="button" data-hero="nature">Nature</button>
         <button class="hero-swatch__opt" type="button" data-hero="black">Black</button>
         <button class="hero-swatch__opt" type="button" data-hero="black-dots">Black pattern</button>
@@ -84,7 +84,7 @@
       <div class="wrap hero__inner">
         <!-- One break, at every width. No measure cap: the break decides the
              first line, so a cap could only force a third one. -->
-        <h1 class="display">The toolbox<br> to deploy enterprise AI</h1>
+        <h1 class="display"><span class="hl">The toolbox</span><br> to deploy enterprise AI</h1>
         <!-- Wider than the system's 46ch lead measure, which breaks this copy
              over four lines. Between 642px and 660px it sets in three with the
              closing sentence alone on the last; 54.6ch is the middle of that
@@ -150,7 +150,7 @@
     <section class="wrap sec" id="solution">
       <span class="eyebrow">02 — Solution</span>
       <hr class="rule">
-      <h2 class="h2 sec-head">Empowering organizations to drive their AI transformation.</h2>
+      <h2 class="h2 sec-head">Empowering organizations to drive their <span class="hl">AI transformation</span>.</h2>
       <p class="lead sec-head__lead sec-head__lead--full">Teams can focus on strategy &amp; change management — we make sure the technology is not the bottleneck and doesn’t push timelines or budget.</p>
 
       <div class="grid-4" style="margin-top:var(--space-12)">
@@ -184,7 +184,7 @@
       <span class="eyebrow">03 — Team &amp; Ecosystem</span>
       <hr class="rule">
       <div class="split split--start split--pt">
-        <h2 class="h2">Made in Europe, for Europe.</h2>
+        <h2 class="h2">Made in <span class="hl">Europe</span>, for <span class="hl">Europe</span>.</h2>
         <div class="lead-group">
           <p class="lead">We are a pan-European team of AI Engineers based in Amsterdam and Berlin. <span class="pop"><button class="pop__trigger" type="button" aria-expanded="false" aria-controls="pop-recruiting">Reach out to us</button><span class="pop__panel" id="pop-recruiting"><span class="pop__value">recruiting@ascending.ai</span><button class="btn pop__copy" type="button" data-copy="recruiting@ascending.ai">Copy email address</button></span></span> if you want to get in contact and discuss current job openings.</p>
           <p class="lead">Our mission is to help European companies strengthen their competitive position in a new environment. While pioneering technology of the next AI era that gets humans and agents to work hand in hand, with the human in full control.</p>
@@ -295,6 +295,6 @@
 
 </div>
 
-<script src="assets/site.js?v=75" defer></script>
+<script src="assets/site.js?v=76" defer></script>
 </body>
 </html>
