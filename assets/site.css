@@ -1342,8 +1342,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   /* Block-level flex, not inline: as an inline box it sat on a line whose height
      came from the parent's strut, which added 4px per entry and put the group
      pitch at 68 instead of 64. */
+  /* Optically aligned, not box-aligned. Every level's layout box sits at 40, but
+     a glyph does not start at its box edge — it starts a side bearing in, and
+     the bearing scales with the type size while the box does not. Measured in
+     Inter Tight: T of Toolbox 0.5px at 24, K of Knowledge Base 0.9px and P/I
+     1.0px at 16, l of lorem 0.7px at 14. So the smaller levels began up to half
+     a pixel right of the row above them — about 1.5 device pixels on a 3x phone,
+     which is small but reads as a drift because the eye lines everything up
+     against the first and largest item.
+
+     Pulled back by the difference so the ink agrees rather than the boxes. Only
+     valid for this face: on a fallback the bearings differ and this becomes a
+     small error in whichever direction that face runs. */
   .nav-entry__label {
     display: flex;
+    margin-left: -0.5px;
     font-size: 16px;
     line-height: 16px;
     letter-spacing: -0.02em;
@@ -1359,13 +1372,19 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   .nav-entry__sub {
     display: block;
     margin-top: 4px;
+    /* Same optical correction as the label, smaller because l carries less
+       bearing at 14px than K does at 16. */
+    margin-left: -0.25px;
     /* A step down from the reference's own 16/24, which set this line at the
        same size as the label above it and left the two too close in weight to
        read as different levels. 14 on 20 keeps the entry compact. */
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.02em;
-    font-weight: 300;
+    /* The reference sets this 300. Our face ships 400 and 500 only, so 300 was
+       quietly resolving to 400 — there is no synthetic light. Stated as what it
+       actually renders, and 400 is the body weight the system runs anyway. */
+    font-weight: 400;
     /* Between the reference's #717680 and the #a4a7ae above it on its ramp.
        #a4a7ae itself is 2.4:1 on white; this holds 3.2:1, which is still under
        AA for text this size — worth knowing once this line carries real copy
