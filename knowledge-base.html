@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=59">
+<link rel="stylesheet" href="assets/site.css?v=60">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -91,9 +91,6 @@
     </section>
 
     <section class="wrap sec" id="architecture">
-      <span class="eyebrow">01 &mdash; Architecture</span>
-      <hr class="rule">
-
       <!-- Imported whole from the source file, markup and scoped styles
            together. Everything it needs is inside it: no script, no external
            asset, the logos inlined as data URIs and the view toggle done with
@@ -166,8 +163,8 @@
             gap:2px;
             background:var(--surface);
             box-shadow:inset 0 0 0 1px var(--hairline);
-            border-radius:calc(var(--af-cta-radius) + 3px);
-            padding:3px;
+            border-radius:calc(var(--af-cta-radius) + 2px);
+            padding:2px;
             z-index:2;
           }
           .af-flow2 .af-toggle-opt{
@@ -177,7 +174,10 @@
             letter-spacing:var(--tracking-eyebrow);
             text-transform:uppercase;
             color:var(--af-ink-soft);
-            padding:0.85em 1.1em;
+            /* The type stays on the scale at 12px; the box around it comes in.
+               This was 0.85/1.1em, which made the control 43px tall and nearly
+               a third of the panel wide for two words. */
+            padding:0.45em 0.7em;
             border-radius:var(--af-cta-radius);
             cursor:pointer;
             white-space:nowrap;
@@ -737,6 +737,6 @@
 
 </div>
 
-<script src="assets/site.js?v=59" defer></script>
+<script src="assets/site.js?v=60" defer></script>
 </body>
 </html>
