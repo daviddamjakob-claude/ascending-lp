@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=82">
+<link rel="stylesheet" href="assets/site.css?v=83">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -467,16 +467,18 @@
              both. Not --ground-base: that is #fafafa, a five-value step off white,
              which reads on a panel the size of the hero and disappears entirely
              on a row twelve pixels tall. The chip is 5% black and actually shows. */
+          /* The same highlight the two layer cards above use: the grey gradient,
+             and nothing drawn around it. */
           .af-flow2 .af-bullets li:hover{
-            background-color:var(--fill);
-            box-shadow:inset 0 0 0 1px var(--hairline);
+            background-color:var(--wash-grey-base);
+            background-image:var(--wash-grey);
             color:var(--ink);
           }
           /* A pointer is not the only way in. The rows are static text, so this
              is for the keyboard and for touch, where :hover is unreliable. */
           .af-flow2 .af-bullets li:focus-within{
-            background-color:var(--fill);
-            box-shadow:inset 0 0 0 1px var(--hairline);
+            background-color:var(--wash-grey-base);
+            background-image:var(--wash-grey);
             color:var(--ink);
           }
           .af-flow2 .af-bullet-icon{ flex:none; margin-top:1.5px; }
@@ -1055,6 +1057,6 @@
 
 </div>
 
-<script src="assets/site.js?v=82" defer></script>
+<script src="assets/site.js?v=83" defer></script>
 </body>
 </html>

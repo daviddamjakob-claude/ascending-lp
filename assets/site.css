@@ -143,11 +143,22 @@
 .page[data-ground="dots"] {
   --ground-base: #fafafa;
   --ground-wash:
-    radial-gradient(115% 115% at 2% 98%, #fafafa 22%, rgba(250, 250, 250, 0) 72%),
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.17) 1.1px, rgba(0, 0, 0, 0) 1.6px),
+    /* The cover. It used to sit on the bottom-left corner, which cleared the
+       floor of the panel but left the field running all the way into the top
+       left, over the headline. Centred on the left edge instead, so the whole
+       column the copy sits in is clean top to bottom and the field arrives
+       from the right. */
+    radial-gradient(110% 160% at -5% 50%, #fafafa 18%, rgba(250, 250, 250, 0) 65%),
+    /* A soft light over the field at the upper right, which is what gives the
+       reference its bloom — the dots stay drawn there and are washed out rather
+       than removed. Above the dots, below the cover. */
+    radial-gradient(42% 52% at 76% 14%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 72%),
+    /* A shade larger and darker than before, and on a slightly wider pitch, so
+       the field reads as a drawn grid rather than as texture. */
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.20) 1.25px, rgba(0, 0, 0, 0) 1.75px),
     radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.085), rgba(0, 0, 0, 0) 62%);
-  /* One entry per layer, in the same order. Only the middle one tiles. */
-  --ground-size: auto, 13px 13px, auto;
+  /* One entry per layer, in the same order. Only the dots tile. */
+  --ground-size: auto, auto, 14px 14px, auto;
 }
 
 /* A photograph in the hero, and everywhere else a flat grey. The wash is the
@@ -184,10 +195,11 @@
   --ground-size: auto;
   --hero-base: #0a0a0a;
   --hero-wash:
-    radial-gradient(115% 115% at 2% 98%, #0a0a0a 22%, rgba(10, 10, 10, 0) 72%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.20) 1.1px, rgba(255, 255, 255, 0) 1.6px),
+    radial-gradient(110% 160% at -5% 50%, #0a0a0a 18%, rgba(10, 10, 10, 0) 65%),
+    radial-gradient(42% 52% at 76% 14%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 1.25px, rgba(255, 255, 255, 0) 1.75px),
     radial-gradient(90% 120% at 95% 0%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 62%);
-  --hero-size: auto, 13px 13px, auto;
+  --hero-size: auto, auto, 14px 14px, auto;
 }
 
 /* The fold is the one place the contextual tokens are re-declared per ground.
@@ -547,6 +559,23 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   gap: var(--space-8);
   justify-items: start;
 }
+/* The landing fold alone. The Knowledge Base one is a stack that has to end
+   inside the first screen and cannot afford this. */
+.page[data-page="home"] .hero__inner { padding-block: clamp(5rem, 14vh, 10rem); }
+/* Only where there is an accent to draw it in — the other five grounds have no
+   blue, and a black version of this would be a second mark competing with the
+   wordmark. Sized down a step on a phone, where 134px of it would be a third of
+   the screen width. */
+.hero__mark { display: none; }
+.page[data-page="home"]:not([data-ground]) .hero__mark,
+.page[data-page="home"][data-ground="dots"] .hero__mark {
+  display: block;
+  width: clamp(84px, 9vw, 134px);
+  height: auto;
+  margin-bottom: var(--space-4);
+  fill: var(--hl);
+}
+
 .hero__cta { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
 /* The reference's call to action: a squarer corner than the system's pill, and
    the label set small, spaced and upper case so it reads as a control rather
@@ -1935,6 +1964,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
      the ends: neither binds between 306px and the 760px breakpoint. */
   .hero .display { font-size: clamp(1.75rem, 9.15vw, 4.5rem); }
   .hero__inner { gap: var(--space-12); }
+  /* The extra air is a desktop instruction. On a phone the fold is already the
+     whole screen, so it keeps the padding it had. */
+  .page[data-page="home"] .hero__inner { padding-block: clamp(4rem, 11vh, 7.5rem); }
   .sec { padding-top: var(--section-md); }
   .site-footer { flex-direction: column; align-items: flex-start; }
 }

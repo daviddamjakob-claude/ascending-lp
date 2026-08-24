@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=82">
+<link rel="stylesheet" href="assets/site.css?v=83">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -82,6 +82,17 @@
                    assets/media/hero-fields-2400.jpg 2400w"
            sizes="100vw" width="2400" height="1018" loading="lazy" decoding="async">
       <div class="wrap hero__inner">
+        <!-- Three ascending bars, and decoration rather than content: the
+             wordmark in the header is what names the company, so this carries
+             no label and is hidden from the reader of the page. Painted in the
+             accent, which means it only appears on the two grey grounds — on
+             the others there is no accent for it to be. -->
+        <svg class="hero__mark" viewBox="0 0 134 117" width="134" height="117"
+             aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="25" height="19"/>
+          <rect x="0" y="37" width="67" height="25"/>
+          <rect x="0" y="78" width="134" height="39"/>
+        </svg>
         <!-- One break, at every width. No measure cap: the break decides the
              first line, so a cap could only force a third one. -->
         <h1 class="display"><span class="hl">The toolbox</span><br> to deploy enterprise AI</h1>
@@ -295,6 +306,6 @@
 
 </div>
 
-<script src="assets/site.js?v=82" defer></script>
+<script src="assets/site.js?v=83" defer></script>
 </body>
 </html>
