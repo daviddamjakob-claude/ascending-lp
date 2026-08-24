@@ -95,6 +95,15 @@
      wash and each surface sets both. */
   --ground-size: auto;
 
+  /* The same wash as the default grey ground, but pinned rather than switched:
+     the row highlights on the Knowledge Base page are grey whatever the fold
+     is set to. Deliberately a shade below --ground-base — #fafafa is a 2%
+     shift on white and disappears on a row this short. */
+  --wash-grey-base: #f4f4f4;
+  --wash-grey:
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 0, 0.045), rgba(0, 0, 0, 0) 60%);
+
   /* The hero followed the ground until a ground wanted a black fold over grey
      hover surfaces. It has its own set now, defaulting to the ground's, so the
      four grounds that keep them identical say nothing and only the two that
@@ -223,7 +232,9 @@
    pages, with no per-page rule needed.
    -------------------------------------------------------------------------- */
 .page[data-page="home"]:not([data-ground]),
-.page[data-page="home"][data-ground="dots"] { --hl: #0000ff; }
+.page[data-page="home"][data-ground="dots"],
+.page[data-page="knowledge-base"]:not([data-ground]),
+.page[data-page="knowledge-base"][data-ground="dots"] { --hl: #0000ff; }
 .hl, .brand__slash { color: var(--hl, inherit); }
 
 /* --------------------------------------------------------------------------
@@ -1644,27 +1655,31 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   letter-spacing: var(--tracking-h3);
 }
 
-/* The landing hero stacks one column and ranges left. This one is a pair: the
-   claim on the left, the drawing on the right, both centred against each other
-   so the title sits opposite the middle of the diagram rather than its top. */
-.hero--split .hero__inner--split {
-  /* Weighted to the drawing, not evenly. The title is capped at 18ch and needs
-     no more than it gets; the diagram is 1100 units wide and every pixel it is
-     given comes straight off the size of its labels. */
-  grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
-  gap: var(--space-12);
-  align-items: center;
-  justify-items: stretch;
+/* The claim over the drawing rather than beside it. The pair capped the title
+   at 60px and the diagram at two thirds of the page; stacked, the title runs at
+   the landing page's own display size and the drawing gets the full container,
+   which is where its smallest labels were losing. */
+.hero--stack .hero__inner--stack {
+  display: grid;
+  justify-items: center;
+  text-align: center;
 }
-/* Well back from the landing page's 84px — this title carries nine words in a
-   column a little under half the page — but it has to stay ahead of the section
-   headings below it, or the fold reads as the smallest thing on the page. The
-   split is what caps it: every pixel the title takes comes off the diagram,
-   whose labels are already the tightest type here. */
-.hero--split .hero__title {
+/* Same size it ran at beside the drawing. Stacked it could take the landing
+   page's full 84px, but the section headings under it are at 32 and the fold
+   would then be shouting at them across the gap. */
+.hero--stack .hero__title {
   font-size: clamp(2.25rem, 4.7vw, 3.75rem);
-  max-width: 20ch;
+  max-width: 22ch;
 }
+/* Wider than the 46ch body measure: centred, three lines reads as a second
+   statement under the claim, where five would read as a paragraph. */
+.hero--stack .hero__lead { max-width: 54ch; }
+/* The copy block is what the grid centres; these are ordinary blocks inside it,
+   so without this they keep their max-width but sit hard left inside a
+   full-width parent, with only their text ranged centre. */
+.hero--stack .hero__title,
+.hero--stack .hero__lead { margin-inline: auto; }
+.hero--stack .hero__figure { width: 100%; margin-top: var(--space-12); }
 /* Sits under the title rather than beside it, so the fold has a second, quieter
    line to step down through on the way into the page. */
 .hero__lead { margin-top: var(--space-6); max-width: 42ch; }
@@ -1672,6 +1687,18 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   margin: 0;
   padding: var(--space-4);
   border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+/* Stacked, the drawing sits on the ground itself — the plate that made sense
+   beside the title reads as a box drawn around nothing once it is the width of
+   the page. It comes back on the three grounds that need it: without a white
+   surface under them the drawing's muted labels sit on near-black. */
+.hero--stack .hero__figure { padding: 0; background: none; box-shadow: none; }
+.page[data-ground="nature"] .hero--stack .hero__figure,
+.page[data-ground="black"] .hero--stack .hero__figure,
+.page[data-ground="black-dots"] .hero--stack .hero__figure {
+  padding: var(--space-4);
   background: var(--surface);
   box-shadow: inset 0 0 0 1px var(--hairline);
 }
@@ -1713,14 +1740,15 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 .layer-list li:hover,
 .layer-list li:focus-within {
-  background-color: var(--fill);
+  background-color: var(--wash-grey-base);
+  background-image: var(--wash-grey);
   box-shadow: inset 0 0 0 1px var(--hairline);
 }
 
 @media (max-width: 900px) {
-  .hero--split .hero__inner--split { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
-  .hero--split .hero__title { max-width: none; }
+  .hero--stack .hero__title { max-width: none; }
   .hero__lead { max-width: var(--measure-body); }
+  .hero--stack .hero__figure { margin-top: var(--space-8); }
   .layer-grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
@@ -1758,17 +1786,19 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   /* Pulled out by the same amount the padding adds, so the rows keep the page
      column while still having somewhere to put a highlight. */
   margin-inline: calc(var(--space-6) * -1);
+  /* Between the rows only — the list opens straight off the heading and closes
+     on the last row, so it reads as five things rather than as a boxed table. */
   border-top: 1px solid var(--hairline);
   transition: background-color var(--dur) var(--ease);
 }
-.cap:last-child { border-bottom: 1px solid var(--hairline); }
-/* The ground, like the strip panels and the cards on the landing page: these
-   are large enough surfaces for it to read, and it follows the switch. */
+.cap:first-child { border-top: 0; }
+/* Grey whatever the fold is set to, unlike the landing page's panels: this list
+   is far enough down that a highlight matching the hero reads as a coincidence
+   rather than as the same switch. */
 .cap:hover,
 .cap:focus-within {
-  background-color: var(--ground-base);
-  background-image: var(--ground-wash);
-  background-size: var(--ground-size);
+  background-color: var(--wash-grey-base);
+  background-image: var(--wash-grey);
 }
 .cap__head { display: grid; gap: var(--space-4); align-content: start; }
 .cap__title {
@@ -1786,6 +1816,13 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 @media (max-width: 760px) {
   .cap { padding: var(--space-6) var(--space-4); margin-inline: calc(var(--space-4) * -1); }
+}
+/* The comparison leaves the page on a phone. It is 1100 units of small type and
+   thin rules around a control that swaps between two of them; at this width the
+   drawing either scales until its labels are unreadable or scrolls sideways,
+   and the section is the drawing. The fold's copy of it stays. */
+@media (max-width: 640px) {
+  #architecture { display: none; }
 }
 
 /* --------------------------------------------------------------------------

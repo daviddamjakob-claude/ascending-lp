@@ -17,14 +17,14 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=76">
+<link rel="stylesheet" href="assets/site.css?v=77">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
 
 <a class="skip" href="#main">Skip to content</a>
 
-<div class="page">
+<div class="page" data-page="knowledge-base">
 
   <!-- The wordmark is the way back to the top of the site, which is why the nav
        carries no entry for this page. -->
@@ -60,7 +60,7 @@
   <main id="main">
 
     <!-- ABOVE THE FOLD -->
-    <section class="hero hero--split" id="context-layer">
+    <section class="hero hero--stack" id="context-layer">
       <!-- The same comparison control the landing page carries, on its own
            stored key: the two pages are being judged against each other, so a
            ground picked here must not follow you there. Goes with the swatch
@@ -82,9 +82,9 @@
                    assets/media/hero-fields-1600.jpg 1600w,
                    assets/media/hero-fields-2400.jpg 2400w"
            sizes="100vw" width="2400" height="1018" loading="lazy" decoding="async">
-      <div class="wrap hero__inner hero__inner--split">
+      <div class="wrap hero__inner hero__inner--stack">
         <div class="hero__copy">
-          <h1 class="display hero__title">Context that makes enterprise AI powerful and sovereign</h1>
+          <h1 class="display hero__title"><span class="hl">Context</span> that makes enterprise AI powerful and sovereign</h1>
           <!-- The fold used to be a title alone, which left it lighter than the
                section heading underneath it. The sub-title gives the claim a
                second beat and hands the reader down into the page. -->
@@ -248,7 +248,7 @@
         <article class="layer-card">
           <span class="eyebrow">Knowledge Base</span>
           <hr class="rule">
-          <p class="layer-card__role">What makes it trustworthy.</p>
+          <p class="layer-card__role">What makes it <span class="hl">trustworthy</span>.</p>
           <ul class="layer-list">
           <li><strong>Universal integration.</strong> Connects to every system that holds company knowledge — including tools like AFAS and DATEV that have no off-the-shelf MCP.</li>
           <li><strong>Full control, current and compounding.</strong> You own everything — the knowledge you start with, and everything the AI compounds on top of it — never the vendor.</li>
@@ -484,10 +484,19 @@
           .af-flow2 .af-bullet-icon-pro{ color:var(--af-ink); }
           .af-flow2 .af-bullets li span{ padding-top:0.5px; }
 
+          /* The card is pinned to the AI-assistant box's centre, which works only
+             while the drawing is the taller of the two. Below this the card wins
+             and the pin pushes its top above the row — far enough at 960px to
+             touch the toggle sitting over it. It goes back into the flow here and
+             hangs from the top of the column, which keeps the row's own gap under
+             the control. */
+          @media (max-width:1100px){
+            .af-flow2 .af-bullets-anchor{ position:static; }
+            .af-flow2 .af-bullets-col{ position:static; transform:none; }
+          }
           @media (max-width:760px){
             .af-flow2 .af-row{ flex-direction:column; align-items:stretch; }
-            .af-flow2 .af-bullets-anchor{ position:static; }
-            .af-flow2 .af-bullets-col{ position:static; transform:none; margin-top:4px; }
+            .af-flow2 .af-bullets-col{ margin-top:4px; }
           }
 
           /* ---- shared node / chip styling ---- */
@@ -583,12 +592,6 @@
             .af-flow2{ --af-pad-x:16px; }
             .af-flow2 .af-panel{ padding-top:20px; padding-bottom:22px; }
             .af-flow2 .af-toggle{ margin-bottom:12px; }
-            /* The drawing leaves the page here. It is 1100 units of small type
-               and thin rules; at this width it either scales until the labels
-               are unreadable or scrolls sideways, and neither is worth the
-               room. The toggle and the bullets carry the same comparison in
-               words, which is what survives the size. */
-            .af-flow2 .af-diagram-col{ display:none; }
             /* The toggle's own size is no longer restated here: this block was
                putting the padding and the font back up to 7px/11.5 on exactly
                the screens where the control is tightest. */
@@ -947,12 +950,7 @@
     <section class="wrap sec" id="capabilities">
       <span class="eyebrow">Technical capabilities</span>
       <hr class="rule">
-      <div class="split split--start split--pt">
-        <h2 class="h2">Knowledge in one system, owned by you</h2>
-        <div class="lead-group">
-          <p class="lead">Most AI tools search a folder. This is a knowledge graph &mdash; it ingests your organization&rsquo;s knowledge, resolves it into a single structure, reasons across it, and keeps proving it&rsquo;s right. Five layers, working together.</p>
-        </div>
-      </div>
+      <h2 class="h2 sec-head">Knowledge in one system, owned by you</h2>
 
       <!-- One row per layer: the label and the claim on the left, what it is
            made of on the right. An ordered list because the five are a sequence
@@ -1057,6 +1055,6 @@
 
 </div>
 
-<script src="assets/site.js?v=76" defer></script>
+<script src="assets/site.js?v=77" defer></script>
 </body>
 </html>
