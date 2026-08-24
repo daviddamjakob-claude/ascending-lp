@@ -275,10 +275,6 @@ html { scroll-behavior: smooth; }
   flex: none;
 }
 .brand:hover { text-decoration: none; }
-/* base.css sets height:auto on every img, so both axes are pinned here or the
-   mark collapses to its intrinsic ratio against a fixed width. */
-.brand__mark { width: 1.5rem; height: 1.5rem; flex: none; }
-
 /* Emphasis inside copy. The system runs one heading weight, so this is 500 and
    the heading ink rather than the browser's 700. */
 .page strong { font-weight: var(--weight-heading); color: var(--heading); }
