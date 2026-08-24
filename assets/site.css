@@ -291,7 +291,11 @@ html { scroll-behavior: smooth; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  /* 0.6rem when this was a mark beside a wordmark. The mark is gone and the
+     slash is part of the word, so the gap was setting the two apart as if they
+     were still two things — and a bare text node is an anonymous flex item, so
+     it took the gap too. */
+  gap: 0;
   font-size: 1.375rem;
   font-weight: var(--weight-heading);
   letter-spacing: var(--tracking-h2);
@@ -699,6 +703,15 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__body,
 .page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__num,
 .page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__body { color: var(--ink-muted); }
+
+/* The tags carry the accent in 01, ring and all. They read at rest, not only
+   under the pointer, so this is not scoped to the hover — it is what the
+   section's chips are on these two grounds. */
+.page[data-page="home"]:not([data-ground]) .strip__tags .chip-outline,
+.page[data-page="home"][data-ground="dots"] .strip__tags .chip-outline {
+  color: var(--hl);
+  box-shadow: inset 0 0 0 1px var(--hl);
+}
 
 /* The title and the body name --ink and --ink-muted directly rather than the
    contextual pair, so the flip above cannot reach them. */
@@ -1344,6 +1357,31 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
 }
+/* Grey grounds mark the whole card instead of the title. An inset shadow on the
+   card would be painted under its own children, so the photograph at the foot
+   would eat the bottom of the ring — this is an overlay on top of everything,
+   which is what makes it read as one border around one card. */
+.page[data-page="home"]:not([data-ground]) .link-card,
+.page[data-page="home"][data-ground="dots"] .link-card { position: relative; }
+.page[data-page="home"]:not([data-ground]) .link-card::after,
+.page[data-page="home"][data-ground="dots"] .link-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+}
+.page[data-page="home"]:not([data-ground]) .link-card:hover::after,
+.page[data-page="home"]:not([data-ground]) .link-card:focus-visible::after,
+.page[data-page="home"][data-ground="dots"] .link-card:hover::after,
+.page[data-page="home"][data-ground="dots"] .link-card:focus-visible::after { opacity: 1; }
+.page[data-page="home"]:not([data-ground]) .link-card:hover .h4-card,
+.page[data-page="home"]:not([data-ground]) .link-card:focus-visible .h4-card,
+.page[data-page="home"][data-ground="dots"] .link-card:hover .h4-card,
+.page[data-page="home"][data-ground="dots"] .link-card:focus-visible .h4-card { text-decoration: none; }
 .link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
 /* base.css sets height:auto on every img, so the fill is pinned here. Greyscale
    keeps borrowed photography inside the page's monochrome identity. */
