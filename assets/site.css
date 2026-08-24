@@ -94,6 +94,14 @@
      ground has a layer that has to tile instead, so the size travels with the
      wash and each surface sets both. */
   --ground-size: auto;
+
+  /* The hero followed the ground until a ground wanted a black fold over grey
+     hover surfaces. It has its own set now, defaulting to the ground's, so the
+     four grounds that keep them identical say nothing and only the two that
+     split them declare both. */
+  --hero-base: var(--ground-base);
+  --hero-wash: var(--ground-wash);
+  --hero-size: var(--ground-size);
 }
 /* The reference's hue on the same two layers — see the swatch note in index.html. */
 .page[data-ground="purple"] {
@@ -144,6 +152,52 @@
   --ground-base: #f2f2f2;
   --ground-wash: none;
   --ground-size: auto;
+}
+
+/* A black fold over the same flat grey. Worth saying plainly: the system allows
+   one dark block per page and the page already spends it on Security and the
+   outro, so these two grounds put a second one at the top. That is the thing to
+   judge when picking between them, not the black itself. */
+.page[data-ground="black"] {
+  --ground-base: #f2f2f2;
+  --ground-wash: none;
+  --ground-size: auto;
+  --hero-base: #000000;
+  --hero-wash: none;
+  --hero-size: auto;
+}
+/* The dot ground inverted — same three layers and the same fade, with the cover
+   in the panel's own black and the dots in white at a lower alpha, since light
+   on dark reads stronger than dark on light at the same value. */
+.page[data-ground="black-dots"] {
+  --ground-base: #f2f2f2;
+  --ground-wash: none;
+  --ground-size: auto;
+  --hero-base: #0a0a0a;
+  --hero-wash:
+    radial-gradient(115% 115% at 2% 98%, #0a0a0a 22%, rgba(10, 10, 10, 0) 72%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.20) 1.1px, rgba(255, 255, 255, 0) 1.6px),
+    radial-gradient(90% 120% at 95% 0%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 62%);
+  --hero-size: auto, 13px 13px, auto;
+}
+
+/* The fold is the one place the contextual tokens are re-declared per ground.
+   Same set the .dark block re-declares, so the hero inverts by the same route
+   the rest of the page does rather than by recolouring its parts. */
+.page[data-ground="black"] .hero__inner,
+.page[data-ground="black-dots"] .hero__inner {
+  color: var(--ink-invert);
+  --heading: var(--ink-invert);
+  --body: var(--ink-muted-invert);
+  --meta: rgba(255, 255, 255, 0.55);
+  --line: rgba(255, 255, 255, 0.22);
+}
+/* The call to action is a black box with white type, which on this ground would
+   be a hole. It swaps rather than inverting its ink alone. */
+.page[data-ground="black"] .hero .btn--hero,
+.page[data-ground="black-dots"] .hero .btn--hero {
+  background: var(--ink-invert);
+  color: var(--ink);
 }
 
 .dark {
@@ -377,9 +431,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   inset: var(--space-2);
   z-index: 0;
   border-radius: var(--radius-lg);
-  background-color: var(--ground-base);
-  background-image: var(--ground-wash);
-  background-size: var(--ground-size);
+  background-color: var(--hero-base);
+  background-image: var(--hero-wash);
+  background-size: var(--hero-size);
   transition: background-color var(--dur) var(--ease);
 }
 
@@ -1488,11 +1542,19 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
     background: linear-gradient(100deg, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.82) 45%, rgba(255, 255, 255, 0.68) 100%);
   }
 
-  /* Five options no longer fit the panel at this width. Wraps as a last resort
-     rather than overflowing, and the row is right-aligned so a wrapped line
-     stays under the one above it. Scaffolding — it goes with the swatch. */
-  .hero-swatch { flex-wrap: wrap; justify-content: flex-end; max-width: calc(100% - var(--space-2) * 2 - var(--space-4) * 2); }
-  .hero-swatch__opt { padding: 0.3rem 0.5rem; }
+  /* Seven options cannot fit a phone, and wrapping them was worse than
+     overflowing: two stacked rows of pills read as a broken menu rather than as
+     one control. It stays a single row and scrolls, which is a shape people
+     already know. Scaffolding — it goes with the swatch. */
+  .hero-swatch {
+    flex-wrap: nowrap;
+    max-width: calc(100% - var(--space-2) * 2 - var(--space-4) * 2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hero-swatch::-webkit-scrollbar { display: none; }
+  .hero-swatch__opt { padding: 0.3rem 0.5rem; flex: none; }
 
   /* Sized so the second line, "to deploy enterprise AI", holds on one row: the
      headline keeps the two lines it has on desktop instead of breaking into
