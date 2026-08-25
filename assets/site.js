@@ -693,3 +693,42 @@
 
   paint();
 })();
+
+/* Hero mark comparison. Two drawings, one shown at a time, remembered so the
+   choice survives a reload while it is being lived with. Scaffolding: remove
+   this block with the .hero__marks markup and rules once a mark is picked. */
+(function () {
+  'use strict';
+
+  var stage = document.querySelector('[data-mark-switch]');
+  if (!stage) return;
+  var marks = [].slice.call(stage.querySelectorAll('.hero__mark'));
+  if (marks.length < 2) return;
+
+  var KEY = 'graph0:hero-mark';
+  var index = 0;
+
+  /* A stored name with no drawing left falls back to the first, so removing a
+     mark cannot strand the fold on nothing. */
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  marks.forEach(function (m, i) { if (m.dataset.mark === saved) index = i; });
+
+  function apply() {
+    marks.forEach(function (m, i) {
+      if (i === index) m.setAttribute('data-current', 'true');
+      else m.removeAttribute('data-current');
+    });
+    try { localStorage.setItem(KEY, marks[index].dataset.mark); } catch (e) {}
+  }
+
+  apply();
+
+  stage.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-mark-step]');
+    if (!btn) return;
+    var step = parseInt(btn.dataset.markStep, 10) || 1;
+    index = (index + step + marks.length) % marks.length;
+    apply();
+  });
+})();

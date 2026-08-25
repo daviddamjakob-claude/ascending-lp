@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=87">
+<link rel="stylesheet" href="assets/site.css?v=88">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -94,12 +94,35 @@
              no label and is hidden from the reader of the page. Painted in the
              accent, which means it only appears on the two grey grounds — on
              the others there is no accent for it to be. -->
-        <svg class="hero__mark" viewBox="0 0 134 117" width="134" height="117"
-             aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="25" height="19"/>
-          <rect x="0" y="37" width="67" height="25"/>
-          <rect x="0" y="78" width="134" height="39"/>
-        </svg>
+        <!-- Two marks under comparison. Same 134x117 box and the same solid
+             blocks, built two ways: stacked bars that widen, and a diagonal
+             stair that echoes the slash in the wordmark. The arrows are
+             scaffolding for the decision — drop them, the second <svg> and the
+             .hero__marks rules once one wins. -->
+        <div class="hero__marks" data-mark-switch>
+          <div class="hero__mark-stage">
+            <svg class="hero__mark" data-mark="bars" viewBox="0 0 134 117"
+                 width="134" height="117" aria-hidden="true" focusable="false"
+                 xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="0" width="25" height="19"/>
+              <rect x="0" y="37" width="67" height="25"/>
+              <rect x="0" y="78" width="134" height="39"/>
+            </svg>
+            <svg class="hero__mark" data-mark="stair" viewBox="0 0 134 117"
+                 width="134" height="117" aria-hidden="true" focusable="false"
+                 xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="78" width="39" height="39"/>
+              <rect x="47" y="39" width="39" height="39"/>
+              <rect x="95" y="0" width="39" height="39"/>
+            </svg>
+          </div>
+          <div class="hero__mark-nav">
+            <button class="hero__mark-arrow" type="button" data-mark-step="-1"
+                    aria-label="Previous logo option">&lsaquo;</button>
+            <button class="hero__mark-arrow" type="button" data-mark-step="1"
+                    aria-label="Next logo option">&rsaquo;</button>
+          </div>
+        </div>
         <!-- One break, at every width. No measure cap: the break decides the
              first line, so a cap could only force a third one. -->
         <h1 class="display"><span class="hl">The toolbox</span><br> to deploy enterprise AI</h1>
@@ -313,6 +336,6 @@
 
 </div>
 
-<script src="assets/site.js?v=87" defer></script>
+<script src="assets/site.js?v=88" defer></script>
 </body>
 </html>
