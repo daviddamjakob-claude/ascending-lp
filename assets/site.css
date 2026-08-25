@@ -1544,20 +1544,35 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   color: var(--heading);
   text-wrap: pretty;
 }
-/* One of the three modules is shipping and links out; the other two are only
-   labelled. The underline sits on the title rather than a "read more" line
-   under it, so the heading is the target and the difference between a live
-   module and a coming one is visible without reading the label. */
+/* One of the three modules is shipping and links out. The arrow carries the
+   affordance so the heading can stay a clean line of type at rest; the
+   underline is drawn in only under the pointer. Underline rather than a
+   border, so it follows the words if the title ever wraps. */
 .showcase__link {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.16em;
-  transition: text-decoration-color var(--dur-fast) var(--ease);
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.showcase__link:hover, .showcase__link:focus-visible {
-  text-decoration-color: currentColor;
+/* Kept out of the underline and off the line box: inline-block so it can move,
+   and its own margin so the arrow never picks up the rule under the words. */
+.showcase__link::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 0.3em;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease);
+}
+.showcase__link:hover, .showcase__link:focus-visible { color: var(--hl, inherit); }
+.showcase__link:hover { text-decoration-color: currentColor; }
+.showcase__link:hover::after, .showcase__link:focus-visible::after {
+  transform: translateX(0.2em);
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase__link::after { transition: none; }
+  .showcase__link:hover::after, .showcase__link:focus-visible::after { transform: none; }
 }
 .showcase__body { max-width: 46ch; color: var(--body); }
 
