@@ -1544,6 +1544,21 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   color: var(--heading);
   text-wrap: pretty;
 }
+/* One of the three modules is shipping and links out; the other two are only
+   labelled. The underline sits on the title rather than a "read more" line
+   under it, so the heading is the target and the difference between a live
+   module and a coming one is visible without reading the label. */
+.showcase__link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+  transition: text-decoration-color var(--dur-fast) var(--ease);
+}
+.showcase__link:hover, .showcase__link:focus-visible {
+  text-decoration-color: currentColor;
+}
 .showcase__body { max-width: 46ch; color: var(--body); }
 
 .showcase__visual {
