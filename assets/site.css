@@ -1501,6 +1501,67 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 /* Space held for something not built yet. Same flat grey the knowledge-base
    panel uses for its media slot, labelled so it reads as reserved rather than
    as a component that failed to load. */
+/* --------------------------------------------------------------------------
+   Showcase — modules read down the left, one visual holds the right.
+
+   No cards here: the items are separated by hairlines only, which is what lets
+   three long descriptions sit in a column without turning into a wall of
+   boxes. The visual stretches to the height of the list rather than sitting at
+   a fixed size, so the two columns finish together whatever the copy does.
+   -------------------------------------------------------------------------- */
+.showcase { display: grid; gap: var(--space-12); align-items: stretch; }
+@media (min-width: 900px) {
+  .showcase { grid-template-columns: 0.85fr 1fr; }
+}
+.showcase__text { display: grid; align-content: start; }
+
+/* The head sits above both columns rather than over the left one, so it runs
+   the container width on one line — and the two columns below start level,
+   which takes a heading's worth of height out of the visual. */
+.showcase__head { margin-bottom: var(--space-12); }
+.showcase__list { margin-top: 0; }
+
+.showcase__item {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--line);
+}
+.showcase__item:last-child { border-bottom: 1px solid var(--line); }
+
+.showcase__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-tiny);
+  line-height: var(--lh-body);
+  text-transform: uppercase;
+  color: var(--meta);
+}
+.showcase__title {
+  font-size: clamp(1.375rem, 0.8vw + 1.1rem, 1.75rem);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--tracking-h3);
+  font-weight: var(--weight-heading);
+  color: var(--heading);
+  text-wrap: pretty;
+}
+.showcase__body { max-width: 46ch; color: var(--body); }
+
+.showcase__visual {
+  position: relative;
+  min-height: 32rem;
+  border-radius: var(--radius-lg);
+  background: #ececec;
+  overflow: hidden;
+}
+.showcase__caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--space-4);
+  text-align: center;
+  font-size: var(--fs-tiny);
+  color: var(--meta);
+}
+
 .placeholder {
   display: grid;
   place-items: center;
