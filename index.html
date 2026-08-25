@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=88">
+<link rel="stylesheet" href="assets/site.css?v=89">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -95,8 +95,8 @@
              accent, which means it only appears on the two grey grounds — on
              the others there is no accent for it to be. -->
         <!-- Two marks under comparison. Same 134x117 box and the same solid
-             blocks, built two ways: stacked bars that widen, and a diagonal
-             stair that echoes the slash in the wordmark. The arrows are
+             blocks, built two ways: bars that widen down the stack, and bars
+             held to one width that thicken instead. The arrows are
              scaffolding for the decision — drop them, the second <svg> and the
              .hero__marks rules once one wins. -->
         <div class="hero__marks" data-mark-switch>
@@ -108,12 +108,12 @@
               <rect x="0" y="37" width="67" height="25"/>
               <rect x="0" y="78" width="134" height="39"/>
             </svg>
-            <svg class="hero__mark" data-mark="stair" viewBox="0 0 134 117"
-                 width="134" height="117" aria-hidden="true" focusable="false"
+            <svg class="hero__mark" data-mark="rules" viewBox="0 0 134 128"
+                 width="134" height="128" aria-hidden="true" focusable="false"
                  xmlns="http://www.w3.org/2000/svg">
-              <rect x="0" y="78" width="39" height="39"/>
-              <rect x="47" y="39" width="39" height="39"/>
-              <rect x="95" y="0" width="39" height="39"/>
+              <rect x="0" y="0" width="134" height="27"/>
+              <rect x="0" y="40" width="134" height="27"/>
+              <rect x="0" y="80" width="134" height="48"/>
             </svg>
           </div>
           <div class="hero__mark-nav">
@@ -336,6 +336,6 @@
 
 </div>
 
-<script src="assets/site.js?v=88" defer></script>
+<script src="assets/site.js?v=89" defer></script>
 </body>
 </html>
