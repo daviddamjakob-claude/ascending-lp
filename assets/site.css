@@ -189,11 +189,43 @@
   --hero-size: auto;
 }
 
+/* The blue is the accent the two grey grounds already carry in the wordmark's
+   slash and three headings, taken up to the whole fold. Pure #0000FF behind
+   dark type would be unreadable, so it lands the way the purple and orange
+   ones do — a near-white base with the hue only in the wash — and the accent
+   itself stays at full strength on the marks that carry it. */
+.page[data-ground="blue"] {
+  --ground-base: #f5f6ff;
+  --ground-wash:
+    radial-gradient(90% 120% at 95% 0%, rgba(0, 0, 255, 0.20), rgba(0, 0, 255, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(0, 0, 255, 0.09), rgba(0, 0, 255, 0) 60%);
+  --ground-size: auto;
+}
+
+/* Cosmic — a photographic plate in the fold, and its light everywhere else.
+
+   The plate is a deep teal; measured, its mean is rgb(21, 59, 64) and its
+   brightest pixel #4d9a9e. So this ground is not invented, it is sampled: the
+   hero falls back to the plate's own dark while the picture loads, and the
+   surfaces that lift under the pointer take the same teal at wash strength.
+   That is what keeps the rest of the page tied to a fold it cannot show. */
+.page[data-ground="cosmic"] {
+  --ground-base: #f1f6f6;
+  --ground-wash:
+    radial-gradient(90% 120% at 95% 0%, rgba(16, 80, 80, 0.26), rgba(16, 80, 80, 0) 62%),
+    radial-gradient(80% 110% at 0% 100%, rgba(77, 154, 158, 0.24), rgba(77, 154, 158, 0) 60%);
+  --ground-size: auto;
+  --hero-base: #0a1a1c;
+  --hero-wash: none;
+  --hero-size: auto;
+}
+
 /* The fold is the one place the contextual tokens are re-declared per ground.
    Same set the .dark block re-declares, so the hero inverts by the same route
    the rest of the page does rather than by recolouring its parts. */
 .page[data-ground="black"] .hero__inner,
-.page[data-ground="black-dots"] .hero__inner {
+.page[data-ground="black-dots"] .hero__inner,
+.page[data-ground="cosmic"] .hero__inner {
   color: var(--ink-invert);
   --heading: var(--ink-invert);
   --body: var(--ink-muted-invert);
@@ -203,7 +235,8 @@
 /* The call to action is a black box with white type, which on this ground would
    be a hole. It swaps rather than inverting its ink alone. */
 .page[data-ground="black"] .hero .btn--hero,
-.page[data-ground="black-dots"] .hero .btn--hero {
+.page[data-ground="black-dots"] .hero .btn--hero,
+.page[data-ground="cosmic"] .hero .btn--hero {
   background: var(--ink-invert);
   color: var(--ink);
 }
@@ -231,9 +264,15 @@
    pages, with no per-page rule needed.
    -------------------------------------------------------------------------- */
 .page[data-page="home"]:not([data-ground]),
-.page[data-page="home"][data-ground="dots"],
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]),
 .page[data-page="knowledge-base"]:not([data-ground]),
-.page[data-page="knowledge-base"][data-ground="dots"] { --hl: #0000ff; }
+.page[data-page="knowledge-base"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) { --hl: #0000ff; }
+/* Cosmic draws its accent out of its own plate rather than taking the blue:
+   #4d9a9e is the brightest pixel in the photograph, so the marks that carry
+   the accent are lit by the same light the fold is. Declared after the rule
+   above, which the :is() list above deliberately lets it match first. */
+.page[data-page="home"][data-ground="cosmic"],
+.page[data-page="knowledge-base"][data-ground="cosmic"] { --hl: #4d9a9e; }
 .hl, .brand__slash { color: var(--hl, inherit); }
 
 /* --------------------------------------------------------------------------
@@ -495,7 +534,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    Three layers over the panel, then: image, scrim, type. The scrim is its own
    pseudo-element because it has to sit above the image while the ground colour
    stays below it. */
-.hero__media {
+.hero__media,
+.hero__plate,
+.hero__shimmer {
   display: none;
   position: absolute;
   inset: var(--space-2);
@@ -506,6 +547,16 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   border-radius: var(--radius-lg);
 }
 .page[data-ground="nature"] .hero__media { display: block; }
+.page[data-ground="cosmic"] .hero__plate { display: block; }
+
+/* The shimmer sits over the plate, not in it. The reference blits the
+   photograph into its canvas and redraws the whole thing every frame, because
+   there is no <img> left underneath once it swaps in; here the picture stays a
+   real element and the canvas carries only the specks, so a frame is ~48
+   fillRects over a transparent clear and the plate is never touched. Above the
+   plate at 2, still under .hero__inner at 3. */
+.page[data-ground="cosmic"] .hero__shimmer { display: block; z-index: 2; }
+.hero__shimmer { pointer-events: none; object-fit: fill; }
 
 /* Near-black type over a bright sky. The image is lifted from the left, where
    the heading and the lead sit, and left alone on the right. A legibility
@@ -579,7 +630,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    the screen width. */
 .hero__marks { display: none; }
 .page[data-page="home"]:not([data-ground]) .hero__marks,
-.page[data-page="home"][data-ground="dots"] .hero__marks {
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .hero__marks {
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -740,8 +791,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    would be light with white type on it. */
 .page[data-page="home"]:not([data-ground]) .strip:hover .strip__panel:hover,
 .page[data-page="home"]:not([data-ground]) .strip:not(:hover) .strip__panel:focus-visible,
-.page[data-page="home"][data-ground="dots"] .strip:hover .strip__panel:hover,
-.page[data-page="home"][data-ground="dots"] .strip:not(:hover) .strip__panel:focus-visible {
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip:hover .strip__panel:hover,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip:not(:hover) .strip__panel:focus-visible {
   background: #f2f2f2;
   color: var(--ink);
   --heading: var(--ink);
@@ -753,22 +804,22 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 .page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__title,
 .page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__title,
-.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__title,
-.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__title { color: var(--ink); }
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:hover .strip__title,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:focus-visible .strip__title { color: var(--ink); }
 .page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__num,
 .page[data-page="home"]:not([data-ground]) .strip__panel:hover .strip__body,
 .page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__num,
 .page[data-page="home"]:not([data-ground]) .strip__panel:focus-visible .strip__body,
-.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__num,
-.page[data-page="home"][data-ground="dots"] .strip__panel:hover .strip__body,
-.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__num,
-.page[data-page="home"][data-ground="dots"] .strip__panel:focus-visible .strip__body { color: var(--ink-muted); }
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:hover .strip__num,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:hover .strip__body,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:focus-visible .strip__num,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__panel:focus-visible .strip__body { color: var(--ink-muted); }
 
 /* The tags carry the accent in 01, ring and all. They read at rest, not only
    under the pointer, so this is not scoped to the hover — it is what the
    section's chips are on these two grounds. */
 .page[data-page="home"]:not([data-ground]) .strip__tags .chip-outline,
-.page[data-page="home"][data-ground="dots"] .strip__tags .chip-outline {
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .strip__tags .chip-outline {
   background: var(--hl);
   color: #ffffff;
   box-shadow: none;
@@ -1119,8 +1170,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    nothing in the box model moves and the grid cannot jump. */
 .page[data-page="home"]:not([data-ground]) .card--reveal:hover,
 .page[data-page="home"]:not([data-ground]) .card--reveal:focus-within,
-.page[data-page="home"][data-ground="dots"] .card--reveal:hover,
-.page[data-page="home"][data-ground="dots"] .card--reveal:focus-within {
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .card--reveal:hover,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .card--reveal:focus-within {
   background: transparent;
   box-shadow: inset 0 0 0 2px var(--ink);
   color: var(--ink);
@@ -1423,9 +1474,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    would eat the bottom of the ring — this is an overlay on top of everything,
    which is what makes it read as one border around one card. */
 .page[data-page="home"]:not([data-ground]) .link-card,
-.page[data-page="home"][data-ground="dots"] .link-card { position: relative; }
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card { position: relative; }
 .page[data-page="home"]:not([data-ground]) .link-card::after,
-.page[data-page="home"][data-ground="dots"] .link-card::after {
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1437,12 +1488,12 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 }
 .page[data-page="home"]:not([data-ground]) .link-card:hover::after,
 .page[data-page="home"]:not([data-ground]) .link-card:focus-visible::after,
-.page[data-page="home"][data-ground="dots"] .link-card:hover::after,
-.page[data-page="home"][data-ground="dots"] .link-card:focus-visible::after { opacity: 1; }
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card:hover::after,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card:focus-visible::after { opacity: 1; }
 .page[data-page="home"]:not([data-ground]) .link-card:hover .h4-card,
 .page[data-page="home"]:not([data-ground]) .link-card:focus-visible .h4-card,
-.page[data-page="home"][data-ground="dots"] .link-card:hover .h4-card,
-.page[data-page="home"][data-ground="dots"] .link-card:focus-visible .h4-card { text-decoration: none; }
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card:hover .h4-card,
+.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .link-card:focus-visible .h4-card { text-decoration: none; }
 .link-card__media { aspect-ratio: 3 / 2; background: #ececec; overflow: hidden; }
 /* base.css sets height:auto on every img, so the fill is pinned here. Greyscale
    keeps borrowed photography inside the page's monochrome identity. */
@@ -1583,6 +1634,13 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
   background: #ececec;
   overflow: hidden;
 }
+/* Cosmic is the one ground with a picture for this panel, out of the same
+   plate family as its fold. base.css sets height:auto on every img, so the
+   fill is pinned here rather than left to the intrinsic ratio. */
+.showcase__art { display: none; width: 100%; height: 100%; object-fit: cover; }
+.page[data-ground="cosmic"] .showcase__art { display: block; }
+.page[data-ground="cosmic"] .showcase__caption { display: none; }
+
 .showcase__caption {
   position: absolute;
   inset-inline: 0;
@@ -1896,7 +1954,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 .hero--stack .hero__figure { padding: 0; background: none; box-shadow: none; }
 .page[data-ground="nature"] .hero--stack .hero__figure,
 .page[data-ground="black"] .hero--stack .hero__figure,
-.page[data-ground="black-dots"] .hero--stack .hero__figure {
+.page[data-ground="black-dots"] .hero--stack .hero__figure,
+.page[data-ground="cosmic"] .hero--stack .hero__figure {
   padding: var(--space-4);
   background: var(--surface);
   box-shadow: inset 0 0 0 1px var(--hairline);

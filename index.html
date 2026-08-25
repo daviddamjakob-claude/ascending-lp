@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=93">
+<link rel="stylesheet" href="assets/site.css?v=95">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -67,11 +67,13 @@
       <div class="hero-swatch" data-ground-key="home" role="group" aria-label="Hero background">
         <button class="hero-swatch__opt" type="button" data-hero="grey" aria-current="true">Grey</button>
         <button class="hero-swatch__opt" type="button" data-hero="dots">Grey Pattern</button>
+        <button class="hero-swatch__opt" type="button" data-hero="black">Black</button>
+        <button class="hero-swatch__opt" type="button" data-hero="black-dots">Black Pattern</button>
         <button class="hero-swatch__opt" type="button" data-hero="purple">Purple</button>
         <button class="hero-swatch__opt" type="button" data-hero="orange">Orange</button>
+        <button class="hero-swatch__opt" type="button" data-hero="blue">Blue</button>
         <button class="hero-swatch__opt" type="button" data-hero="nature">Nature</button>
-        <button class="hero-swatch__opt" type="button" data-hero="black">Black</button>
-        <button class="hero-swatch__opt" type="button" data-hero="black-dots">Black pattern</button>
+        <button class="hero-swatch__opt" type="button" data-hero="cosmic">Cosmic</button>
       </div>
       <!-- The pattern ground, and a canvas rather than a background because of
            what the pattern is: an 8x8 ordered dither of solid square blocks,
@@ -80,6 +82,17 @@
            by the dither block in site.js, and only ever visible on the two
            pattern grounds. -->
       <canvas class="hero__dither" data-dither aria-hidden="true"></canvas>
+      <!-- Cosmic's plate. Lazy for the same reason Nature's is: eight of the nine
+           grounds never show it. The shimmer canvas goes over it rather than
+           replacing it, so if the script never runs the photograph still
+           stands. -->
+      <img class="hero__plate" alt="" loading="lazy" decoding="async"
+           src="assets/media/hero-dark-1600.jpg"
+           srcset="assets/media/hero-dark-900.jpg 900w,
+                   assets/media/hero-dark-1600.jpg 1600w,
+                   assets/media/hero-dark-2400.jpg 2400w"
+           sizes="100vw" width="2400" height="1359">
+      <canvas class="hero__shimmer" data-shimmer aria-hidden="true"></canvas>
       <!-- Only painted on the Nature ground. lazy, because six of the seven
            grounds never show it and it is the heaviest thing on the page. -->
       <img class="hero__media" alt=""
@@ -241,6 +254,11 @@
         </div>
 
         <figure class="showcase__visual">
+          <img class="showcase__art" alt="" loading="lazy" decoding="async"
+               src="assets/media/toolbox-visual-1400.jpg"
+               srcset="assets/media/toolbox-visual-800.jpg 800w,
+                       assets/media/toolbox-visual-1400.jpg 1400w"
+               sizes="(min-width: 900px) 55vw, 100vw" width="1400" height="1386">
           <figcaption class="showcase__caption">Toolbox illustration &mdash; placeholder</figcaption>
         </figure>
       </div>
@@ -362,6 +380,6 @@
 
 </div>
 
-<script src="assets/site.js?v=93" defer></script>
+<script src="assets/site.js?v=95" defer></script>
 </body>
 </html>
