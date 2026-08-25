@@ -236,6 +236,12 @@
    be a hole. It swaps rather than inverting its ink alone. */
 .page[data-ground="black"] .hero .btn--hero,
 .page[data-ground="black-dots"] .hero .btn--hero,
+/* Cosmic only, and only inside the fold: on a plate this dark the teal that
+   works on the light sections below is too close to the picture to hold, so
+   the mark and the highlighted words take the reversed ink instead. Scoped to
+   .hero__inner, so the tags and the card ring further down keep the teal. */
+.page[data-ground="cosmic"] .hero__inner { --hl: #ffffff; }
+
 .page[data-ground="cosmic"] .hero .btn--hero {
   background: var(--ink-invert);
   color: var(--ink);
@@ -628,9 +634,11 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
    blue, and a black version of this would be a second mark competing with the
    wordmark. Sized down a step on a phone, where 134px of it would be a third of
    the screen width. */
+/* On every ground now, which also settles the fold's height: the mark is the
+   only thing that differed between them, so before this the grounds without it
+   stood 158px shorter than the grey ones on identical padding. */
 .hero__marks { display: none; }
-.page[data-page="home"]:not([data-ground]) .hero__marks,
-.page[data-page="home"]:is([data-ground="dots"], [data-ground="blue"], [data-ground="cosmic"]) .hero__marks {
+.page[data-page="home"] .hero__marks {
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -639,8 +647,15 @@ section[id] { scroll-margin-top: calc(var(--header-h) + var(--space-8)); }
 /* The stage is sized, not the drawings: both share the box, so switching swaps
    what is drawn without the type below it moving. */
 .hero__mark-stage { width: clamp(84px, 9vw, 134px); }
-.hero__mark { display: none; width: 100%; height: auto; fill: var(--hl); }
+/* The accent where a ground declares one, and otherwise the fold's own ink —
+   which is what makes it black on the light grounds and white where the type
+   reverses out, off a single declaration rather than a rule per ground. */
+.hero__mark { display: none; width: 100%; height: auto; fill: var(--hl, currentColor); }
 .hero__mark[data-current="true"] { display: block; }
+/* The third option is the absence of one. Nothing to draw, so the stage and
+   its gap collapse and the arrows sit where the mark started. */
+.hero__marks:has([data-mark="none"][data-current="true"]) { gap: 0; }
+.hero__marks:has([data-mark="none"][data-current="true"]) .hero__mark-stage { width: 0; }
 
 /* Scaffolding, so it is quiet: no fill until the pointer is on it, and it steps
    out of the way of the mark rather than sitting under it. */

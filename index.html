@@ -17,7 +17,7 @@
      because nothing here edits it. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&amp;display=swap">
 <link rel="stylesheet" href="assets/design-system/styles.css">
-<link rel="stylesheet" href="assets/site.css?v=95">
+<link rel="stylesheet" href="assets/site.css?v=96">
 <link rel="icon" href="assets/graph0-mark.svg" type="image/svg+xml">
 </head>
 <body data-surface="light">
@@ -102,16 +102,15 @@
                    assets/media/hero-fields-2400.jpg 2400w"
            sizes="100vw" width="2400" height="1018" loading="lazy" decoding="async">
       <div class="wrap hero__inner">
-        <!-- Three ascending bars, and decoration rather than content: the
-             wordmark in the header is what names the company, so this carries
-             no label and is hidden from the reader of the page. Painted in the
-             accent, which means it only appears on the two grey grounds — on
-             the others there is no accent for it to be. -->
-        <!-- Two marks under comparison. Same 134x117 box and the same solid
-             blocks, built two ways: bars that widen down the stack, and bars
-             held to one width that thicken instead. The arrows are
-             scaffolding for the decision — drop them, the second <svg> and the
-             .hero__marks rules once one wins. -->
+        <!-- Ascending bars, and decoration rather than content: the wordmark in
+             the header is what names the company, so this carries no label and
+             is hidden from the reader of the page.
+
+             Three options under comparison — two drawings in the same 134x117
+             box out of the same solid blocks, bars that widen down the stack
+             and bars held to one width that thicken instead, then no mark at
+             all. The arrows are scaffolding for the decision: drop them, the
+             options not chosen and the .hero__marks rules once one wins. -->
         <div class="hero__marks" data-mark-switch>
           <div class="hero__mark-stage">
             <svg class="hero__mark" data-mark="bars" viewBox="0 0 134 117"
@@ -128,6 +127,7 @@
               <rect x="0" y="40" width="134" height="27"/>
               <rect x="0" y="80" width="134" height="48"/>
             </svg>
+            <div class="hero__mark hero__mark--none" data-mark="none"></div>
           </div>
           <div class="hero__mark-nav">
             <button class="hero__mark-arrow" type="button" data-mark-step="-1"
@@ -380,6 +380,6 @@
 
 </div>
 
-<script src="assets/site.js?v=95" defer></script>
+<script src="assets/site.js?v=96" defer></script>
 </body>
 </html>
